@@ -1,13 +1,18 @@
 {
   "name": "react-components",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "Kenny Wu",
   "type": "module",
+  "files": [
+    "./src/components",
+    "./src/metadata"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:tsc": "tsc -d --declarationDir dist --emitDeclarationOnly"
   },
   "dependencies": {
     "@types/lodash": "^4.14.192",
