@@ -1,15 +1,19 @@
-import { ComponentStyle } from "../metadata/ComponentStyle";
+import {
+  ComponentStyle,
+  ComponentStyleMerging,
+} from "../metadata/ComponentStyle";
 import classNames from "classnames";
+import { MergeComponentStyle } from "../utility/componentUtility";
 
 interface BasicTemplateProps {
   Header?: React.ReactNode;
   ToolBar?: React.ReactNode;
   TreeView?: React.ReactNode;
   ContentPage?: React.ReactNode;
-  headerStyle?: ComponentStyle;
-  toolbarStyle?: ComponentStyle;
-  treeViewStyle?: ComponentStyle;
-  contentPageStyle?: ComponentStyle;
+  headerStyle?: ComponentStyleMerging;
+  toolbarStyle?: ComponentStyleMerging;
+  treeViewStyle?: ComponentStyleMerging;
+  contentPageStyle?: ComponentStyleMerging;
 }
 
 const BasicTemplate: React.FC<BasicTemplateProps> = ({
@@ -22,50 +26,60 @@ const BasicTemplate: React.FC<BasicTemplateProps> = ({
   treeViewStyle,
   contentPageStyle,
 }) => {
-  headerStyle = {
-    css: classNames("grow-0 shrink-0 h-24", headerStyle?.css),
-    style: headerStyle?.style,
-  };
-  console.log(headerStyle);
+  const _headerStyle = MergeComponentStyle(
+    {
+      css: "grow-0 shrink-0 h-24",
+    },
+    headerStyle
+  );
 
-  toolbarStyle = {
-    css: classNames("grow-0 shrink-0 w-12", toolbarStyle?.css),
-    style: toolbarStyle?.style,
-  };
+  const _toolbarStyle = MergeComponentStyle(
+    {
+      css: "grow-0 shrink-0 w-12",
+    },
+    toolbarStyle
+  );
 
-  treeViewStyle = {
-    css: classNames("grow-0 shrink-0 w-1/4", treeViewStyle?.css),
-    style: treeViewStyle?.style,
-  };
+  const _treeViewStyle = MergeComponentStyle(
+    {
+      css: "grow-0 shrink-0 w-1/4",
+    },
+    treeViewStyle
+  );
 
-  contentPageStyle = {
-    css: classNames("grow shrink-0", contentPageStyle?.css),
-    style: contentPageStyle?.style,
-  };
+  const _contentPageStyle = MergeComponentStyle(
+    {
+      css: "grow shrink-0",
+    },
+    contentPageStyle
+  );
 
   return (
     <>
       <div className="flex flex-col h-screen">
         {Header && (
-          <div className={headerStyle.css} style={headerStyle.style}>
+          <div className={_headerStyle.css} style={_headerStyle.style}>
             {Header}
           </div>
         )}
 
         <div className="flex grow shrink-0">
           {ToolBar && (
-            <div className={toolbarStyle.css} style={toolbarStyle.style}>
+            <div className={_toolbarStyle.css} style={_toolbarStyle.style}>
               {ToolBar}
             </div>
           )}
 
           {TreeView && (
-            <div className={treeViewStyle.css} style={treeViewStyle.style}>
+            <div className={_treeViewStyle.css} style={_treeViewStyle.style}>
               {TreeView}
             </div>
           )}
 
-          <div className={contentPageStyle.css} style={contentPageStyle.style}>
+          <div
+            className={_contentPageStyle.css}
+            style={_contentPageStyle.style}
+          >
             {ContentPage}
           </div>
         </div>
