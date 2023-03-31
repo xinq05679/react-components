@@ -6,7 +6,8 @@
   "type": "module",
   "files": [
     "./src/components",
-    "./src/metadata"
+    "./src/metadata",
+    "./src/template"
   ],
   "scripts": {
     "dev": "vite",
