@@ -3,12 +3,12 @@ import { TreeViewItemProps } from "./TreeViewItemProps";
 import { TreeViewProps } from "./TreeViewProps";
 import _ from "lodash";
 
-export interface DefaultTreeViewProps<T extends TreeViewItemProps<T>>
+export interface BasicTreeViewProps<T extends TreeViewItemProps<T>>
   extends TreeViewProps<T> {}
 
-function TreeView<T extends TreeViewItemProps<T>>(
-  props: DefaultTreeViewProps<T>
-): React.ReactElement<DefaultTreeViewProps<T>> {
+function BasicTreeView<T extends TreeViewItemProps<T>>(
+  props: BasicTreeViewProps<T>
+): React.ReactElement<BasicTreeViewProps<T>> {
   const { roots, onClicked, onHovered, onContextMenuClicked, TreeViewItem } =
     props;
   const [items, setItems] = useState<Map<string, T>>(new Map());
@@ -103,4 +103,4 @@ function TreeView<T extends TreeViewItemProps<T>>(
   );
 }
 
-export default TreeView;
+export default BasicTreeView;

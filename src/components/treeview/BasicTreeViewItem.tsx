@@ -10,10 +10,10 @@ const TreeItemStyle = {
   expandableColor: "rgb(0, 0, 0)",
 };
 
-export interface DefaultTreeViewItemProps
-  extends TreeViewItemProps<DefaultTreeViewItemProps> {}
+export interface BasicTreeViewItemProps
+  extends TreeViewItemProps<BasicTreeViewItemProps> {}
 
-const TreeViewItem: React.FC<DefaultTreeViewItemProps> = ({
+const BasicTreeViewItem: React.FC<BasicTreeViewItemProps> = ({
   name,
   icon,
   children,
@@ -84,4 +84,4 @@ const TreeViewItem: React.FC<DefaultTreeViewItemProps> = ({
   );
 };
 
-export default TreeViewItem;
+export default BasicTreeViewItem;
