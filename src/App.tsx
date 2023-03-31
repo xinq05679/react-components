@@ -1,9 +1,14 @@
-import TreeViewItem, {
-  DefaultTreeViewItemProps,
-} from "./components/treeview/TreeViewItem";
-import TreeView from "./components/treeview/TreeView";
+import BasicTreeViewItem, {
+  BasicTreeViewItemProps,
+} from "./components/treeview/BasicTreeViewItem";
+import BasicTreeView from "./components/treeview/BasicTreeView";
+import BasicTemplate from "./template/BasicTemplate";
+import BasicHeader from "./components/header/BasicHeader";
+import BasicButton from "./components/button/BasicButton";
+import { StyleMergingMode } from "./metadata/ComponentStyle";
+import { ButtonType } from "./metadata/ButtonType";
 
-type T = DefaultTreeViewItemProps;
+type T = BasicTreeViewItemProps;
 
 const App: React.FC = () => {
   const roots: T[] = [
@@ -29,10 +34,37 @@ const App: React.FC = () => {
     },
   ];
 
-  return (
+  const treeView = (
     <div className="flex flex-col h-96">
-      <TreeView<T> roots={roots} TreeViewItem={TreeViewItem} />
+      <BasicTreeView<T> roots={roots} TreeViewItem={BasicTreeViewItem} />
     </div>
+  );
+
+  return (
+    <BasicTemplate
+      Header={<BasicHeader title="CVE" />}
+      TreeView={treeView}
+      ContentPage={
+        <BasicButton
+          type={ButtonType.Dark}
+          customizedStyle={{
+            css: "bg-[#f00]",
+          }}
+        >
+          Click me
+        </BasicButton>
+      }
+      headerStyle={{
+        css: "h-40",
+        style: {
+          backgroundColor: "red",
+        },
+        cssMode: StyleMergingMode.replace,
+      }}
+      toolbarStyle={{
+        css: "w-64",
+      }}
+    />
   );
 };
 

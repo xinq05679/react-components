@@ -1,8 +1,4 @@
-import {
-  ComponentStyle,
-  ComponentStyleMerging,
-} from "../metadata/ComponentStyle";
-import classNames from "classnames";
+import { ComponentStyleMerging } from "../metadata/ComponentStyle";
 import { MergeComponentStyle } from "../utility/componentUtility";
 
 interface BasicTemplateProps {
