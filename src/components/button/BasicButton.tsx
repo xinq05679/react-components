@@ -12,6 +12,7 @@ export interface BasicButtonProps {
   onClicked?: () => void;
   outline?: boolean;
   customizedStyle?: ComponentStyleMerging;
+  [key: string]: any;
 }
 
 const BasicButton: React.FC<BasicButtonProps> = ({

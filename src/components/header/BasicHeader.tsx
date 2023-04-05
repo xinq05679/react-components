@@ -36,8 +36,6 @@ const BasicHeader: React.FC<BasicHeaderProps> = ({
     titleStyle
   );
 
-  console.log(_titleStyle);
-
   return (
     <div className={_containerStyle.css} style={_containerStyle.style}>
       <div className={iconStyle?.css} style={iconStyle?.style}>
