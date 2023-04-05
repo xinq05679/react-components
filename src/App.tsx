@@ -7,6 +7,7 @@ import BasicHeader from "./components/header/BasicHeader";
 import BasicButton from "./components/button/BasicButton";
 import { StyleMergingMode } from "./metadata/ComponentStyle";
 import { ButtonType } from "./metadata/ButtonType";
+import { ProgressBarDialogProvider } from "./dialog/progressbar-dialog/useProgressBarDialog";
 
 type T = BasicTreeViewItemProps;
 
@@ -41,30 +42,32 @@ const App: React.FC = () => {
   );
 
   return (
-    <BasicTemplate
-      Header={<BasicHeader title="CVE" />}
-      TreeView={treeView}
-      ContentPage={
-        <BasicButton
-          type={ButtonType.Dark}
-          customizedStyle={{
-            css: "bg-[#f00]",
-          }}
-        >
-          Click me
-        </BasicButton>
-      }
-      headerStyle={{
-        css: "h-40",
-        style: {
-          backgroundColor: "red",
-        },
-        cssMode: StyleMergingMode.replace,
-      }}
-      toolbarStyle={{
-        css: "w-64",
-      }}
-    />
+    <ProgressBarDialogProvider>
+      <BasicTemplate
+        Header={<BasicHeader title="CVE" />}
+        TreeView={treeView}
+        ContentPage={
+          <BasicButton
+            type={ButtonType.Dark}
+            customizedStyle={{
+              css: "bg-[#f00]",
+            }}
+          >
+            Click me
+          </BasicButton>
+        }
+        headerStyle={{
+          css: "h-40",
+          style: {
+            backgroundColor: "red",
+          },
+          cssMode: StyleMergingMode.replace,
+        }}
+        toolbarStyle={{
+          css: "w-64",
+        }}
+      />
+    </ProgressBarDialogProvider>
   );
 };
 

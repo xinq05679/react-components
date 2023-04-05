@@ -1,9 +1,9 @@
 import { createContext, useContext, useState } from "react";
-import { ComponentStyleMerging } from "../metadata/ComponentStyle";
+import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import QueryDialog from "./QueryDialog";
-import { QueryDialogType } from "../metadata/QueryDialogType";
-import { BasicButtonProps } from "../components/button/BasicButton";
-import { ButtonType } from "../metadata/ButtonType";
+import { QueryDialogType } from "../../metadata/QueryDialogType";
+import { BasicButtonProps } from "../../components/button/BasicButton";
+import { ButtonType } from "../../metadata/ButtonType";
 
 export interface QueryDialogSettings {
   title?: string;
@@ -11,7 +11,7 @@ export interface QueryDialogSettings {
   icon?: string;
   buttons?: BasicButtonProps[];
   type?: QueryDialogType;
-  titleStyle?: ComponentStyleMerging;
+  headerStyle?: ComponentStyleMerging;
   iconStyle?: ComponentStyleMerging;
   contentStyle?: ComponentStyleMerging;
   containerStyle?: ComponentStyleMerging;

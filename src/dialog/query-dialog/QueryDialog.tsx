@@ -1,9 +1,9 @@
-import QueryIcon from "../resources/image/query.png";
-import BasicDialog from "./BasicDialog";
-import { QueryDialogType } from "../metadata/QueryDialogType";
-import { MergeComponentStyle } from "../utility/componentUtility";
+import QueryIcon from "../../resources/image/query.png";
+import BasicDialog from "../BasicDialog";
+import { QueryDialogType } from "../../metadata/QueryDialogType";
+import { MergeComponentStyle } from "../../utility/componentUtility";
 import useQueryDialog from "./useQueryDialog";
-import BasicButton from "../components/button/BasicButton";
+import BasicButton from "../../components/button/BasicButton";
 
 const QueryDialog: React.FC = () => {
   const { isOpen, settings } = useQueryDialog();
@@ -14,7 +14,7 @@ const QueryDialog: React.FC = () => {
     buttons,
     type = QueryDialogType.Info,
     iconStyle,
-    titleStyle,
+    headerStyle,
     contentStyle,
     containerStyle,
   } = settings;
@@ -62,7 +62,7 @@ const QueryDialog: React.FC = () => {
         )
       }
       isOpen={isOpen}
-      headerStyle={titleStyle}
+      headerStyle={headerStyle}
       contentStyle={contentStyle}
       containerStyle={containerStyle}
     />

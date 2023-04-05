@@ -9,9 +9,11 @@ export function MergeComponentStyle(
   originStyle: ComponentStyle,
   newStyle?: ComponentStyleMerging
 ): ComponentStyle {
-  const mergedStyle: ComponentStyle = {
+  const mergedStyle: ComponentStyleMerging = {
     css: originStyle.css,
     style: originStyle.style,
+    cssMode: newStyle?.cssMode,
+    styleMode: newStyle?.styleMode,
   };
 
   if (!newStyle) return mergedStyle;
