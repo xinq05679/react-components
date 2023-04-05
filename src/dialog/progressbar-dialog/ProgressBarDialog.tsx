@@ -118,7 +118,7 @@ const ProgressBarDialog: React.FC = () => {
           </div>
         </>
       }
-      isOpen={true}
+      isOpen={isOpen}
       headerStyle={headerStyle}
       containerStyle={_containerStyle}
       bodyStyle={_bodyStyle}

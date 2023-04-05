@@ -8,6 +8,9 @@ import BasicButton from "./components/button/BasicButton";
 import { StyleMergingMode } from "./metadata/ComponentStyle";
 import { ButtonType } from "./metadata/ButtonType";
 import { ProgressBarDialogProvider } from "./dialog/progressbar-dialog/useProgressBarDialog";
+import BasicListItem from "./components/list/BasicListItem";
+import { BasicListItemProps } from "./components/list/BasicListItemProps";
+import List from "./components/list/List";
 
 type T = BasicTreeViewItemProps;
 
@@ -41,20 +44,43 @@ const App: React.FC = () => {
     </div>
   );
 
+  const listItem: React.FC<BasicListItemProps> = (props) => {
+    return <BasicListItem {...props} textStyle={{ css: "text-red-900" }} />;
+  };
+
   return (
     <ProgressBarDialogProvider>
       <BasicTemplate
         Header={<BasicHeader title="CVE" />}
         TreeView={treeView}
         ContentPage={
-          <BasicButton
-            type={ButtonType.Dark}
-            customizedStyle={{
-              css: "bg-[#f00]",
-            }}
-          >
-            Click me
-          </BasicButton>
+          // <BasicButton
+          //   type={ButtonType.Dark}
+          //   customizedStyle={{
+          //     css: "bg-[#f00]",
+          //   }}
+          // >
+          //   Click me
+          // </BasicButton>
+          // ######
+          // <BasicListItem id="list-item" text="haha" />
+          // #####
+          <div className="flex flex-col h-96">
+            <List
+              listItems={[
+                {
+                  id: "list-1",
+                  text: "list-1",
+                  unselectable: true,
+                  listStyle: { css: "bg-red-900" },
+                },
+                { id: "list-2", text: "list-2" },
+                { id: "list-3", text: "list-3" },
+              ]}
+              multiSelectionMode
+              ListItem={listItem}
+            />
+          </div>
         }
         headerStyle={{
           css: "h-40",
