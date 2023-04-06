@@ -13,7 +13,8 @@ import { BasicListItemProps } from "./components/list/BasicListItemProps";
 import List from "./components/list/List";
 import BasicSearchTextBox from "./components/search/BasicSearchBar";
 import BasicTable from "./components/table/BasicTable";
-import BasicLabel from "./components/input/BasicLabel";
+import BasicLink from "./components/input/BasicLink";
+import BasicTextInput from "./components/input/BasicTextInput";
 
 type T = BasicTreeViewItemProps;
 
@@ -87,7 +88,25 @@ const App: React.FC = () => {
           // ###
           // <BasicSearchTextBox onChanged={(val) => console.log(val)} />
           // ###
-          <BasicLabel value="1@1" />
+          // <BasicLabel value="1@1" editable />
+          // ###
+          <BasicTable
+            headerCell={["abc", 2, 3, 4]}
+            tableCell={[
+              [
+                <BasicLink text="778" />,
+                <BasicLink text="5" />,
+                <BasicTextInput text="1@1" editable />,
+                7,
+              ],
+              [
+                <div>hi</div>,
+                <BasicTextInput text="1@1" />,
+                <BasicTextInput text="1@1" editable />,
+                7,
+              ],
+            ]}
+          />
         }
         headerStyle={{
           css: "h-40",
