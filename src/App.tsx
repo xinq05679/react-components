@@ -52,7 +52,7 @@ const App: React.FC = () => {
     <ProgressBarDialogProvider>
       <BasicTemplate
         Header={<BasicHeader title="CVE" />}
-        TreeView={treeView}
+        SideBar={treeView}
         ContentPage={
           // <BasicButton
           //   type={ButtonType.Dark}

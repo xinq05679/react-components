@@ -4,23 +4,27 @@ import { MergeComponentStyle } from "../utility/componentUtility";
 interface BasicTemplateProps {
   Header?: React.ReactNode;
   ToolBar?: React.ReactNode;
-  TreeView?: React.ReactNode;
+  SideBar?: React.ReactNode;
   ContentPage?: React.ReactNode;
+  Footer?: React.ReactNode;
   headerStyle?: ComponentStyleMerging;
   toolbarStyle?: ComponentStyleMerging;
-  treeViewStyle?: ComponentStyleMerging;
+  sidebarStyle?: ComponentStyleMerging;
   contentPageStyle?: ComponentStyleMerging;
+  footerStyle?: ComponentStyleMerging;
 }
 
 const BasicTemplate: React.FC<BasicTemplateProps> = ({
   Header,
   ToolBar,
-  TreeView,
+  SideBar,
   ContentPage,
+  Footer,
   headerStyle,
   toolbarStyle,
-  treeViewStyle,
+  sidebarStyle,
   contentPageStyle,
+  footerStyle,
 }) => {
   const _headerStyle = MergeComponentStyle(
     {
@@ -36,11 +40,11 @@ const BasicTemplate: React.FC<BasicTemplateProps> = ({
     toolbarStyle
   );
 
-  const _treeViewStyle = MergeComponentStyle(
+  const _sidebarStyle = MergeComponentStyle(
     {
       css: "grow-0 shrink-0 w-1/4",
     },
-    treeViewStyle
+    sidebarStyle
   );
 
   const _contentPageStyle = MergeComponentStyle(
@@ -48,6 +52,13 @@ const BasicTemplate: React.FC<BasicTemplateProps> = ({
       css: "grow shrink-0",
     },
     contentPageStyle
+  );
+
+  const _footerStyle = MergeComponentStyle(
+    {
+      css: "grow-0 shrink-0 h-8",
+    },
+    footerStyle
   );
 
   return (
@@ -66,9 +77,9 @@ const BasicTemplate: React.FC<BasicTemplateProps> = ({
             </div>
           )}
 
-          {TreeView && (
-            <div className={_treeViewStyle.css} style={_treeViewStyle.style}>
-              {TreeView}
+          {SideBar && (
+            <div className={_sidebarStyle.css} style={_sidebarStyle.style}>
+              {SideBar}
             </div>
           )}
 
@@ -79,6 +90,12 @@ const BasicTemplate: React.FC<BasicTemplateProps> = ({
             {ContentPage}
           </div>
         </div>
+
+        {Footer && (
+          <div className={_footerStyle.css} style={_footerStyle.style}>
+            {Footer}
+          </div>
+        )}
       </div>
     </>
   );
