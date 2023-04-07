@@ -21,6 +21,7 @@ const ProgressBarDialog: React.FC = () => {
     progressInnerStyle,
     progressOuterStyle,
     progressValueStyle,
+    buttonDivStyle,
   } = settings;
 
   const _containerStyle = MergeComponentStyle(
@@ -39,10 +40,14 @@ const ProgressBarDialog: React.FC = () => {
 
   const _iconStyle = MergeComponentStyle(
     {
-      css: "h-24",
+      css: "h-32",
     },
     iconStyle
   );
+
+  const footStyle: ComponentStyleMerging = {
+    css: "flex flex-col w-full gap-[20px] px-[10px]",
+  };
 
   const _progressOuterStyle = MergeComponentStyle(
     {
@@ -65,9 +70,12 @@ const ProgressBarDialog: React.FC = () => {
     progressValueStyle
   );
 
-  const footStyle: ComponentStyleMerging = {
-    css: "flex flex-col w-full gap-10",
-  };
+  const _buttonDivStyle = MergeComponentStyle(
+    {
+      css: "flex shrink-0 w-full justify-center gap-3",
+    },
+    buttonDivStyle
+  );
 
   return (
     <BasicDialog
@@ -101,7 +109,7 @@ const ProgressBarDialog: React.FC = () => {
             </div>
           </div>
           {/* Buttons */}
-          <div className="flex shrink-0 w-full justify-center gap-3">
+          <div className={_buttonDivStyle.css} style={_buttonDivStyle.style}>
             {buttons && (
               <>
                 {buttons.map((button, index) => {
@@ -109,7 +117,7 @@ const ProgressBarDialog: React.FC = () => {
                     <BasicButton
                       key={index}
                       {...button}
-                      customizedStyle={{ css: "h-10" }}
+                      customizedStyle={{ css: "h-[36px]" }}
                     />
                   );
                 })}

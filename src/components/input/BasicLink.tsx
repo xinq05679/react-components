@@ -7,7 +7,6 @@ export interface BasicLinkProps {
   text?: string;
   url?: string;
   linkStyle?: ComponentStyleMerging;
-  isVisited?: boolean;
   onClicked?: () => void;
 }
 

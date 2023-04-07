@@ -1,4 +1,4 @@
-export enum ButtonType {
+export const enum ButtonType {
   Primary,
   Secondary,
   Success,

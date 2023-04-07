@@ -18,21 +18,21 @@ const BasicTable: React.FC<BasicTableProps> = ({
 }) => {
   const _tableStyle = MergeComponentStyle(
     {
-      css: "w-full",
+      css: "w-full table-auto border-separate border-spacing-y-1",
     },
     tableStyle
   );
 
   const _headerStyle = MergeComponentStyle(
     {
-      css: "uppercase bg-indigo-400 text-white",
+      css: "capitalize bg-[#0e6db7] text-[#fff] text-xl",
     },
     headerStyle
   );
 
   const _rowStyle = MergeComponentStyle(
     {
-      css: "even:bg-[#fff] odd:bg-blue-100 text-center border-b-2",
+      css: "even:bg-[#fff] odd:bg-[#f0f0f0] text-center",
     },
     rowStyle
   );

@@ -15,6 +15,7 @@ export interface QueryDialogSettings {
   iconStyle?: ComponentStyleMerging;
   contentStyle?: ComponentStyleMerging;
   containerStyle?: ComponentStyleMerging;
+  buttonDivStyle?: ComponentStyleMerging;
 }
 
 export interface QueryDialogContextValue {

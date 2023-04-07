@@ -1,4 +1,4 @@
-export enum QueryDialogType {
+export const enum QueryDialogType {
   Query,
   Warning,
   Error,

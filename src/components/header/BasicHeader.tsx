@@ -18,20 +18,14 @@ const BasicHeader: React.FC<BasicHeaderProps> = ({
 }) => {
   const _containerStyle = MergeComponentStyle(
     {
-      css: "flex items-center gap-3 justify-center w-full h-full",
-      style: {
-        backgroundColor: "#0e6eb8",
-      },
+      css: "flex items-center gap-3 justify-center w-full h-full bg-[#0e6eb8]",
     },
     containerStyle
   );
 
   const _titleStyle = MergeComponentStyle(
     {
-      css: "text-4xl text-white font-bold",
-      style: {
-        backgroundColor: "#0e6eb8",
-      },
+      css: "text-4xl text-[#fff] font-bold",
     },
     titleStyle
   );

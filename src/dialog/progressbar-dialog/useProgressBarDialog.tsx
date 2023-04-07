@@ -18,6 +18,7 @@ export interface ProgressBarDialogSettings {
   progressOuterStyle?: ComponentStyleMerging;
   progressInnerStyle?: ComponentStyleMerging;
   progressValueStyle?: ComponentStyleMerging;
+  buttonDivStyle?: ComponentStyleMerging;
 }
 
 export interface ProgressBarDialogContextValue {

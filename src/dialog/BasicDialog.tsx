@@ -31,10 +31,7 @@ const BasicDialog: React.FC<BasicDialogProps> = ({
 }) => {
   const _containerStyle = MergeComponentStyle(
     {
-      css: "flex flex-col border bg-white self-center h-64 pb-4",
-      style: {
-        width: "520px",
-      },
+      css: "flex flex-col border bg-white self-center h-64 pb-4 w-[520px]",
     },
     containerStyle
   );

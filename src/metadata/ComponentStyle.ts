@@ -1,4 +1,4 @@
-export enum StyleMergingMode {
+export const enum StyleMergingMode {
   combine,
   replace,
   none,

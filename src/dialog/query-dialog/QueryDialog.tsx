@@ -17,6 +17,7 @@ const QueryDialog: React.FC = () => {
     headerStyle,
     contentStyle,
     containerStyle,
+    buttonDivStyle,
   } = settings;
 
   const getImage = () => {
@@ -34,6 +35,8 @@ const QueryDialog: React.FC = () => {
     },
     iconStyle
   );
+
+  const _buttonDivStyle = MergeComponentStyle({}, buttonDivStyle);
 
   return (
     <BasicDialog
@@ -54,7 +57,7 @@ const QueryDialog: React.FC = () => {
                 <BasicButton
                   key={index}
                   {...button}
-                  customizedStyle={{ css: "h-10" }}
+                  customizedStyle={{ css: "h-[36px]" }}
                 />
               );
             })}
@@ -65,6 +68,7 @@ const QueryDialog: React.FC = () => {
       headerStyle={headerStyle}
       contentStyle={contentStyle}
       containerStyle={containerStyle}
+      footerStyle={_buttonDivStyle}
     />
   );
 };
