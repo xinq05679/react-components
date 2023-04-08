@@ -5,7 +5,7 @@ import { MergeComponentStyle } from "../../utility/componentUtility";
 import useQueryDialog from "./useQueryDialog";
 import BasicButton from "../../components/button/BasicButton";
 
-const QueryDialog: React.FC = () => {
+export const QueryDialog: React.FC = () => {
   const { isOpen, settings } = useQueryDialog();
   const {
     title,

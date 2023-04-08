@@ -6,7 +6,7 @@ import _ from "lodash";
 export interface BasicTreeViewProps<T extends TreeViewItemProps<T>>
   extends TreeViewProps<T> {}
 
-function BasicTreeView<T extends TreeViewItemProps<T>>(
+export function BasicTreeView<T extends TreeViewItemProps<T>>(
   props: BasicTreeViewProps<T>
 ): React.ReactElement<BasicTreeViewProps<T>> {
   const { roots, onClicked, onHovered, onContextMenuClicked, TreeViewItem } =

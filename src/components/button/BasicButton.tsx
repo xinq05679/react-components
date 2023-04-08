@@ -15,7 +15,7 @@ export interface BasicButtonProps {
   [key: string]: any;
 }
 
-const BasicButton: React.FC<BasicButtonProps> = ({
+export const BasicButton: React.FC<BasicButtonProps> = ({
   type = ButtonType.Primary,
   children,
   onClicked,

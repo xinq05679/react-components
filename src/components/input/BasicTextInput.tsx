@@ -10,7 +10,7 @@ export interface BasicTextInputProps {
   inputStyle?: ComponentStyleMerging;
 }
 
-const BasicTextInput: React.FC<BasicTextInputProps> = ({
+export const BasicTextInput: React.FC<BasicTextInputProps> = ({
   text,
   editable,
   onChanged,

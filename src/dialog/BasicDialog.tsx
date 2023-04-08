@@ -16,7 +16,7 @@ export interface BasicDialogProps {
   isOpen?: boolean;
 }
 
-const BasicDialog: React.FC<BasicDialogProps> = ({
+export const BasicDialog: React.FC<BasicDialogProps> = ({
   Header,
   Footer,
   Content,

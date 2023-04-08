@@ -5,7 +5,7 @@ import { MergeComponentStyle } from "../../utility/componentUtility";
 import BasicButton from "../../components/button/BasicButton";
 import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 
-const ProgressBarDialog: React.FC = () => {
+export const ProgressBarDialog: React.FC = () => {
   const { isOpen, settings } = useProgressBarDialog();
   const {
     title,

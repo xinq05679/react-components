@@ -9,7 +9,7 @@ export interface BasicHeaderProps {
   titleStyle?: ComponentStyleMerging;
 }
 
-const BasicHeader: React.FC<BasicHeaderProps> = ({
+export const BasicHeader: React.FC<BasicHeaderProps> = ({
   title,
   icon,
   iconStyle,

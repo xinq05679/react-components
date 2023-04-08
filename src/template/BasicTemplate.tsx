@@ -1,7 +1,7 @@
 import { ComponentStyleMerging } from "../metadata/ComponentStyle";
 import { MergeComponentStyle } from "../utility/componentUtility";
 
-interface BasicTemplateProps {
+export interface BasicTemplateProps {
   Header?: React.ReactNode;
   ToolBar?: React.ReactNode;
   SideBar?: React.ReactNode;
@@ -14,7 +14,7 @@ interface BasicTemplateProps {
   footerStyle?: ComponentStyleMerging;
 }
 
-const BasicTemplate: React.FC<BasicTemplateProps> = ({
+export const BasicTemplate: React.FC<BasicTemplateProps> = ({
   Header,
   ToolBar,
   SideBar,

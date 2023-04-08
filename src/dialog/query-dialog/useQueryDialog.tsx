@@ -73,7 +73,7 @@ export const QueryDialogProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
-const useQueryDialog = (): QueryDialogContextValue => {
+export const useQueryDialog = (): QueryDialogContextValue => {
   return useContext(QueryDialogContext) as QueryDialogContextValue;
 };
 

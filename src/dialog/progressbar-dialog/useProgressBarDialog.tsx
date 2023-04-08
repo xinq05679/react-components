@@ -78,7 +78,7 @@ export const ProgressBarDialogProvider: React.FC<{
   );
 };
 
-const useProgressBarDialog = (): ProgressBarDialogContextValue => {
+export const useProgressBarDialog = (): ProgressBarDialogContextValue => {
   return useContext(ProgressBarDialogContext) as ProgressBarDialogContextValue;
 };
 

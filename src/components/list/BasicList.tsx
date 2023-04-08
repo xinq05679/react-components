@@ -3,7 +3,7 @@ import { BasicListProps } from "./BasicListProps";
 import BasicListItem from "./BasicListItem";
 import { MergeComponentStyle } from "../../utility/componentUtility";
 
-function BasicList<T extends BasicListItemProps>(
+export function BasicList<T extends BasicListItemProps>(
   props: BasicListProps<T>
 ): React.ReactElement<BasicListProps<T>> {
   const {

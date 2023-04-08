@@ -9,7 +9,7 @@ export interface BasicTableProps {
   rowStyle?: ComponentStyleMerging;
 }
 
-const BasicTable: React.FC<BasicTableProps> = ({
+export const BasicTable: React.FC<BasicTableProps> = ({
   headerCell,
   tableCell,
   tableStyle,

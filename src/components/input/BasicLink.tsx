@@ -10,7 +10,7 @@ export interface BasicLinkProps {
   onClicked?: () => void;
 }
 
-const BasicLink: React.FC<BasicLinkProps> = ({
+export const BasicLink: React.FC<BasicLinkProps> = ({
   text,
   url,
   linkStyle,

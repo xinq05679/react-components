@@ -12,7 +12,7 @@ export interface BasicSearchBarProps {
   onChanged?: (value: string) => void;
 }
 
-const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
+export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
   textboxStyle,
   placeholder,
   icon,

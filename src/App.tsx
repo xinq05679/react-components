@@ -110,27 +110,27 @@ const App: React.FC = () => {
             //   />
             // </div>
             // ###
-            // <BasicSearchTextBox onChanged={(val) => console.log(val)} />
+            <BasicSearchTextBox onChanged={(val) => console.log(val)} />
             // ###
             // <BasicLabel value="1@1" editable />
             // ###
-            <BasicTable
-              headerCell={["abc", 2, 3, 4]}
-              tableCell={[
-                [
-                  <BasicLink text="778" />,
-                  <BasicLink text="5" />,
-                  <BasicTextInput text="1@1" editable />,
-                  listFC(),
-                ],
-                [
-                  <BasicSearchTextBox onChanged={(val) => console.log(val)} />,
-                  <BasicTextInput text="1@1" />,
-                  <BasicTextInput text="1@1" editable />,
-                  7,
-                ],
-              ]}
-            />
+            // <BasicTable
+            //   headerCell={["abc", 2, 3, 4]}
+            //   tableCell={[
+            //     [
+            //       <BasicLink text="778" />,
+            //       <BasicLink text="5" />,
+            //       <BasicTextInput text="1@1" editable />,
+            //       listFC(),
+            //     ],
+            //     [
+            //       <BasicSearchTextBox onChanged={(val) => console.log(val)} />,
+            //       <BasicTextInput text="1@1" />,
+            //       <BasicTextInput text="1@1" editable />,
+            //       7,
+            //     ],
+            //   ]}
+            // />
           }
           headerStyle={{
             css: "h-40",

@@ -10,7 +10,7 @@ export interface ListProps<T extends BasicListItemProps>
   onClicked?: (id: string, selected: boolean) => void;
 }
 
-function List<T extends BasicListItemProps>(
+export function List<T extends BasicListItemProps>(
   props: ListProps<T>
 ): React.ReactElement<ListProps<T>> {
   const {

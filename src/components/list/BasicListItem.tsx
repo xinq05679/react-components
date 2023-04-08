@@ -2,7 +2,7 @@ import { BasicListItemProps } from "./BasicListItemProps";
 import { MergeComponentStyle } from "../../utility/componentUtility";
 import classNames from "classnames";
 
-const BasicListItem: React.FC<BasicListItemProps> = ({
+export const BasicListItem: React.FC<BasicListItemProps> = ({
   text,
   icon,
   isSelected,

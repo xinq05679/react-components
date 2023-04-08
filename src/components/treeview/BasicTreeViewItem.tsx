@@ -13,7 +13,7 @@ const TreeItemStyle = {
 export interface BasicTreeViewItemProps
   extends TreeViewItemProps<BasicTreeViewItemProps> {}
 
-const BasicTreeViewItem: React.FC<BasicTreeViewItemProps> = ({
+export const BasicTreeViewItem: React.FC<BasicTreeViewItemProps> = ({
   name,
   icon,
   children,
