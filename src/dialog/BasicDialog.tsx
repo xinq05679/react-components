@@ -59,14 +59,14 @@ export const BasicDialog: React.FC<BasicDialogProps> = ({
 
   const _contentStyle = MergeComponentStyle(
     {
-      css: "flex items-center h-full w-full font-bold text-gray-500",
+      css: "flex items-center h-[100%] w-[100%] font-bold text-gray-500",
     },
     contentStyle
   );
 
   const _footerStyle = MergeComponentStyle(
     {
-      css: "flex shrink-0 w-full justify-center gap-3",
+      css: "flex shrink-0 w-[100%] justify-center gap-3",
     },
     footerStyle
   );

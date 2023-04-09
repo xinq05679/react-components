@@ -2,6 +2,7 @@ import { BasicListItemProps } from "./BasicListItemProps";
 import { BasicListProps } from "./BasicListProps";
 import BasicListItem from "./BasicListItem";
 import { MergeComponentStyle } from "../../utility/componentUtility";
+import { Fragment } from "react";
 
 export function BasicList<T extends BasicListItemProps>(
   props: BasicListProps<T>
@@ -26,7 +27,7 @@ export function BasicList<T extends BasicListItemProps>(
       {listItems.map((item) => {
         const { id } = item;
         return (
-          <li key={id} id={id}>
+          <Fragment key={id}>
             {(() => {
               const props = {
                 ...item,
@@ -40,7 +41,7 @@ export function BasicList<T extends BasicListItemProps>(
               if (ListItem) return <ListItem {...props} />;
               return <BasicListItem {...props} />;
             })()}
-          </li>
+          </Fragment>
         );
       })}
     </ul>

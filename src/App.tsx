@@ -46,7 +46,7 @@ const App: React.FC = () => {
 
   const listFC = () => {
     const listItem: React.FC<BasicListItemProps> = (props) => {
-      return <BasicListItem {...props} textStyle={{ css: "text-red-900" }} />;
+      return <BasicListItem {...props} textStyle={{ css: "bg-[#0f0]" }} />;
     };
 
     return (
@@ -56,14 +56,14 @@ const App: React.FC = () => {
             {
               id: "list-1",
               text: "list-1",
-              unselectable: true,
-              listStyle: { css: "bg-red-900" },
             },
             { id: "list-2", text: "list-2" },
             { id: "list-3", text: "list-3" },
           ]}
-          multiSelectionMode
           ListItem={listItem}
+          containerStyle={{
+            css: "items-center",
+          }}
         />
       </div>
     );
@@ -93,44 +93,31 @@ const App: React.FC = () => {
             // ######
             // <BasicListItem id="list-item" text="haha" />
             // #####
-            // <div className="flex flex-col h-96">
-            //   <List
-            //     listItems={[
-            //       {
-            //         id: "list-1",
-            //         text: "list-1",
-            //         unselectable: true,
-            //         listStyle: { css: "bg-red-900" },
-            //       },
-            //       { id: "list-2", text: "list-2" },
-            //       { id: "list-3", text: "list-3" },
-            //     ]}
-            //     multiSelectionMode
-            //     ListItem={listItem}
-            //   />
-            // </div>
+            // <div className="flex flex-col h-96">{listFC()}</div>
             // ###
-            <BasicSearchTextBox onChanged={(val) => console.log(val)} />
+            // <BasicSearchTextBox onSubmit={(val) => console.log(val)} />
             // ###
             // <BasicLabel value="1@1" editable />
             // ###
-            // <BasicTable
-            //   headerCell={["abc", 2, 3, 4]}
-            //   tableCell={[
-            //     [
-            //       <BasicLink text="778" />,
-            //       <BasicLink text="5" />,
-            //       <BasicTextInput text="1@1" editable />,
-            //       listFC(),
-            //     ],
-            //     [
-            //       <BasicSearchTextBox onChanged={(val) => console.log(val)} />,
-            //       <BasicTextInput text="1@1" />,
-            //       <BasicTextInput text="1@1" editable />,
-            //       7,
-            //     ],
-            //   ]}
-            // />
+            <BasicTable
+              headerCell={["abc", 2, 3, 4]}
+              tableCell={[
+                [
+                  <BasicLink text="778" />,
+                  <BasicLink text="5" />,
+                  <BasicTextInput text="1@1" editable />,
+                  listFC(),
+                ],
+                [
+                  <BasicSearchTextBox onChanged={(val) => console.log(val)} />,
+                  <BasicTextInput text="1@1" />,
+                  <BasicTextInput text="1@1" editable />,
+                  7,
+                ],
+              ]}
+              headerStyle={{ css: "h-[100px]" }}
+              tableStyle={{ css: "text-2xl" }}
+            />
           }
           headerStyle={{
             css: "h-40",

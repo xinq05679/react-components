@@ -31,7 +31,7 @@ export const BasicTreeViewItem: React.FC<BasicTreeViewItemProps> = ({
 
   const classes = classNames(
     "font-semibold",
-    "py-3 w-full",
+    "py-3 w-[100%]",
     "flex items-center rounded",
     {
       "pl-8 text-sm": !children,

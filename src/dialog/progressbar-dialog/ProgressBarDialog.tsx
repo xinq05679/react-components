@@ -46,7 +46,7 @@ export const ProgressBarDialog: React.FC = () => {
   );
 
   const footStyle: ComponentStyleMerging = {
-    css: "flex flex-col w-full gap-[20px] px-[10px]",
+    css: "flex flex-col w-[100%] gap-[20px] px-[10px]",
   };
 
   const _progressOuterStyle = MergeComponentStyle(
@@ -58,21 +58,21 @@ export const ProgressBarDialog: React.FC = () => {
 
   const _progressInnerStyle = MergeComponentStyle(
     {
-      css: "rounded absolute w-full h-full bg-green-500",
+      css: "rounded absolute w-[100%] h-[100%] bg-green-500",
     },
     progressInnerStyle
   );
 
   const _progressValueStyle = MergeComponentStyle(
     {
-      css: "absolute w-full text-center text-[#fff] font-bold",
+      css: "absolute w-[100%] text-center text-[#fff] font-bold",
     },
     progressValueStyle
   );
 
   const _buttonDivStyle = MergeComponentStyle(
     {
-      css: "flex shrink-0 w-full justify-center gap-3",
+      css: "flex shrink-0 w-[100%] justify-center gap-3",
     },
     buttonDivStyle
   );

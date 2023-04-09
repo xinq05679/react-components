@@ -60,7 +60,7 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
   const _inputStyle = MergeComponentStyle(
     {
       css: classNames(
-        "outline-0 border border-[#000] w-full h-10 text-xl px-2 rounded m-0",
+        "outline-0 border border-[#000] w-[100%] h-10 text-xl px-2 rounded m-0",
         {
           "border-0 bg-[#fff0]": !isEditMode,
           "cursor-pointer": editable,

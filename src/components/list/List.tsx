@@ -7,6 +7,7 @@ import _ from "lodash";
 export interface ListProps<T extends BasicListItemProps>
   extends Omit<BasicListProps<T>, "onClicked"> {
   multiSelectionMode?: boolean;
+  disableUnselected?: boolean;
   onClicked?: (id: string, selected: boolean) => void;
 }
 
@@ -16,9 +17,11 @@ export function List<T extends BasicListItemProps>(
   const {
     listItems,
     multiSelectionMode,
+    disableUnselected,
     onClicked,
     onContextMenuClicked,
     containerStyle,
+    ...other
   } = props;
 
   const [items, setItems] = useState<{ [key: string]: T }>({});
@@ -41,7 +44,11 @@ export function List<T extends BasicListItemProps>(
   }, [listItems]);
 
   const handleClicked = (id: string) => {
-    if (items[id].unselectable) return;
+    const clickedItem = items[id];
+    if (clickedItem.unselectable) return;
+    if (clickedItem.isSelected && !multiSelectionMode && disableUnselected) {
+      return onClicked?.(id, true);
+    }
 
     const newItems = _.cloneDeep(items);
     const item = newItems[id];
@@ -72,6 +79,7 @@ export function List<T extends BasicListItemProps>(
       onClicked={(id) => handleClicked(id)}
       onContextMenuClicked={(id, pos) => onContextMenuClicked?.(id, pos)}
       containerStyle={containerStyle}
+      {...other}
     />
   );
 }

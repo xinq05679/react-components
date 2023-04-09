@@ -18,7 +18,7 @@ export const BasicHeader: React.FC<BasicHeaderProps> = ({
 }) => {
   const _containerStyle = MergeComponentStyle(
     {
-      css: "flex items-center gap-3 justify-center w-full h-full bg-[#0e6eb8]",
+      css: "flex items-center gap-3 justify-center w-[100%] h-[100%] bg-[#0e6eb8]",
     },
     containerStyle
   );

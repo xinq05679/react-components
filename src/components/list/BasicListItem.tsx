@@ -15,7 +15,7 @@ export const BasicListItem: React.FC<BasicListItemProps> = ({
   const _listStyle = MergeComponentStyle(
     {
       css: classNames(
-        "flex items-center rounded font-semibold py-3 w-full text-xl",
+        "flex items-center rounded font-semibold py-3 w-[100%] text-xl",
         "hover:text-[#333] hover:bg-[#9ff8]",
         {
           "text-[#00f] bg-[#9ff]": isSelected,
@@ -41,28 +41,26 @@ export const BasicListItem: React.FC<BasicListItemProps> = ({
   );
 
   return (
-    <div className="flex">
-      <button
-        style={_listStyle.style}
-        className={_listStyle.css}
-        onClick={() => onClicked?.()}
-        onContextMenuCapture={(evt) =>
-          onContextMenuClicked?.({ x: evt.clientX, y: evt.clientY })
-        }
-      >
-        {icon && (
-          <img
-            src={icon}
-            className={_iconStyle.css}
-            style={_iconStyle.style}
-            alt={text}
-          />
-        )}
-        <div className={_textStyle.css} style={_textStyle.style}>
-          {text}
-        </div>
-      </button>
-    </div>
+    <button
+      style={_listStyle.style}
+      className={_listStyle.css}
+      onClick={() => onClicked?.()}
+      onContextMenuCapture={(evt) =>
+        onContextMenuClicked?.({ x: evt.clientX, y: evt.clientY })
+      }
+    >
+      {icon && (
+        <img
+          src={icon}
+          className={_iconStyle.css}
+          style={_iconStyle.style}
+          alt={text}
+        />
+      )}
+      <div className={_textStyle.css} style={_textStyle.style}>
+        {text}
+      </div>
+    </button>
   );
 };
 

@@ -2,11 +2,12 @@ import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { MergeComponentStyle } from "../../utility/componentUtility";
 
 export interface BasicTableProps {
-  headerCell: React.ReactNode[];
-  tableCell: [React.ReactNode[]];
+  headerCell?: React.ReactNode[];
+  tableCell: React.ReactNode[][];
   tableStyle?: ComponentStyleMerging;
   headerStyle?: ComponentStyleMerging;
   rowStyle?: ComponentStyleMerging;
+  cellStyle?: ComponentStyleMerging;
 }
 
 export const BasicTable: React.FC<BasicTableProps> = ({
@@ -15,10 +16,11 @@ export const BasicTable: React.FC<BasicTableProps> = ({
   tableStyle,
   headerStyle,
   rowStyle,
+  cellStyle,
 }) => {
   const _tableStyle = MergeComponentStyle(
     {
-      css: "w-full table-auto border-separate border-spacing-y-1",
+      css: "w-[100%] table-auto border-separate border-spacing-y-1",
     },
     tableStyle
   );
@@ -32,19 +34,29 @@ export const BasicTable: React.FC<BasicTableProps> = ({
 
   const _rowStyle = MergeComponentStyle(
     {
-      css: "even:bg-[#fff] odd:bg-[#f0f0f0] text-center",
+      css: "even:bg-[#fff] odd:bg-[#f0f0f0] text-center  hover:bg-[#cce4f1]",
     },
     rowStyle
   );
 
+  const _cellStyle = MergeComponentStyle({}, cellStyle);
+
   return (
     <table className={_tableStyle.css} style={_tableStyle.style}>
-      <thead className={_headerStyle.css} style={_headerStyle.style}>
-        <tr>
-          {headerCell.map((cell, index) => (
-            <th key={index}>{cell}</th>
-          ))}
-        </tr>
+      <thead>
+        {headerCell && (
+          <tr>
+            {headerCell.map((cell, index) => (
+              <th
+                className={_headerStyle.css}
+                style={_headerStyle.style}
+                key={index}
+              >
+                {cell}
+              </th>
+            ))}
+          </tr>
+        )}
       </thead>
       <tbody>
         {tableCell.map((row, rowIdx) => {
@@ -55,7 +67,13 @@ export const BasicTable: React.FC<BasicTableProps> = ({
               style={_rowStyle.style}
             >
               {row.map((cell, colIdx) => (
-                <td key={`cell-${rowIdx}-${colIdx}`}>{cell}</td>
+                <td
+                  key={`cell-${rowIdx}-${colIdx}`}
+                  className={_cellStyle.css}
+                  style={_cellStyle.style}
+                >
+                  {cell}
+                </td>
               ))}
             </tr>
           );
