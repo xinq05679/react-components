@@ -17,6 +17,8 @@ import BasicLink from "./components/input/BasicLink";
 import BasicTextInput from "./components/input/BasicTextInput";
 import QueryDialog from "./dialog/query-dialog/QueryDialog";
 import { QueryDialogProvider } from "./dialog/query-dialog/useQueryDialog";
+import BasicTab from "./components/tabpage/BasicTab";
+import BasicTabPage from "./components/tabpage/BasicTabPage";
 
 type T = BasicTreeViewItemProps;
 
@@ -99,24 +101,37 @@ const App: React.FC = () => {
             // ###
             // <BasicLabel value="1@1" editable />
             // ###
-            <BasicTable
-              headerCell={["abc", 2, 3, 4]}
-              tableCell={[
-                [
-                  <BasicLink text="778" />,
-                  <BasicLink text="5" />,
-                  <BasicTextInput text="1@1" editable />,
-                  listFC(),
-                ],
-                [
-                  <BasicSearchTextBox onChanged={(val) => console.log(val)} />,
-                  <BasicTextInput text="1@1" />,
-                  <BasicTextInput text="1@1" editable />,
-                  7,
-                ],
+            // <BasicTable
+            //   headerCell={["abc", 2, 3, 4]}
+            //   tableCell={[
+            //     [
+            //       <BasicLink text="778" />,
+            //       <BasicLink text="5" />,
+            //       <BasicTextInput text="1@1" editable />,
+            //       listFC(),
+            //     ],
+            //     [
+            //       <BasicSearchTextBox onChanged={(val) => console.log(val)} />,
+            //       <BasicTextInput text="1@1" />,
+            //       <BasicTextInput text="1@1" editable />,
+            //       7,
+            //     ],
+            //   ]}
+            //   headerStyle={{ css: "h-[100px]" }}
+            //   tableStyle={{ css: "text-2xl" }}
+            // />
+            <BasicTabPage
+              tabs={[
+                {
+                  id: "tab-1",
+                  text: "tab-1",
+                  isSelected: true,
+                },
+                {
+                  id: "tab-2",
+                  text: "tab-2",
+                },
               ]}
-              headerStyle={{ css: "h-[100px]" }}
-              tableStyle={{ css: "text-2xl" }}
             />
           }
           headerStyle={{
