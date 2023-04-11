@@ -33,6 +33,7 @@ export * from "./src/metadata/ButtonType";
 export * from "./src/metadata/ComponentStyle";
 export * from "./src/metadata/Point";
 export * from "./src/metadata/QueryDialogType";
+export * from "./src/metadata/SelectionMode";
 //#endregion
 
 //#region Utility

@@ -19,6 +19,7 @@ import QueryDialog from "./dialog/query-dialog/QueryDialog";
 import { QueryDialogProvider } from "./dialog/query-dialog/useQueryDialog";
 import BasicTab from "./components/tabpage/BasicTab";
 import BasicTabPage from "./components/tabpage/BasicTabPage";
+import { SelectionMode } from "./metadata/SelectionMode";
 
 type T = BasicTreeViewItemProps;
 
@@ -48,7 +49,7 @@ const App: React.FC = () => {
 
   const listFC = () => {
     const listItem: React.FC<BasicListItemProps> = (props) => {
-      return <BasicListItem {...props} textStyle={{ css: "bg-[#0f0]" }} />;
+      return <BasicListItem {...props} />;
     };
 
     return (
@@ -66,6 +67,7 @@ const App: React.FC = () => {
           containerStyle={{
             css: "items-center",
           }}
+          mode={SelectionMode.Multi}
         />
       </div>
     );
@@ -101,38 +103,44 @@ const App: React.FC = () => {
             // ###
             // <BasicLabel value="1@1" editable />
             // ###
-            // <BasicTable
-            //   headerCell={["abc", 2, 3, 4]}
-            //   tableCell={[
-            //     [
-            //       <BasicLink text="778" />,
-            //       <BasicLink text="5" />,
-            //       <BasicTextInput text="1@1" editable />,
-            //       listFC(),
-            //     ],
-            //     [
-            //       <BasicSearchTextBox onChanged={(val) => console.log(val)} />,
-            //       <BasicTextInput text="1@1" />,
-            //       <BasicTextInput text="1@1" editable />,
-            //       7,
-            //     ],
-            //   ]}
-            //   headerStyle={{ css: "h-[100px]" }}
-            //   tableStyle={{ css: "text-2xl" }}
-            // />
-            <BasicTabPage
-              tabs={[
-                {
-                  id: "tab-1",
-                  text: "tab-1",
-                  isSelected: true,
-                },
-                {
-                  id: "tab-2",
-                  text: "tab-2",
-                },
+            <BasicTable
+              headerCell={[<div className="min-w-[200px]">abc</div>, 2, 3, 4]}
+              tableCell={[
+                [
+                  <BasicLink text="778" />,
+                  <BasicLink text="5" />,
+                  <BasicTextInput text="1@1" editable />,
+                  listFC(),
+                ],
+                [
+                  <BasicSearchTextBox
+                    containerStyle={{ css: "w-[80%]" }}
+                    onChanged={(val) => console.log(val)}
+                  />,
+                  <BasicTextInput text="1@1" />,
+                  <BasicTextInput text="1@1" editable />,
+                  7,
+                ],
               ]}
+              headerStyle={{
+                css: "p-1 h-[35px] bg-[#fff] text-[color:#f00] border-y-[3px] border-solid border-[#0e6eb8] text-[18px] ",
+              }}
+              tableStyle={{ css: "text-2xl" }}
             />
+            // #
+            // <BasicTabPage
+            //   tabs={[
+            //     {
+            //       id: "tab-1",
+            //       text: "tab-1",
+            //       isSelected: true,
+            //     },
+            //     {
+            //       id: "tab-2",
+            //       text: "tab-2",
+            //     },
+            //   ]}
+            // />
           }
           headerStyle={{
             css: "h-40",

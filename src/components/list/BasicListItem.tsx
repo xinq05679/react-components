@@ -16,11 +16,9 @@ export const BasicListItem: React.FC<BasicListItemProps> = ({
     {
       css: classNames(
         "flex items-center rounded font-semibold py-3 w-[100%] text-xl",
-        "hover:text-[#333] hover:bg-[#9ff8]",
-        {
-          "text-[#00f] bg-[#9ff]": isSelected,
-          "text-[#333] bg-[#fff0]": !isSelected,
-        }
+        "text-[color:#333] bg-[color:#fff0]",
+        "hover:text-[color:#333] hover:bg-[color:#9ff8]",
+        "aria-selected:text-[color:#00f] aria-selected:bg-[color:#9ff]"
       ),
     },
     listStyle
@@ -42,6 +40,7 @@ export const BasicListItem: React.FC<BasicListItemProps> = ({
 
   return (
     <button
+      aria-selected={isSelected}
       style={_listStyle.style}
       className={_listStyle.css}
       onClick={() => onClicked?.()}

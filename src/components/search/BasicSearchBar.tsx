@@ -72,31 +72,33 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <div className={_containerStyle.css} style={_containerStyle.style}>
-          <input
-            className={_textboxStyle.css}
-            style={_textboxStyle.style}
-            type="text"
-            value={input}
-            onChange={handleValueChanged}
-            onFocus={(event) => event.target.select()}
-            placeholder={placeholder}
-            ref={inputRef}
-          />
-          <div
-            className={_iconStyle.css}
-            style={_iconStyle.style}
-            onClick={() => {
-              inputRef.current?.focus();
-            }}
-          >
-            {(() => {
-              if (!icon)
-                return <BsSearch className="h-[100%]" size={iconHeight} />;
-              return <img src={icon} width={iconHeight} />;
-            })()}
-          </div>
+      <form
+        onSubmit={handleSubmit}
+        className={_containerStyle.css}
+        style={_containerStyle.style}
+      >
+        <input
+          className={_textboxStyle.css}
+          style={_textboxStyle.style}
+          type="text"
+          value={input}
+          onChange={handleValueChanged}
+          onFocus={(event) => event.target.select()}
+          placeholder={placeholder}
+          ref={inputRef}
+        />
+        <div
+          className={_iconStyle.css}
+          style={_iconStyle.style}
+          onClick={() => {
+            inputRef.current?.focus();
+          }}
+        >
+          {(() => {
+            if (!icon)
+              return <BsSearch className="h-[100%]" size={iconHeight} />;
+            return <img src={icon} width={iconHeight} />;
+          })()}
         </div>
       </form>
     </>
