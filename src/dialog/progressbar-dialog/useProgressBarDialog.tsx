@@ -2,7 +2,6 @@ import { createContext, useContext, useState } from "react";
 import ProgressBarDialog from "./ProgressBarDialog";
 import { BasicButtonProps } from "../../components/button/BasicButton";
 import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
-import { ButtonType } from "../../metadata/ButtonType";
 
 export interface ProgressBarDialogSettings {
   title?: string;
@@ -15,9 +14,7 @@ export interface ProgressBarDialogSettings {
   contentStyle?: ComponentStyleMerging;
   containerStyle?: ComponentStyleMerging;
   bodyStyle?: ComponentStyleMerging;
-  progressOuterStyle?: ComponentStyleMerging;
-  progressInnerStyle?: ComponentStyleMerging;
-  progressValueStyle?: ComponentStyleMerging;
+  ProgressBar?: React.FC;
   buttonDivStyle?: ComponentStyleMerging;
 }
 
@@ -34,27 +31,11 @@ const ProgressBarDialogContext =
 export const ProgressBarDialogProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
-  const [settings, setSettings] = useState<ProgressBarDialogSettings>({
-    title: "Scanning",
-    content: "Please wait the scanning process to be done...",
-    progressValue: 50,
-    buttons: [
-      {
-        children: "Yes",
-        onClicked: () => {
-          closeProgressBarDialog();
-        },
-      },
-      {
-        children: "No",
-        type: ButtonType.Secondary,
-      },
-    ],
-  });
+  const [settings, setSettings] = useState<ProgressBarDialogSettings>({});
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const openProgressBarDialog = (settings: ProgressBarDialogSettings) => {
-    setSettings(settings);
+  const openProgressBarDialog = (newSettings: ProgressBarDialogSettings) => {
+    setSettings(newSettings);
     setIsOpen(true);
   };
 

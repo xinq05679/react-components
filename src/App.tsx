@@ -7,7 +7,7 @@ import BasicHeader from "./components/header/BasicHeader";
 import BasicButton from "./components/button/BasicButton";
 import { StyleMergingMode } from "./metadata/ComponentStyle";
 import { ButtonType } from "./metadata/ButtonType";
-import { ProgressBarDialogProvider } from "./dialog/progressbar-dialog/useProgressBarDialog";
+
 import BasicListItem from "./components/list/BasicListItem";
 import { BasicListItemProps } from "./components/list/BasicListItemProps";
 import List from "./components/list/List";
@@ -16,14 +16,20 @@ import BasicTable from "./components/table/BasicTable";
 import BasicLink from "./components/input/BasicLink";
 import BasicTextInput from "./components/input/BasicTextInput";
 import QueryDialog from "./dialog/query-dialog/QueryDialog";
-import { QueryDialogProvider } from "./dialog/query-dialog/useQueryDialog";
+
 import BasicTab from "./components/tabpage/BasicTab";
 import BasicTabPage from "./components/tabpage/BasicTabPage";
 import { SelectionMode } from "./metadata/SelectionMode";
-
+import { BasicProgressBar } from "./components/progressbar/BasicProgressBar";
+import useProgressBarDialog from "./dialog/progressbar-dialog/useProgressBarDialog";
+import useQueryDialog from "./dialog/query-dialog/useQueryDialog";
+import { useEffect } from "react";
 type T = BasicTreeViewItemProps;
 
 const App: React.FC = () => {
+  const { openProgressBarDialog, isOpen } = useProgressBarDialog();
+  const { openQueryDialog, closeQueryDialog } = useQueryDialog();
+
   const roots: T[] = [
     {
       id: "root-1",
@@ -80,81 +86,79 @@ const App: React.FC = () => {
   );
 
   return (
-    <QueryDialogProvider>
-      <ProgressBarDialogProvider>
-        <BasicTemplate
-          Header={<BasicHeader title="CVE" />}
-          SideBar={treeView}
-          ContentPage={
-            // <BasicButton
-            //   type={ButtonType.Dark}
-            //   customizedStyle={{
-            //     css: "bg-[#f00]",
-            //   }}
-            // >
-            //   Click me
-            // </BasicButton>
-            // ######
-            // <BasicListItem id="list-item" text="haha" />
-            // #####
-            // <div className="flex flex-col h-96">{listFC()}</div>
-            // ###
-            // <BasicSearchTextBox onSubmit={(val) => console.log(val)} />
-            // ###
-            // <BasicLabel value="1@1" editable />
-            // ###
-            <BasicTable
-              headerCell={[<div className="min-w-[200px]">abc</div>, 2, 3, 4]}
-              tableCell={[
-                [
-                  <BasicLink text="778" />,
-                  <BasicLink text="5" />,
-                  <BasicTextInput text="1@1" editable />,
-                  listFC(),
-                ],
-                [
-                  <BasicSearchTextBox
-                    containerStyle={{ css: "w-[80%]" }}
-                    onChanged={(val) => console.log(val)}
-                  />,
-                  <BasicTextInput text="1@1" />,
-                  <BasicTextInput text="1@1" editable />,
-                  7,
-                ],
-              ]}
-              headerStyle={{
-                css: "p-1 h-[35px] bg-[#fff] text-[color:#f00] border-y-[3px] border-solid border-[#0e6eb8] text-[18px] ",
-              }}
-              tableStyle={{ css: "text-2xl" }}
-            />
-            // #
-            // <BasicTabPage
-            //   tabs={[
-            //     {
-            //       id: "tab-1",
-            //       text: "tab-1",
-            //       isSelected: true,
-            //     },
-            //     {
-            //       id: "tab-2",
-            //       text: "tab-2",
-            //     },
-            //   ]}
-            // />
-          }
-          headerStyle={{
-            css: "h-40",
-            style: {
-              backgroundColor: "red",
-            },
-            cssMode: StyleMergingMode.replace,
-          }}
-          toolbarStyle={{
-            css: "w-64",
-          }}
-        />
-      </ProgressBarDialogProvider>
-    </QueryDialogProvider>
+    <BasicTemplate
+      Header={<BasicHeader title="CVE" />}
+      SideBar={treeView}
+      ContentPage={
+        // <BasicButton
+        //   type={ButtonType.Dark}
+        //   customizedStyle={{
+        //     css: "bg-[#f00]",
+        //   }}
+        // >
+        //   Click me
+        // </BasicButton>
+        // ######
+        // <BasicListItem id="list-item" text="haha" />
+        // #####
+        // <div className="flex flex-col h-96">{listFC()}</div>
+        // ###
+        // <BasicSearchTextBox onSubmit={(val) => console.log(val)} />
+        // ###
+        // <BasicLabel value="1@1" editable />
+        // ###
+        // <BasicTable
+        //   headerCell={[<div className="min-w-[200px]">abc</div>, 2, 3, 4]}
+        //   tableCell={[
+        //     [
+        //       <BasicLink text="778" />,
+        //       <BasicLink text="5" />,
+        //       <BasicTextInput text="1@1" editable />,
+        //       listFC(),
+        //     ],
+        //     [
+        //       <BasicSearchTextBox
+        //         containerStyle={{ css: "w-[80%]" }}
+        //         onChanged={(val) => console.log(val)}
+        //       />,
+        //       <BasicTextInput text="1@1" />,
+        //       <BasicTextInput text="1@1" editable />,
+        //       7,
+        //     ],
+        //   ]}
+        //   headerStyle={{
+        //     css: "p-1 h-[35px] bg-[#fff] text-[color:#f00] border-y-[3px] border-solid border-[#0e6eb8] text-[18px] ",
+        //   }}
+        //   tableStyle={{ css: "text-2xl" }}
+        // />
+        // #
+        // <BasicTabPage
+        //   tabs={[
+        //     {
+        //       id: "tab-1",
+        //       text: "tab-1",
+        //       isSelected: true,
+        //     },
+        //     {
+        //       id: "tab-2",
+        //       text: "tab-2",
+        //     },
+        //   ]}
+        // />
+        // ###
+        <BasicProgressBar />
+      }
+      headerStyle={{
+        css: "h-40",
+        style: {
+          backgroundColor: "red",
+        },
+        cssMode: StyleMergingMode.replace,
+      }}
+      toolbarStyle={{
+        css: "w-64",
+      }}
+    />
   );
 };
 

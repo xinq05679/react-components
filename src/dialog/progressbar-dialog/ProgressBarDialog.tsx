@@ -4,6 +4,7 @@ import useProgressBarDialog from "./useProgressBarDialog";
 import { MergeComponentStyle } from "../../utility/componentUtility";
 import BasicButton from "../../components/button/BasicButton";
 import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
+import BasicProgressBar from "../../components/progressbar/BasicProgressBar";
 
 export const ProgressBarDialog: React.FC = () => {
   const { isOpen, settings } = useProgressBarDialog();
@@ -18,9 +19,7 @@ export const ProgressBarDialog: React.FC = () => {
     bodyStyle,
     contentStyle,
     iconStyle,
-    progressInnerStyle,
-    progressOuterStyle,
-    progressValueStyle,
+    ProgressBar = BasicProgressBar,
     buttonDivStyle,
   } = settings;
 
@@ -49,27 +48,6 @@ export const ProgressBarDialog: React.FC = () => {
     css: "flex flex-col w-[100%] gap-[20px] px-[10px]",
   };
 
-  const _progressOuterStyle = MergeComponentStyle(
-    {
-      css: "rounded relative bg-gray-200 h-6 mx-3",
-    },
-    progressOuterStyle
-  );
-
-  const _progressInnerStyle = MergeComponentStyle(
-    {
-      css: "rounded absolute w-[100%] h-[100%] bg-green-500",
-    },
-    progressInnerStyle
-  );
-
-  const _progressValueStyle = MergeComponentStyle(
-    {
-      css: "absolute w-[100%] text-center text-[#fff] font-bold",
-    },
-    progressValueStyle
-  );
-
   const _buttonDivStyle = MergeComponentStyle(
     {
       css: "flex shrink-0 w-[100%] justify-center gap-3",
@@ -91,23 +69,7 @@ export const ProgressBarDialog: React.FC = () => {
       Footer={
         <>
           {/* Progress Bar  */}
-          <div
-            className={_progressOuterStyle.css}
-            style={_progressOuterStyle.style}
-          >
-            <div
-              className={_progressInnerStyle.css}
-              style={
-                _progressInnerStyle.style || { width: `${progressValue}%` }
-              }
-            ></div>
-            <div
-              className={_progressValueStyle.css}
-              style={_progressValueStyle.style}
-            >
-              {progressValue}%
-            </div>
-          </div>
+          <ProgressBar value={progressValue} />
           {/* Buttons */}
           <div className={_buttonDivStyle.css} style={_buttonDivStyle.style}>
             {buttons && (
