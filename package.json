@@ -11,6 +11,9 @@
     ".": {
       "import": "./dist/index.es.js",
       "require": "./dist/index.umd.js"
+    },
+    "./tailwind": {
+      "require": "./tailwind.config.js"
     }
   },
   "files": [
