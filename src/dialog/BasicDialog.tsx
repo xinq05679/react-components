@@ -31,7 +31,7 @@ export const BasicDialog: React.FC<BasicDialogProps> = ({
 }) => {
   const _containerStyle = MergeComponentStyle(
     {
-      css: "flex flex-col border bg-white self-center h-64 pb-4 w-[520px]",
+      css: "flex flex-col border bg-white self-center h-[250px] pb-4 w-[520px]",
     },
     containerStyle
   );
@@ -45,14 +45,14 @@ export const BasicDialog: React.FC<BasicDialogProps> = ({
 
   const _bodyStyle = MergeComponentStyle(
     {
-      css: "flex shrink-0 grow h-36 items-center gap-8 p-4",
+      css: "flex items-center shrink-0 grow items-start gap-8 px-[4%]",
     },
     bodyStyle
   );
 
   const _imageStyle = MergeComponentStyle(
     {
-      css: "shrink-0",
+      css: "shrink-0 grow-0",
     },
     imageStyle
   );

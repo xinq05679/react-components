@@ -24,11 +24,20 @@ import { BasicProgressBar } from "./components/progressbar/BasicProgressBar";
 import useProgressBarDialog from "./dialog/progressbar-dialog/useProgressBarDialog";
 import useQueryDialog from "./dialog/query-dialog/useQueryDialog";
 import { useEffect } from "react";
+import { QueryDialogType } from "./metadata/QueryDialogType";
 type T = BasicTreeViewItemProps;
 
 const App: React.FC = () => {
   const { openProgressBarDialog, isOpen } = useProgressBarDialog();
   const { openQueryDialog, closeQueryDialog } = useQueryDialog();
+
+  useEffect(() => {
+    openQueryDialog({
+      type: QueryDialogType.Error,
+      title: "Error",
+      content: "An error has happened......",
+    });
+  });
 
   const roots: T[] = [
     {

@@ -4,6 +4,7 @@ import { QueryDialogType } from "../../metadata/QueryDialogType";
 import { MergeComponentStyle } from "../../utility/componentUtility";
 import useQueryDialog from "./useQueryDialog";
 import BasicButton from "../../components/button/BasicButton";
+import { MdOutlineError } from "react-icons/md";
 
 export const QueryDialog: React.FC = () => {
   const { isOpen, settings } = useQueryDialog();
@@ -20,35 +21,53 @@ export const QueryDialog: React.FC = () => {
     buttonDivStyle,
   } = settings;
 
-  const getImage = () => {
-    if (icon) return icon;
-
-    switch (type) {
-      default:
-        return QueryIcon;
-    }
-  };
-
   const _iconStyle = MergeComponentStyle(
     {
-      css: "h-20",
+      css: "h-[20]",
     },
     iconStyle
   );
 
+  const _headerStyle = MergeComponentStyle({}, headerStyle);
+
   const _buttonDivStyle = MergeComponentStyle({}, buttonDivStyle);
+
+  const getImage = (): React.ReactNode => {
+    let trgIcon = icon;
+
+    if (!trgIcon) {
+      switch (type) {
+        case QueryDialogType.Error:
+          return (
+            <div>
+              <MdOutlineError
+                style={{ ...{ fontSize: "128px" }, ..._iconStyle.style }}
+                className={"!text-[#f00] " + _iconStyle.css}
+              />
+            </div>
+          );
+        default:
+          trgIcon = QueryIcon;
+          break;
+      }
+
+      return (
+        trgIcon ?? (
+          <img
+            className={_iconStyle.css}
+            style={_iconStyle.style}
+            src={trgIcon}
+          />
+        )
+      );
+    }
+  };
 
   return (
     <BasicDialog
       Header={title}
       Content={content}
-      Image={
-        <img
-          className={_iconStyle.css}
-          style={_iconStyle.style}
-          src={getImage()}
-        ></img>
-      }
+      Image={getImage()}
       Footer={
         buttons && (
           <>
@@ -65,7 +84,7 @@ export const QueryDialog: React.FC = () => {
         )
       }
       isOpen={isOpen}
-      headerStyle={headerStyle}
+      headerStyle={_headerStyle}
       contentStyle={contentStyle}
       containerStyle={containerStyle}
       footerStyle={_buttonDivStyle}
