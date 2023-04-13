@@ -1,14 +1,12 @@
-import BasicTreeViewItem, {
-  BasicTreeViewItemProps,
-} from "./components/treeview/BasicTreeViewItem";
-import BasicTreeView from "./components/treeview/BasicTreeView";
 import BasicTemplate from "./template/BasicTemplate";
 import BasicHeader from "./components/header/BasicHeader";
 import BasicButton from "./components/button/BasicButton";
 import { StyleMergingMode } from "./metadata/ComponentStyle";
 import { ButtonType } from "./metadata/ButtonType";
-
+import BasicTreeViewItem from "./components/treeview/BasicTreeViewItem";
+import BasicTreeView from "./components/treeview/BasicTreeView";
 import BasicListItem from "./components/list/BasicListItem";
+import { BasicTreeViewItemProps } from "./components/treeview/BasicTreeViewItemProps";
 import { BasicListItemProps } from "./components/list/BasicListItemProps";
 import List from "./components/list/List";
 import BasicSearchTextBox from "./components/search/BasicSearchBar";
@@ -16,6 +14,7 @@ import BasicTable from "./components/table/BasicTable";
 import BasicLink from "./components/input/BasicLink";
 import BasicTextInput from "./components/input/BasicTextInput";
 import QueryDialog from "./dialog/query-dialog/QueryDialog";
+import TreeView from "./components/treeview/TreeView";
 
 import BasicTab from "./components/tabpage/BasicTab";
 import BasicTabPage from "./components/tabpage/BasicTabPage";
@@ -31,38 +30,14 @@ const App: React.FC = () => {
   const { openProgressBarDialog, isOpen } = useProgressBarDialog();
   const { openQueryDialog, closeQueryDialog } = useQueryDialog();
 
-  useEffect(() => {
-    openQueryDialog({
-      type: QueryDialogType.Error,
-      title: "Error",
-      content: "An error has happened......",
-    });
-  });
-
-  const roots: T[] = [
-    {
-      id: "root-1",
-      name: "root-1",
-      children: [
-        {
-          id: "child-1-1",
-          name: "child-1-1",
-        },
-      ],
-    },
-    {
-      id: "root-2",
-      name: "root-2",
-      children: [
-        {
-          id: "child-2-1",
-          name: "child-2-1",
-        },
-      ],
-    },
-  ];
-
-  const listFC = () => {
+  // useEffect(() => {
+  //   openQueryDialog({
+  //     type: QueryDialogType.Error,
+  //     title: "Error",
+  //     content: "An error has happened......",
+  //   });
+  // });
+  const ListFC = () => {
     const listItem: React.FC<BasicListItemProps> = (props) => {
       return <BasicListItem {...props} />;
     };
@@ -88,16 +63,48 @@ const App: React.FC = () => {
     );
   };
 
-  const treeView = (
+  const TreeViewFC = () => (
     <div className="flex flex-col h-96">
-      <BasicTreeView<T> roots={roots} TreeViewItem={BasicTreeViewItem} />
+      <TreeView<T>
+        roots={[
+          {
+            id: "root-1",
+            text: "root-1",
+            isExpanded: true,
+            children: [
+              {
+                id: "child-1-1",
+                text: "child-1-1",
+                containerStyle: { css: "pl-[24px]" },
+              },
+              {
+                id: "child-1-2",
+                text: "child-1-2",
+                containerStyle: { css: "pl-[24px]" },
+              },
+            ],
+          },
+          {
+            id: "root-2",
+            text: "root-2",
+            children: [
+              {
+                id: "child-2-1",
+                text: "child-2-1",
+                containerStyle: { css: "pl-[24px]" },
+              },
+            ],
+          },
+        ]}
+        TreeViewItemFC={BasicTreeViewItem}
+      />
     </div>
   );
 
   return (
     <BasicTemplate
       Header={<BasicHeader title="CVE" />}
-      SideBar={treeView}
+      SideBar={<TreeViewFC />}
       ContentPage={
         // <BasicButton
         //   type={ButtonType.Dark}

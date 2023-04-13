@@ -16,8 +16,8 @@ export * from "./src/components/search/BasicSearchBar";
 export * from "./src/components/table/BasicTable";
 export * from "./src/components/treeview/BasicTreeView";
 export * from "./src/components/treeview/BasicTreeViewItem";
-export * from "./src/components/treeview/TreeViewItemProps";
-export * from "./src/components/treeview/TreeViewProps";
+export * from "./src/components/treeview/BasicTreeViewItemProps";
+export * from "./src/components/treeview/BasicTreeViewProps";
 export * from "./src/components/progressbar/BasicProgressBar";
 //#endregion
 
