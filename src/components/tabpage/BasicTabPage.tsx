@@ -2,8 +2,7 @@ import BasicTab from "./BasicTab";
 import { BasicTabProps } from "./BasicTabProps";
 import { BasicTabPageProps } from "./BasicTabPageProps";
 import { MergeComponentStyle } from "../../utility/componentUtility";
-import { useState } from "react";
-import { Point } from "../../metadata/Point";
+import { Fragment } from "react";
 
 export function BasicTabPage<T extends BasicTabProps>(
   props: BasicTabPageProps<T>
@@ -40,29 +39,22 @@ export function BasicTabPage<T extends BasicTabProps>(
     tabPageDivStyle
   );
 
-  const handleClicked = (tab: T) => {
-    onTabClicked?.(tab);
-  };
-  const handleClosed = (tab: T) => {
-    onTabClosed?.(tab);
-  };
-
-  const handleContextMenuClicked = (tab: T, pos: Point) => {
-    onTabContextMenuClicked?.(tab, pos);
-  };
-
   return (
     <div className={_containerStyle.css} style={_containerStyle.style}>
       <div className={_tabDivStyle.css} style={_tabDivStyle.style}>
         {tabs.map((tab) => {
           const TabFC = Tab || BasicTab;
           return (
-            <TabFC
-              onClicked={() => handleClicked(tab)}
-              onClosed={() => handleClosed(tab)}
-              onContextMenuClicked={(pos) => handleContextMenuClicked(tab, pos)}
-              {...tab}
-            />
+            <Fragment key={`${tab.id}`}>
+              <TabFC
+                onClicked={(params) => onTabClicked?.(params)}
+                onClosed={(params) => onTabClosed?.(params)}
+                onContextMenuClicked={(params) =>
+                  onTabContextMenuClicked?.(params)
+                }
+                {...tab}
+              />
+            </Fragment>
           );
         })}
       </div>

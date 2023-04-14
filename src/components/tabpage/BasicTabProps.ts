@@ -1,4 +1,3 @@
-import { Point } from "../../metadata/Point";
 import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 
 export interface BasicTabProps {
@@ -8,9 +7,18 @@ export interface BasicTabProps {
   page?: React.ReactNode;
   isSelected?: boolean;
   isModified?: boolean;
-  onClicked?: () => void;
-  onClosed?: () => void;
-  onContextMenuClicked?: (pos: Point) => void;
+  onClicked?: (params: {
+    event: React.MouseEvent<HTMLDivElement>;
+    id: string;
+  }) => void;
+  onClosed?: (parms: {
+    event: React.MouseEvent<HTMLButtonElement>;
+    id: string;
+  }) => void;
+  onContextMenuClicked?: (params: {
+    event: React.MouseEvent<HTMLDivElement>;
+    id: string;
+  }) => void;
   containerStyle?: ComponentStyleMerging;
   iconStyle?: ComponentStyleMerging;
   textStyle?: ComponentStyleMerging;
