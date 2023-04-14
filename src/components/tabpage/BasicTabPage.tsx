@@ -8,8 +8,6 @@ import { Point } from "../../metadata/Point";
 export function BasicTabPage<T extends BasicTabProps>(
   props: BasicTabPageProps<T>
 ): React.ReactElement<BasicTabPageProps<T>> {
-  const [selectedTab, setSelectedTab] = useState("");
-
   const {
     tabs,
     Tab,
@@ -43,7 +41,6 @@ export function BasicTabPage<T extends BasicTabProps>(
   );
 
   const handleClicked = (tab: T) => {
-    console.log(tab);
     onTabClicked?.(tab);
   };
   const handleClosed = (tab: T) => {
@@ -70,9 +67,9 @@ export function BasicTabPage<T extends BasicTabProps>(
         })}
       </div>
       <div className={_tabPageDivStyle.css} style={_tabPageDivStyle.style}>
-        {tabs.map((tab) => (
-          <div className="h-[100%] w-[100%]">{tab.page}</div>
-        ))}
+        {(() => {
+          return tabs.find((tab) => tab.isSelected)?.page;
+        })()}
       </div>
     </div>
   );

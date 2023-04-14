@@ -32,10 +32,13 @@ export const BasicTable: React.FC<BasicTableProps> = ({
           parseInt(`${parentEl.clientWidth - 10}`),
           parseInt(`${parentEl.clientHeight - 10}`),
         ]);
+      } else {
+        setSize([0, 0]);
       }
     };
 
     window.addEventListener("resize", resizeHandler);
+
     window.dispatchEvent(new Event("resize"));
 
     return () => {

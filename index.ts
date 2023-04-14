@@ -11,7 +11,6 @@ export * from "./src/components/list/BasicList";
 export * from "./src/components/list/BasicListItem";
 export * from "./src/components/list/BasicListItemProps";
 export * from "./src/components/list/BasicListProps";
-export * from "./src/components/list/List";
 export * from "./src/components/search/BasicSearchBar";
 export * from "./src/components/table/BasicTable";
 export * from "./src/components/treeview/BasicTreeView";
