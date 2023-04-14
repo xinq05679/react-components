@@ -123,30 +123,26 @@ const App: React.FC = () => {
         // ###
         // <BasicLabel value="1@1" editable />
         // ###
-        // <BasicTable
-        //   headerCell={[<div className="min-w-[200px]">abc</div>, 2, 3, 4]}
-        //   tableCell={[
-        //     [
-        //       <BasicLink text="778" />,
-        //       <BasicLink text="5" />,
-        //       <BasicTextInput text="1@1" editable />,
-        //       listFC(),
-        //     ],
-        //     [
-        //       <BasicSearchTextBox
-        //         containerStyle={{ css: "w-[80%]" }}
-        //         onChanged={(val) => console.log(val)}
-        //       />,
-        //       <BasicTextInput text="1@1" />,
-        //       <BasicTextInput text="1@1" editable />,
-        //       7,
-        //     ],
-        //   ]}
-        //   headerStyle={{
-        //     css: "p-1 h-[35px] bg-[#fff] text-[color:#f00] border-y-[3px] border-solid border-[#0e6eb8] text-[18px] ",
-        //   }}
-        //   tableStyle={{ css: "text-2xl" }}
-        // />
+        <BasicTable
+          headerCell={[<div className="min-w-[200px]">abc</div>, 2, 3, 4]}
+          tableCell={[
+            [
+              <BasicLink text="778" />,
+              <BasicLink text="5" />,
+              <BasicTextInput text="1@1" editable />,
+              5,
+            ],
+            [
+              <BasicSearchTextBox
+                containerStyle={{ css: "w-[80%]" }}
+                onChanged={(val) => console.log(val)}
+              />,
+              <BasicTextInput text="1@1" />,
+              <BasicTextInput text="1@1" editable />,
+              7,
+            ],
+          ]}
+        />
         // #
         // <BasicTabPage
         //   tabs={[
@@ -162,7 +158,7 @@ const App: React.FC = () => {
         //   ]}
         // />
         // ###
-        <BasicProgressBar />
+        // <BasicProgressBar />
       }
       headerStyle={{
         css: "h-40",

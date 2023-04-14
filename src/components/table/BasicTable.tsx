@@ -56,7 +56,7 @@ export const BasicTable: React.FC<BasicTableProps> = ({
 
   const _tableStyle = MergeComponentStyle(
     {
-      css: "w-[100%] h-[100%] relative table-auto border-separate border-spacing-y-1",
+      css: "w-[100%] relative table-auto border-separate border-spacing-y-1",
     },
     tableStyle
   );
@@ -70,7 +70,7 @@ export const BasicTable: React.FC<BasicTableProps> = ({
 
   const _rowStyle = MergeComponentStyle(
     {
-      css: "even:bg-[#fff] odd:bg-[#f0f0f0] text-center  hover:bg-[#cce4f1]",
+      css: "even:bg-[#fff] odd:bg-[#f0f0f0] text-center hover:bg-[#cce4f1]",
     },
     rowStyle
   );
