@@ -26,18 +26,7 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
   onSubmit,
 }) => {
   const [input, setInput] = useState(text || "");
-  const [iconHeight, setIconHeight] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (inputRef.current) {
-      setIconHeight(inputRef.current?.clientHeight);
-    } else {
-      if (iconHeight != 0) {
-        setIconHeight(0);
-      }
-    }
-  }, []);
 
   const handleValueChanged = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setInput(evt.target.value);
@@ -51,7 +40,7 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
 
   const _containerStyle = MergeComponentStyle(
     {
-      css: "flex w-[100%] relative",
+      css: "flex w-[100%] relative items-center",
     },
     containerStyle
   );
@@ -65,7 +54,7 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
 
   const _iconStyle = MergeComponentStyle(
     {
-      css: "absolute right-0 h-[100%] p-2 cursor-pointer",
+      css: "absolute right-[5px] h-[100%] cursor-pointer",
     },
     iconStyle
   );
@@ -87,19 +76,28 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
           placeholder={placeholder}
           ref={inputRef}
         />
-        <div
-          className={_iconStyle.css}
-          style={_iconStyle.style}
-          onClick={() => {
-            inputRef.current?.focus();
-          }}
-        >
-          {(() => {
-            if (!icon)
-              return <BsSearch className="h-[100%]" size={iconHeight} />;
-            return <img src={icon} width={iconHeight} />;
-          })()}
-        </div>
+        {(() => {
+          if (!icon)
+            return (
+              <BsSearch
+                className={_iconStyle.css}
+                style={_iconStyle.style}
+                onClick={() => {
+                  inputRef.current?.focus();
+                }}
+              />
+            );
+          return (
+            <img
+              className={_iconStyle.css}
+              style={_iconStyle.style}
+              onClick={() => {
+                inputRef.current?.focus();
+              }}
+              src={icon}
+            />
+          );
+        })()}
       </form>
     </>
   );
