@@ -16,7 +16,7 @@ export function BasicTreeView<T extends BasicTreeViewItemProps>(
   } = props;
 
   const _containerStyle = MergeComponentStyle(
-    { css: "flex flex-col" },
+    { css: "flex flex-col grow shrink-0 overflow-y-auto h-1" },
     containerStyle
   );
 

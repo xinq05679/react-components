@@ -19,16 +19,20 @@ export const BasicTreeViewItem: React.FC<BasicTreeViewItemProps> = ({
   const _containerStyle = MergeComponentStyle(
     {
       css: classNames(
-        "flex items-center gap-[4px] h-[32px] w-[100%]",
+        "flex shrink-0 items-center gap-[4px] h-[32px] w-[100%]",
         ["text-[#000]"],
         ["hover:bg-[#e5f3ff]"],
         [
           "data-[selected=true]:bg-[#cce8ff]",
           "data-[selected=true]:border-[#99d1ff]",
-          "data-selected:border",
+          "data-[selected=true]:border",
           "data-[selected=true]:font-semibold",
         ],
-        ["data-[type=branch]:text-[16px]", "data-[type=node]:text-[16px]"]
+        [
+          "data-[type=branch]:text-[16px]",
+          "data-[type=branch]:font-bold",
+          "data-[type=node]:text-[16px]",
+        ]
       ),
     },
     containerStyle
