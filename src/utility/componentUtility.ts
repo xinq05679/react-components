@@ -4,6 +4,7 @@ import {
   StyleMergingMode,
 } from "../metadata/ComponentStyle";
 import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 
 export function MergeComponentStyle(
   originStyle: ComponentStyle,
@@ -25,7 +26,7 @@ export function MergeComponentStyle(
     case StyleMergingMode.none:
       break;
     default:
-      mergedStyle.css = classNames(originStyle.css, newStyle.css);
+      mergedStyle.css = twMerge(originStyle.css, newStyle.css);
       break;
   }
 
