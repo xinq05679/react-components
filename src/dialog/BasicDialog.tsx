@@ -101,7 +101,7 @@ export const BasicDialog: React.FC<BasicDialogProps> = ({
       </div>
     ),
     (() => {
-      const divId = "dialog-portal-div";
+      const divId = "dialog-portal";
       let portal = document.querySelector(divId);
       if (portal === null) {
         portal = document.createElement(divId);

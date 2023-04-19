@@ -19,6 +19,7 @@ export * from "./src/components/treeview/BasicTreeViewItemProps";
 export * from "./src/components/treeview/BasicTreeViewProps";
 export * from "./src/components/progressbar/BasicProgressBar";
 export * from "./src/components/spin/BasicSpin";
+export * from "./src/components/tooltip/BasicToolTip";
 //#endregion
 
 //#region Dialog
