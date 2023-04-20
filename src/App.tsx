@@ -9,8 +9,18 @@ import BasicCheckBox from "./components/checkbox/BasicCheckBox";
 import BasicMultiCheckBox from "./components/checkbox/BasicMultiCheckBox";
 import BasicNumeric from "./components/numeric/BasicNumeric";
 import BasicTwoNumeric from "./components/numeric/BasicTwoNumeric";
+import BasicProgressDialog, {
+  BasicProgressDialogProps,
+} from "./components/dialog/BasicProgressDialog";
+import useModal, { ModalType } from "./components/modal/useModal";
+import { BasicProgressBarProps } from "./components/progressbar/BasicProgressBar";
+import { BasicQueryDialogProps } from "./components/dialog/BasicQueryDialog";
+import BasicProgressBar from "./components/progressbar/BasicProgressBar";
+import { QueryDialogType } from "./metadata/QueryDialogType";
 
 const App: React.FC = () => {
+  const { open, close } = useModal();
+
   return (
     <>
       <BasicTemplate
@@ -22,30 +32,33 @@ const App: React.FC = () => {
           </div>
         }
         ContentPage={<TabPageExample />}
-      ></BasicTemplate>
-      <BasicModal
-        Header={"Ha"}
-        Content={
-          <div className="flex flex-col">
-            <BasicMultiCheckBox
-              items={[
-                { text: "checkbox-1" },
-                { text: "checkbox-2" },
-                { text: "checkbox-3" },
-              ]}
-            />
-            <BasicNumeric initValue={0} digits={1} />
-            <BasicTwoNumeric digits={1} />
+        Footer={
+          <div className="flex gap-[10px]">
+            <BasicButton
+              onClicked={() => {
+                open(ModalType.BasicProgressDialog, {
+                  queryDialogType: QueryDialogType.Error,
+                  // prgoressbar: <BasicProgressBar></BasicProgressBar>,
+                  title: "hahb",
+                  content: "Downloading ....",
+                  // information: "QQ",
+                  icon: "QQ",
+                  buttons: (
+                    <>
+                      <BasicButton>Hi</BasicButton>
+                    </>
+                  ),
+                  onCloseButtonClicked: () => {
+                    close();
+                  },
+                } as BasicProgressDialogProps);
+              }}
+            >
+              Open
+            </BasicButton>
           </div>
         }
-        Footer={
-          <>
-            <BasicButton outline>1</BasicButton>
-            <BasicButton type={ButtonType.Danger}>2</BasicButton>
-            <BasicButton type={ButtonType.Success}>3</BasicButton>
-          </>
-        }
-      />
+      ></BasicTemplate>
     </>
   );
 };

@@ -22,10 +22,15 @@ export * from "./src/components/spin/BasicSpin";
 export * from "./src/components/tooltip/BasicToolTip";
 export * from "./src/components/portal/BasicPortal";
 export * from "./src/components/modal/BasicModal";
+export * from "./src/components/modal/useModal";
 export * from "./src/components/checkbox/BasicCheckBox";
 export * from "./src/components/checkbox/BasicMultiCheckBox";
 export * from "./src/components/numeric/BasicNumeric";
 export * from "./src/components/numeric/BasicTwoNumeric";
+export * from "./src/components/progressbar/BasicProgressBar";
+export * from "./src/components/dialog/BasicProgressDialog";
+export * from "./src/components/dialog/BasicQueryDialog";
+
 //#endregion
 
 //#region Dialog

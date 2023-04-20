@@ -4,28 +4,28 @@ import { MergeComponentStyle } from "../../utility/componentUtility";
 import BasicPortal from "../portal/BasicPortal";
 
 export interface BasicModalProps {
-  Header?: React.ReactNode;
-  Content?: React.ReactNode;
-  Footer?: React.ReactNode;
+  header?: React.ReactNode;
+  body?: React.ReactNode;
+  footer?: React.ReactNode;
   showCloseButton?: boolean;
   modalStyle?: ComponentStyleMerging;
   containerStyle?: ComponentStyleMerging;
   headerStyle?: ComponentStyleMerging;
-  contentStyle?: ComponentStyleMerging;
+  bodyStyle?: ComponentStyleMerging;
   footerStyle?: ComponentStyleMerging;
   closeButtonStyle?: ComponentStyleMerging;
   onCloseButtonClicked?: () => void;
 }
 
 export const BasicModal: React.FC<BasicModalProps> = ({
-  Header,
-  Content,
-  Footer,
-  showCloseButton = true,
+  header,
+  body,
+  footer,
+  showCloseButton,
   modalStyle,
   containerStyle,
   headerStyle,
-  contentStyle,
+  bodyStyle,
   footerStyle,
   closeButtonStyle,
   onCloseButtonClicked,
@@ -44,7 +44,7 @@ export const BasicModal: React.FC<BasicModalProps> = ({
         "h-[50%] w-[50%]",
         "bg-[#fff]",
         "relative",
-        "border-[2px] border-[#ccc] rounded"
+        "border-[1px] border-[#888] rounded-b-md"
       ),
     },
     containerStyle
@@ -63,11 +63,11 @@ export const BasicModal: React.FC<BasicModalProps> = ({
     headerStyle
   );
 
-  const _contentStyle = MergeComponentStyle(
+  const _bodyStyle = MergeComponentStyle(
     {
       css: classNames("grow"),
     },
-    contentStyle
+    bodyStyle
   );
 
   const _footerStyle = MergeComponentStyle(
@@ -109,21 +109,21 @@ export const BasicModal: React.FC<BasicModalProps> = ({
           )}
 
           {/* HEADER */}
-          {Header && (
+          {header && (
             <div className={_headerStyle.css} style={_headerStyle.style}>
-              {Header}
+              {header}
             </div>
           )}
 
-          {/* CONTENT */}
-          <div className={_contentStyle.css} style={_contentStyle.style}>
-            {Content}
+          {/* BODY */}
+          <div className={_bodyStyle.css} style={_bodyStyle.style}>
+            {body}
           </div>
 
           {/* FOOTER */}
-          {Footer && (
+          {footer && (
             <div className={_footerStyle.css} style={_footerStyle.style}>
-              {Footer}
+              {footer}
             </div>
           )}
         </div>
