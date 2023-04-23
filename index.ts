@@ -30,15 +30,8 @@ export * from "./src/components/numeric/BasicTwoNumeric";
 export * from "./src/components/progressbar/BasicProgressBar";
 export * from "./src/components/dialog/BasicProgressDialog";
 export * from "./src/components/dialog/BasicQueryDialog";
+export * from "./src/components/select/BasicSelect";
 
-//#endregion
-
-//#region Dialog
-export * from "./src/dialog/BasicDialog";
-export * from "./src/dialog/progressbar-dialog/ProgressBarDialog";
-export * from "./src/dialog/progressbar-dialog/useProgressBarDialog";
-export * from "./src/dialog/query-dialog/QueryDialog";
-export * from "./src/dialog/query-dialog/useQueryDialog";
 //#endregion
 
 //#region MetaData

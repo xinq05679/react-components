@@ -1,22 +1,12 @@
 import BasicTemplate from "./template/BasicTemplate";
 import TabPageExample from "./example/TabPageExample";
-import BasicSpin from "./components/spin/BasicSpin";
-import BasicToolTip from "./components/tooltip/BasicToolTip";
-import BasicModal from "./components/modal/BasicModal";
 import BasicButton from "./components/button/BasicButton";
-import { ButtonType } from "./metadata/ButtonType";
-import BasicCheckBox from "./components/checkbox/BasicCheckBox";
-import BasicMultiCheckBox from "./components/checkbox/BasicMultiCheckBox";
-import BasicNumeric from "./components/numeric/BasicNumeric";
-import BasicTwoNumeric from "./components/numeric/BasicTwoNumeric";
 import BasicProgressDialog, {
   BasicProgressDialogProps,
 } from "./components/dialog/BasicProgressDialog";
 import useModal, { ModalType } from "./components/modal/useModal";
-import { BasicProgressBarProps } from "./components/progressbar/BasicProgressBar";
-import { BasicQueryDialogProps } from "./components/dialog/BasicQueryDialog";
-import BasicProgressBar from "./components/progressbar/BasicProgressBar";
 import { QueryDialogType } from "./metadata/QueryDialogType";
+import BasicSelect from "./components/select/BasicSelect";
 
 const App: React.FC = () => {
   const { open, close } = useModal();
@@ -25,10 +15,23 @@ const App: React.FC = () => {
     <>
       <BasicTemplate
         SideBar={
-          <div className="h-[200px] w-[200px] p-[50px]">
-            <BasicToolTip text="hi there" delayTimeOpen={0}>
-              <BasicSpin svgStyle={{ css: "h-[64px]" }} />
-            </BasicToolTip>
+          <div className="flex flex-col">
+            <BasicSelect
+              items={[
+                {
+                  label: "1",
+                },
+                {
+                  label: "2",
+                },
+                {
+                  label: "3",
+                },
+              ]}
+              placeholder={"111"}
+              selectedLabel={"2"}
+            />
+            <div>123</div>
           </div>
         }
         ContentPage={<TabPageExample />}
