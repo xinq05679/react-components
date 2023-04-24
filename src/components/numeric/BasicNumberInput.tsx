@@ -64,7 +64,7 @@ export const BasicNumberInput: React.FC<BasicNumberInputProps> = ({
         "text-[16px] text-center",
         "cursor-pointer",
         "border border-[#ddd]",
-        "hover:border-[#444]",
+        "hover:border-[#00f]",
         "focus:border-[#00f]"
       ),
     },
@@ -117,6 +117,9 @@ export const BasicNumberInput: React.FC<BasicNumberInputProps> = ({
         id={id}
         onChange={handleValueChanged}
         onBlur={handleBlue}
+        onDrop={(event) => {
+          event.preventDefault();
+        }}
         value={value}
       />
       <input ref={submitRef} type="submit" className="hidden" />

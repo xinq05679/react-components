@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { MergeComponentStyle } from "../../utility/componentUtility";
 import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { BsSearch } from "react-icons/bs";
+import classNames from "classnames";
 
 export interface BasicSearchBarProps {
   text?: string;
@@ -47,7 +48,17 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
 
   const _textboxStyle = MergeComponentStyle(
     {
-      css: "border border-[#000] w-[100%] h-[100%] text-xl px-2 cursor-pointer rounded",
+      css: classNames(
+        "outline-0",
+        "w-[100%] h-[100%]",
+        "text-xl",
+        "px-2",
+        "cursor-pointer",
+        "rounded",
+        "border border-[#ddd]",
+        "[&:hover]:border-[#00f]",
+        "[&:focus]:border-[#00f]"
+      ),
     },
     textboxStyle
   );
@@ -75,6 +86,9 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
           onFocus={(event) => event.target.select()}
           placeholder={placeholder}
           ref={inputRef}
+          onDrop={(event) => {
+            event.preventDefault();
+          }}
         />
         {(() => {
           if (!icon)

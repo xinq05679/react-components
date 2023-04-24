@@ -2,7 +2,6 @@ import classNames from "classnames";
 import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { MergeComponentStyle } from "../../utility/componentUtility";
 import { useState, useEffect } from "react";
-import { randomUUID } from "crypto";
 
 export enum CheckBoxStatus {
   checked = 0,
@@ -12,7 +11,7 @@ export enum CheckBoxStatus {
 
 export interface BasicCheckBoxProps {
   id?: string;
-  text?: string;
+  text?: React.ReactNode;
   checked?: CheckBoxStatus;
   onCheckedChagned?: (checked: CheckBoxStatus) => void;
   containerStyle?: ComponentStyleMerging;

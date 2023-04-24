@@ -29,6 +29,7 @@ export const BasicModal: React.FC<BasicModalProps> = ({
   footerStyle,
   closeButtonStyle,
   onCloseButtonClicked,
+  ...others
 }) => {
   const _modalStyle = MergeComponentStyle(
     {
@@ -95,7 +96,7 @@ export const BasicModal: React.FC<BasicModalProps> = ({
 
   return (
     <BasicPortal portalId="modal-portal">
-      <div className={_modalStyle.css} style={_modalStyle.style}>
+      <div {...others} className={_modalStyle.css} style={_modalStyle.style}>
         <div className={_containerStyle.css} style={_containerStyle.style}>
           {/* CLOSE BUTTON */}
           {showCloseButton && (

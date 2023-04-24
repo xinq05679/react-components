@@ -63,7 +63,7 @@ export const BasicNumeric: React.FC<BasicNumericProps> = ({
         "text-[16px] text-center",
         "cursor-pointer",
         "border border-[#ddd]",
-        "hover:border-[#444]",
+        "hover:border-[#00f]",
         "focus:border-[#00f]"
       ),
     },
@@ -111,6 +111,9 @@ export const BasicNumeric: React.FC<BasicNumericProps> = ({
           id={id}
           onChange={handleValueChanged}
           onBlur={handleBlue}
+          onDrop={(event) => {
+            event.preventDefault();
+          }}
           value={value}
           min={range.min}
           max={range.max}

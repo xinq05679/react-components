@@ -50,14 +50,16 @@ export function BasicProgressDialog(props: BasicProgressDialogProps) {
     reverseFooter,
   } = props;
 
-  const _modalStyle = MergeComponentStyle({}, modalStyle);
+  const _modalStyle = MergeComponentStyle({ css: "group" }, modalStyle);
 
   const _containerStyle = MergeComponentStyle(
     {
-      css: classNames("h-[250px] w-[600px]", {
-        "h-[300px]": prgoressbar,
-        "h-[480px]": information,
-      }),
+      css: classNames(
+        "h-[250px] w-[600px]",
+        "group-[&[data-progressbar='1']]:h-[300px]",
+        "group-[&[data-information='1']]:h-[450px]",
+        "group-[&[data-information='1'][data-progressbar='1']]:h-[550px]"
+      ),
     },
     containerStyle
   );
@@ -66,57 +68,55 @@ export function BasicProgressDialog(props: BasicProgressDialogProps) {
 
   const _bodyStyle = MergeComponentStyle(
     {
-      css: classNames("flex items-center gap-[25px]", "ml-[5%]"),
+      css: classNames("flex items-center"),
     },
     bodyStyle
   );
 
   const _contentStyle = MergeComponentStyle(
     {
-      css: classNames("grow"),
+      css: classNames("grow", "flex items-center", "h-[100%]"),
     },
     contentStyle
   );
 
   const _iconStyle = MergeComponentStyle(
     {
-      css: classNames("h-[128px] w-[128px]", "shrink-0 grow-0"),
+      css: classNames("h-[128px] w-[128px]", "shrink-0 grow-0", "mx-[10px]"),
     },
     iconStyle
   );
 
   const _footerStyle = MergeComponentStyle(
     {
-      css: classNames("flex flex-col", "px-[20px] py-[10px]", {
-        "h-[100px]": prgoressbar,
-        "h-[280px]": information,
-      }),
+      css: classNames(
+        "flex flex-col",
+        "p-[20px]",
+        "group-[&[data-progressbar='1']]:h-[100px]",
+        "group-[&[data-information='1']]:h-[250px]",
+        "group-[&[data-information='1'][data-progressbar='1']]:h-[350px]"
+      ),
     },
     footerStyle
   );
 
   const _progressbarStyle = MergeComponentStyle(
     {
-      css: classNames("grow-0"),
+      css: classNames("grow-0 shrink-0"),
     },
     progressbarStyle
   );
 
   const _buttonStyle = MergeComponentStyle(
     {
-      css: classNames("grow-0 self-end"),
+      css: classNames("grow-0  shrink-0 self-end"),
     },
     buttonStyle
   );
 
   const _informationStyle = MergeComponentStyle(
     {
-      css: classNames(
-        "grow",
-        "h-1 overflow-x-auto",
-        "bg-[#eee]",
-        "shadow-inner"
-      ),
+      css: classNames("grow", "h-1 overflow-auto", "bg-[#eee]", "shadow-inner"),
     },
     informationStyle
   );
@@ -183,35 +183,35 @@ export function BasicProgressDialog(props: BasicProgressDialogProps) {
   };
 
   return (
-    <>
-      <BasicModal
-        header={title}
-        body={
-          <>
-            {/* ICON */}
-            {icon && (
-              <div className={_iconStyle?.css} style={_iconStyle?.style}>
-                {icon}
-              </div>
-            )}
-
-            {/* CONTENT */}
-            <div className={_contentStyle?.css} style={_contentStyle?.style}>
-              {content}
+    <BasicModal
+      data-information={information ? 1 : 0}
+      data-progressbar={prgoressbar ? 1 : 0}
+      header={title}
+      body={
+        <>
+          {/* ICON */}
+          {icon && (
+            <div className={_iconStyle?.css} style={_iconStyle?.style}>
+              {icon}
             </div>
-          </>
-        }
-        footer={renderFooter()}
-        showCloseButton={showCloseButton}
-        modalStyle={_modalStyle}
-        containerStyle={_containerStyle}
-        bodyStyle={_bodyStyle}
-        headerStyle={_headerStyle}
-        footerStyle={_footerStyle}
-        closeButtonStyle={_closeButtonStyle}
-        onCloseButtonClicked={onCloseButtonClicked}
-      />
-    </>
+          )}
+
+          {/* CONTENT */}
+          <div className={_contentStyle?.css} style={_contentStyle?.style}>
+            {content}
+          </div>
+        </>
+      }
+      footer={renderFooter()}
+      showCloseButton={showCloseButton}
+      modalStyle={_modalStyle}
+      containerStyle={_containerStyle}
+      bodyStyle={_bodyStyle}
+      headerStyle={_headerStyle}
+      footerStyle={_footerStyle}
+      closeButtonStyle={_closeButtonStyle}
+      onCloseButtonClicked={onCloseButtonClicked}
+    />
   );
 }
 

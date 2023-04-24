@@ -11,7 +11,7 @@ export interface SelectItem {
 
 export interface BasicSelectProps {
   items: SelectItem[];
-  selectedLabel?: string; //label
+  selectedLabel?: string;
   placeholder?: string;
   containerStyle?: ComponentStyleMerging;
   placeholderStyle?: ComponentStyleMerging;
@@ -105,9 +105,7 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
         "absolute",
         "bg-[#fff]",
         "group",
-        {
-          highlight: highlightSelected,
-        }
+        "z-[99]"
       ),
       style: {
         bottom: `-${optionDivHeight}px`,
@@ -120,10 +118,14 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
     {
       css: classNames(
         "cursor-pointer",
-        ["hover:bg-[#1e90ff]", "hover:text-[#fff]", "hover:font-bold"],
-        "group-[.highlight]:data-[select='true']:bg-[#1e90ff]",
-        "group-[.highlight]:data-[select='true']:text-[#fff]",
-        "group-[.highlight]:data-[select='true']:font-bold"
+        [
+          "[&:hover]:bg-[#1e90ff]",
+          "[&:hover]:text-[#fff]",
+          "[&:hover]:font-bold",
+        ],
+        "group-[&[data-highlight='true']]:[&[data-select='true']]:bg-[#1e90ff]",
+        "group-[&[data-highlight='true']]:[&[data-select='true']]:text-[#fff]",
+        "group-[&[data-highlight='true']]:[&[data-select='true']]:font-bold"
       ),
     },
     optionStyle
@@ -176,6 +178,7 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
         {/* Option */}
         {openDropDown && (
           <div
+            data-highlight={highlightSelected}
             className={_optionsDivStyle.css}
             style={_optionsDivStyle.style}
             ref={optionsDivRef}

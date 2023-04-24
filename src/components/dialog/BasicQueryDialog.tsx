@@ -51,13 +51,14 @@ export const BasicQueryDialog: React.FC<BasicQueryDialogProps> = (props) => {
     reverseFooter,
   } = props;
 
-  const _modalStyle = MergeComponentStyle({}, modalStyle);
+  const _modalStyle = MergeComponentStyle({ css: "group" }, modalStyle);
 
   const _containerStyle = MergeComponentStyle(
     {
-      css: classNames("h-[250px] w-[600px]", {
-        "h-[480px]": information,
-      }),
+      css: classNames(
+        "h-[250px] w-[600px]",
+        "group-[&[data-information='1']]:h-[450px]"
+      ),
     },
     containerStyle
   );
@@ -66,14 +67,14 @@ export const BasicQueryDialog: React.FC<BasicQueryDialogProps> = (props) => {
 
   const _bodyStyle = MergeComponentStyle(
     {
-      css: classNames("flex items-center gap-[25px]", "ml-[5%]"),
+      css: classNames("flex items-center"),
     },
     bodyStyle
   );
 
   const _contentStyle = MergeComponentStyle(
     {
-      css: classNames("grow"),
+      css: classNames("grow", "flex items-center", "h-[100%]"),
     },
     contentStyle
   );
@@ -82,6 +83,7 @@ export const BasicQueryDialog: React.FC<BasicQueryDialogProps> = (props) => {
     {
       css: classNames(
         "h-[128px] w-[128px]",
+        "mx-[10px]",
         "text-[128px] text-[#f00]",
         "shrink-0 grow-0"
       ),
@@ -91,9 +93,11 @@ export const BasicQueryDialog: React.FC<BasicQueryDialogProps> = (props) => {
 
   const _footerStyle = MergeComponentStyle(
     {
-      css: classNames("flex flex-col", "px-[20px] py-[10px]", {
-        "h-[250px]": information,
-      }),
+      css: classNames(
+        "flex flex-col",
+        "p-[20px]",
+        "group-[&[data-information='1']]:h-[250px]"
+      ),
     },
     footerStyle
   );
@@ -107,13 +111,7 @@ export const BasicQueryDialog: React.FC<BasicQueryDialogProps> = (props) => {
 
   const _informationStyle = MergeComponentStyle(
     {
-      css: classNames(
-        "grow",
-        "h-1 overflow-x-auto",
-
-        "bg-[#eee]",
-        "shadow-inner"
-      ),
+      css: classNames("grow", "h-1 overflow-auto", "bg-[#eee]", "shadow-inner"),
     },
     informationStyle
   );
@@ -132,12 +130,9 @@ export const BasicQueryDialog: React.FC<BasicQueryDialogProps> = (props) => {
       case QueryDialogType.Query:
       case QueryDialogType.Warning:
         return (
-          <img
-            src={QueryIcon}
-            alt="query icon"
-            className={_iconStyle.css}
-            style={_iconStyle.style}
-          />
+          <div className={_iconStyle.css} style={_iconStyle.style}>
+            <img src={QueryIcon} alt="query icon" />
+          </div>
         );
     }
   };
@@ -192,13 +187,14 @@ export const BasicQueryDialog: React.FC<BasicQueryDialogProps> = (props) => {
   return (
     <>
       <BasicModal
+        data-information={information ? 1 : 0}
         header={title}
         body={
           <>
             {/* ICON */}
             {renderIcon()}
             {/* CONTENT */}
-            <div className={_contentStyle?.css} style={_contentStyle?.style}>
+            <div className={_contentStyle.css} style={_contentStyle.style}>
               {content}
             </div>
           </>
