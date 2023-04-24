@@ -46,8 +46,7 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
   useEffect(() => {
     const closeDropDown = (event: any) => {
       if (selectRef?.current && selectRef.current.contains(event.target)) {
-        setOpenDropDown(!openDropDown);
-        setHighlightSelected(true);
+        return;
       } else if (
         optionsDivRef?.current &&
         !optionsDivRef.current.contains(event.target)
@@ -59,7 +58,7 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
     document.addEventListener("click", closeDropDown, true);
 
     return document.removeEventListener("click", closeDropDown);
-  }, [openDropDown]);
+  }, []);
 
   const _containerStyle = MergeComponentStyle(
     {
@@ -82,7 +81,8 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
         "cursor-[pointer]",
         "outline-0",
         "border border-[#888]",
-        "flex items-center"
+        "flex items-center",
+        "bg-[#fff]"
       ),
     },
     selectStyle
@@ -154,6 +154,10 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
           className={_selectStyle.css}
           style={_selectStyle.style}
           ref={selectRef}
+          onClick={() => {
+            setOpenDropDown(!openDropDown);
+            setHighlightSelected(true);
+          }}
         >
           <div className="grow">
             {selectedItem ? (

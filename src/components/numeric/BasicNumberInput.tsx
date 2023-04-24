@@ -50,7 +50,7 @@ export const BasicNumberInput: React.FC<BasicNumberInputProps> = ({
 
   const _containerStyle = MergeComponentStyle(
     {
-      css: classNames("flex items-center", "text-[16px]"),
+      css: classNames("flex items-center", "w-[100%]", "text-[16px]"),
     },
     containerStyle
   );

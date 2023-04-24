@@ -49,12 +49,7 @@ export const BasicListItem: React.FC<BasicListItemProps> = ({
       }
     >
       {icon && (
-        <img
-          src={icon}
-          className={_iconStyle.css}
-          style={_iconStyle.style}
-          alt={text}
-        />
+        <img src={icon} className={_iconStyle.css} style={_iconStyle.style} />
       )}
       <div className={_textStyle.css} style={_textStyle.style}>
         {text}

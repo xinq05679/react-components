@@ -24,6 +24,7 @@ const App: React.FC = () => {
             <BasicNumberInput initValue="7.3" />
             <BasicTwoNumeric onlyInteger />
             <BasicTwoNumberInput onlyInteger />
+            <BasicSelect items={[{ label: "1" }, { label: "2" }]} />
 
             <div>123</div>
           </div>
