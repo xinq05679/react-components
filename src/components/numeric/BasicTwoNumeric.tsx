@@ -1,7 +1,8 @@
 import classNames from "classnames";
 import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { MergeComponentStyle } from "../../utility/componentUtility";
-import BasicNumeric, { BasicNumericProps, NumericRange } from "./BasicNumeric";
+import BasicNumeric, { BasicNumericProps } from "./BasicNumeric";
+import { NumericRange } from "../../metadata/NumericRange";
 import { useState, useEffect } from "react";
 
 const _initValue = {

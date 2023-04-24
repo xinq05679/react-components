@@ -27,6 +27,8 @@ export * from "./src/components/checkbox/BasicCheckBox";
 export * from "./src/components/checkbox/BasicMultiCheckBox";
 export * from "./src/components/numeric/BasicNumeric";
 export * from "./src/components/numeric/BasicTwoNumeric";
+export * from "./src/components/numeric/BasicNumberInput";
+export * from "./src/components/numeric/BasicTwoNumberInput";
 export * from "./src/components/progressbar/BasicProgressBar";
 export * from "./src/components/dialog/BasicProgressDialog";
 export * from "./src/components/dialog/BasicQueryDialog";
@@ -40,6 +42,7 @@ export * from "./src/metadata/ComponentStyle";
 export * from "./src/metadata/Point";
 export * from "./src/metadata/QueryDialogType";
 export * from "./src/metadata/SelectionMode";
+export * from "./src/metadata/NumericRange";
 //#endregion
 
 //#region Utility

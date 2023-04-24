@@ -7,6 +7,10 @@ import BasicProgressDialog, {
 import useModal, { ModalType } from "./components/modal/useModal";
 import { QueryDialogType } from "./metadata/QueryDialogType";
 import BasicSelect from "./components/select/BasicSelect";
+import BasicNumeric from "./components/numeric/BasicNumeric";
+import BasicNumberInput from "./components/numeric/BasicNumberInput";
+import BasicTwoNumberInput from "./components/numeric/BasicTwoNumberInput";
+import BasicTwoNumeric from "./components/numeric/BasicTwoNumeric";
 
 const App: React.FC = () => {
   const { open, close } = useModal();
@@ -16,21 +20,11 @@ const App: React.FC = () => {
       <BasicTemplate
         SideBar={
           <div className="flex flex-col">
-            <BasicSelect
-              items={[
-                {
-                  label: "1",
-                },
-                {
-                  label: "2",
-                },
-                {
-                  label: "3",
-                },
-              ]}
-              placeholder={"111"}
-              selectedLabel={"2"}
-            />
+            <BasicNumeric />
+            <BasicNumberInput initValue="7.3" />
+            <BasicTwoNumeric onlyInteger />
+            <BasicTwoNumberInput onlyInteger />
+
             <div>123</div>
           </div>
         }

@@ -1,26 +1,25 @@
-import { useState, useRef, useEffect } from "react";
-import classNames from "classnames";
 import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { MergeComponentStyle } from "../../utility/componentUtility";
 import { convertNumberToString } from "../../utility/conversionUtility";
+import { useEffect, useState, useRef } from "react";
+import classNames from "classnames";
 import { NumericRange } from "../../metadata/NumericRange";
 
-export interface BasicNumericProps {
+export interface BasicNumberInputProps {
   id?: string;
+  initValue?: string;
   range?: NumericRange;
-  initValue?: number;
-  onValueChanged?: (value: number) => void;
+  onValueChanged?: (value: string) => void;
   containerStyle?: ComponentStyleMerging;
   inputStyle?: ComponentStyleMerging;
-  labelStyle?: ComponentStyleMerging;
   onlyInteger?: boolean;
   digits?: number;
 }
 
-export const BasicNumeric: React.FC<BasicNumericProps> = ({
-  id = crypto.randomUUID(),
+export const BasicNumberInput: React.FC<BasicNumberInputProps> = ({
+  id,
+  initValue = "-",
   range = { min: 0, max: 100 },
-  initValue = 0.0,
   onValueChanged,
   containerStyle,
   inputStyle,
@@ -39,9 +38,11 @@ export const BasicNumeric: React.FC<BasicNumericProps> = ({
     }
   }, [initValue]);
 
-  function formatNumber(value: number) {
+  function formatNumber(value: string) {
+    if (value === "-") return value;
+
     return convertNumberToString({
-      value,
+      value: parseFloat(value),
       digits,
       onlyInteger,
     });
@@ -49,7 +50,7 @@ export const BasicNumeric: React.FC<BasicNumericProps> = ({
 
   const _containerStyle = MergeComponentStyle(
     {
-      css: classNames("flex gap-[5px] items-center", "w-[100%]", "text-[16px]"),
+      css: classNames("flex items-center", "text-[16px]"),
     },
     containerStyle
   );
@@ -57,7 +58,7 @@ export const BasicNumeric: React.FC<BasicNumericProps> = ({
   const _inputStyle = MergeComponentStyle(
     {
       css: classNames(
-        "grow",
+        "w-[100%]",
         "outline-0",
         "h-[32px]",
         "text-[16px] text-center",
@@ -82,43 +83,45 @@ export const BasicNumeric: React.FC<BasicNumericProps> = ({
     event.preventDefault();
 
     // Check if the value is vaild
-    let inputValue = parseFloat(value);
+    if (value !== "-") {
+      let inputValue = parseFloat(value);
 
-    if (isNaN(inputValue) || inputValue < range.min || inputValue > range.max) {
-      return setValue(oldValue);
+      if (
+        isNaN(inputValue) ||
+        inputValue < range.min ||
+        inputValue > range.max
+      ) {
+        return setValue(oldValue);
+      }
     }
 
     // Update the showing value
-    const formedValue = formatNumber(inputValue);
+    const formedValue = formatNumber(value);
 
     setOldValue(formedValue);
     setValue(formedValue);
-    onValueChanged?.(parseFloat(formedValue));
+    onValueChanged?.(formedValue);
   };
 
   return (
-    <>
-      <form
-        onSubmit={handleSubmit}
-        className={_containerStyle.css}
-        style={_containerStyle.style}
-        noValidate
-      >
-        <input
-          className={_inputStyle.css}
-          style={_inputStyle.style}
-          type={"number"}
-          id={id}
-          onChange={handleValueChanged}
-          onBlur={handleBlue}
-          value={value}
-          min={range.min}
-          max={range.max}
-        />
-        <input ref={submitRef} type="submit" className="hidden" />
-      </form>
-    </>
+    <form
+      onSubmit={handleSubmit}
+      className={_containerStyle.css}
+      style={_containerStyle.style}
+      noValidate
+    >
+      <input
+        className={_inputStyle.css}
+        style={_inputStyle.style}
+        type={"text"}
+        id={id}
+        onChange={handleValueChanged}
+        onBlur={handleBlue}
+        value={value}
+      />
+      <input ref={submitRef} type="submit" className="hidden" />
+    </form>
   );
 };
 
-export default BasicNumeric;
+export default BasicNumberInput;
