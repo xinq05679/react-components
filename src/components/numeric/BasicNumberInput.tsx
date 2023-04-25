@@ -18,7 +18,7 @@ export interface BasicNumberInputProps {
 
 export const BasicNumberInput: React.FC<BasicNumberInputProps> = ({
   id,
-  initValue = "-",
+  initValue = "",
   range = { min: 0, max: 100 },
   onValueChanged,
   containerStyle,
@@ -39,7 +39,7 @@ export const BasicNumberInput: React.FC<BasicNumberInputProps> = ({
   }, [initValue]);
 
   function formatNumber(value: string) {
-    if (value === "-") return value;
+    if (value.replaceAll(" ", "") === "") return "";
 
     return convertNumberToString({
       value: parseFloat(value),
@@ -83,7 +83,7 @@ export const BasicNumberInput: React.FC<BasicNumberInputProps> = ({
     event.preventDefault();
 
     // Check if the value is vaild
-    if (value !== "-") {
+    if (value.replaceAll(" ", "") !== "") {
       let inputValue = parseFloat(value);
 
       if (

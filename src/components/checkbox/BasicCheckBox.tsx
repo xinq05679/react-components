@@ -39,16 +39,16 @@ export const BasicCheckBox: React.FC<BasicCheckBoxProps> = ({
   }, [checked]);
 
   const _containerStyle = MergeComponentStyle(
-    { css: classNames("flex gap-[5px] items-center", "text-[16px]") },
+    { css: classNames("flex gap-[5px] items-center", "text-[14px]") },
     containerStyle
   );
 
   const _inputStyle = MergeComponentStyle(
     {
-      css: classNames("relative", "cursor-pointer", "w-[24px] h-[24px]", [
+      css: classNames("relative", "cursor-pointer", "w-[20px] h-[20px]", [
         "after:absolute",
         "after:flex after:items-center after:justify-center",
-        "after:w-[24px] after:h-[24px]",
+        "after:w-[20px] after:h-[20px]",
         "after:border after:border-[#888]",
         "after:hover:border-[#00f]",
         "after:text-[#fff]",

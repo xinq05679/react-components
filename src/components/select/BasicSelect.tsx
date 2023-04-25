@@ -34,14 +34,20 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
   optionStyle,
   onSelectedItemChanged,
 }) => {
-  const [selectedItem, setSelectedItem] = useState<SelectItem | undefined>(
-    items.find((item) => item.label === selectedLabel)
-  );
+  const [selectedItem, setSelectedItem] = useState<SelectItem | undefined>();
   const [openDropDown, setOpenDropDown] = useState(false);
   const [optionDivHeight, setOptionDivHeight] = useState(0);
   const [highlightSelected, setHighlightSelected] = useState(false);
   const optionsDivRef = useRef<HTMLDivElement>(null);
   const selectRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setSelectedItem(
+      selectedLabel
+        ? items.find((item) => item.label === selectedLabel)
+        : undefined
+    );
+  }, [selectedLabel]);
 
   useEffect(() => {
     const closeDropDown = (event: any) => {
