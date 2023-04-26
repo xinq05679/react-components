@@ -18,6 +18,7 @@ import BasicTwoNumeric from "./components/numeric/BasicTwoNumeric";
 import BasicCheckBox from "./components/checkbox/BasicCheckBox";
 import BasicSearchBar from "./components/search/BasicSearchBar";
 import BasicProgressBar from "./components/progressbar/BasicProgressBar";
+import BasicMultiCheckBox from "./components/checkbox/BasicMultiCheckBox";
 
 const App: React.FC = () => {
   const { open, close } = useModal();
@@ -34,6 +35,7 @@ const App: React.FC = () => {
             <BasicSelect items={[{ label: "1" }, { label: "2" }]} />
             <BasicCheckBox text={<div>123456</div>} />
             <BasicSearchBar />
+            <BasicMultiCheckBox items={[{ text: "1" }, { text: "2" }]} />
 
             <div>123</div>
           </div>

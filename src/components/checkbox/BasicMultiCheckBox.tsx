@@ -5,7 +5,8 @@ import BasicCheckBox, {
   BasicCheckBoxProps,
   CheckBoxStatus,
 } from "./BasicCheckBox";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
+import _ from "lodash";
 
 export interface BasicMultiCheckBoxProps<T extends BasicCheckBoxProps> {
   items: T[];
@@ -25,6 +26,17 @@ export function BasicMultiCheckBox<T extends BasicCheckBoxProps>(
     onCheckedChanged,
     vertical = false,
   } = props;
+
+  const [checkedList, setCheckedList] = useState(
+    items.map((item) => item.checked)
+  );
+
+  useEffect(() => {
+    const _checkedListFromProps = items.map((item) => item.checked);
+    if (!_.isEqual(_checkedListFromProps, checkedList)) {
+      setCheckedList(_checkedListFromProps);
+    }
+  }, [items]);
 
   const _containerStyle = MergeComponentStyle(
     {
@@ -47,7 +59,13 @@ export function BasicMultiCheckBox<T extends BasicCheckBoxProps>(
           <Fragment key={index}>
             <CheckBoxFC
               {...item}
+              checked={checkedList[index]}
               onCheckedChagned={(checked) => {
+                setCheckedList(
+                  checkedList.map((state, idx) => {
+                    return index === idx ? checked : state;
+                  })
+                );
                 onCheckedChanged?.(item, checked);
               }}
             />
