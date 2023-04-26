@@ -24,7 +24,7 @@ export const BasicTable: React.FC<BasicTableProps> = ({
 }) => {
   const _tableDivStyle = MergeComponentStyle(
     {
-      css: `overflow-auto m-auto`,
+      css: `overflow-auto m-auto h-[100%] w-[100%]`,
     },
     tableDivStyle
   );
