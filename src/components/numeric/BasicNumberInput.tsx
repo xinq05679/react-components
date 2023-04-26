@@ -41,11 +41,16 @@ export const BasicNumberInput: React.FC<BasicNumberInputProps> = ({
   function formatNumber(value: string) {
     if (value.replaceAll(" ", "") === "") return "";
 
-    return convertNumberToString({
-      value: parseFloat(value),
-      digits,
-      onlyInteger,
-    });
+    const number = parseFloat(value);
+    if (isNaN(number)) {
+      return "";
+    } else {
+      return convertNumberToString({
+        value: parseFloat(value),
+        digits,
+        onlyInteger,
+      });
+    }
   }
 
   const _containerStyle = MergeComponentStyle(
@@ -100,7 +105,10 @@ export const BasicNumberInput: React.FC<BasicNumberInputProps> = ({
 
     setOldValue(formedValue);
     setValue(formedValue);
-    onValueChanged?.(formedValue);
+
+    if (formedValue !== oldValue) {
+      onValueChanged?.(formedValue);
+    }
   };
 
   return (

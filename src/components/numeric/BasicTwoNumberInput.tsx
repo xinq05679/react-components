@@ -4,6 +4,7 @@ import { MergeComponentStyle } from "../../utility/componentUtility";
 import BasicNumberInput from "./BasicNumberInput";
 import { NumericRange } from "../../metadata/NumericRange";
 import { useState, useEffect } from "react";
+import { BasicNumberInputProps } from "./BasicNumberInput";
 
 const _initValue = {
   left: "10",
@@ -17,6 +18,7 @@ export interface BasicTwoNumberInputProps {
   containerStyle?: ComponentStyleMerging;
   onlyInteger?: boolean;
   digits?: number;
+  numberInputProps?: BasicNumberInputProps;
 }
 
 export const BasicTwoNumberInput: React.FC<BasicTwoNumberInputProps> = ({
@@ -26,6 +28,7 @@ export const BasicTwoNumberInput: React.FC<BasicTwoNumberInputProps> = ({
   containerStyle,
   digits = -1,
   onlyInteger,
+  numberInputProps,
 }) => {
   const [value, setValue] = useState(initValue);
 
@@ -62,6 +65,7 @@ export const BasicTwoNumberInput: React.FC<BasicTwoNumberInputProps> = ({
           }}
           onlyInteger={onlyInteger}
           digits={digits}
+          {...numberInputProps}
         />
         <div className="shrink-0">-</div>
         <BasicNumberInput
@@ -77,6 +81,7 @@ export const BasicTwoNumberInput: React.FC<BasicTwoNumberInputProps> = ({
           }}
           onlyInteger={onlyInteger}
           digits={digits}
+          {...numberInputProps}
         />
       </div>
     </>

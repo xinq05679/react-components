@@ -15,27 +15,64 @@ import BasicNumeric from "./components/numeric/BasicNumeric";
 import BasicNumberInput from "./components/numeric/BasicNumberInput";
 import BasicTwoNumberInput from "./components/numeric/BasicTwoNumberInput";
 import BasicTwoNumeric from "./components/numeric/BasicTwoNumeric";
-import BasicCheckBox from "./components/checkbox/BasicCheckBox";
+import BasicCheckBox, {
+  CheckBoxStatus,
+} from "./components/checkbox/BasicCheckBox";
 import BasicSearchBar from "./components/search/BasicSearchBar";
 import BasicProgressBar from "./components/progressbar/BasicProgressBar";
 import BasicMultiCheckBox from "./components/checkbox/BasicMultiCheckBox";
+import { useState } from "react";
 
 const App: React.FC = () => {
   const { open, close } = useModal();
+  const [checkedList, setCheckedList] = useState([
+    CheckBoxStatus.unchecked,
+    CheckBoxStatus.unchecked,
+  ]);
 
   return (
     <>
       <BasicTemplate
         SideBar={
           <div className="flex flex-col">
-            <BasicNumeric />
-            <BasicNumberInput initValue="abc" />
-            <BasicTwoNumeric onlyInteger />
-            <BasicTwoNumberInput onlyInteger />
+            <BasicNumeric
+              onValueChanged={(value) => {
+                console.log(value);
+              }}
+            />
+            <BasicNumberInput
+              initValue="abc"
+              onValueChanged={(value) => {
+                console.log(value);
+              }}
+            />
+            <BasicTwoNumeric
+              onlyInteger
+              onValueChanged={(value) => {
+                console.log(value);
+              }}
+              numericProps={{
+                inputStyle: { css: "h-[24px]" },
+              }}
+            />
+            <BasicTwoNumberInput
+              onlyInteger
+              onValueChanged={(value) => {
+                console.log(value);
+              }}
+              numberInputProps={{
+                inputStyle: { css: "h-[24px]" },
+              }}
+            />
             <BasicSelect items={[{ label: "1" }, { label: "2" }]} />
             <BasicCheckBox text={<div>123456</div>} />
             <BasicSearchBar />
-            <BasicMultiCheckBox items={[{ text: "1" }, { text: "2" }]} />
+            <BasicMultiCheckBox
+              items={[
+                { text: "1", checked: checkedList[0] },
+                { text: "2", checked: checkedList[1] },
+              ]}
+            />
 
             <div>123</div>
           </div>

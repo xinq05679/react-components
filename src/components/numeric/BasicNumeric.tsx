@@ -93,7 +93,10 @@ export const BasicNumeric: React.FC<BasicNumericProps> = ({
 
     setOldValue(formedValue);
     setValue(formedValue);
-    onValueChanged?.(parseFloat(formedValue));
+
+    if (formedValue !== oldValue) {
+      onValueChanged?.(parseFloat(formedValue));
+    }
   };
 
   return (

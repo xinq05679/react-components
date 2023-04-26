@@ -18,6 +18,7 @@ export interface BasicTwoNumericProps<T extends BasicNumericProps> {
   containerStyle?: ComponentStyleMerging;
   onlyInteger?: boolean;
   digits?: number;
+  numericProps?: BasicNumericProps;
 }
 
 export function BasicTwoNumeric<T extends BasicNumericProps>(
@@ -31,6 +32,7 @@ export function BasicTwoNumeric<T extends BasicNumericProps>(
     containerStyle,
     digits = -1,
     onlyInteger,
+    numericProps,
   } = props;
 
   const [value, setValue] = useState(initValue);
@@ -64,6 +66,7 @@ export function BasicTwoNumeric<T extends BasicNumericProps>(
             onlyInteger,
             digits,
           } as T)}
+          {...numericProps}
         />
         <div>-</div>
         <NumericFC
@@ -76,6 +79,7 @@ export function BasicTwoNumeric<T extends BasicNumericProps>(
             onlyInteger,
             digits,
           } as T)}
+          {...numericProps}
         />
       </div>
     </>
