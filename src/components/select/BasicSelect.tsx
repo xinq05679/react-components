@@ -3,6 +3,7 @@ import { MergeComponentStyle } from "../../utility/componentUtility";
 import classNames from "classnames";
 import { BiDownArrow } from "react-icons/bi";
 import { useRef, useState, useEffect } from "react";
+import BasicPortal from "../portal/BasicPortal";
 
 export interface SelectItem {
   label: string;
@@ -104,17 +105,17 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
   const _optionsDivStyle = MergeComponentStyle(
     {
       css: classNames(
-        "bottom-[0px]",
-        "w-[100%]",
         "flex flex-col",
         "border border-[#888]",
         "absolute",
         "bg-[#fff]",
         "group",
-        "z-[99]"
+        "text-center"
       ),
       style: {
-        bottom: `-${optionDivHeight}px`,
+        top: selectRef.current?.getBoundingClientRect().bottom,
+        left: selectRef.current?.getBoundingClientRect().left,
+        width: selectRef.current?.getBoundingClientRect().width,
       },
     },
     optionsDivStyle
@@ -183,25 +184,27 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
         </div>
         {/* Option */}
         {openDropDown && (
-          <div
-            data-highlight={highlightSelected}
-            className={_optionsDivStyle.css}
-            style={_optionsDivStyle.style}
-            ref={optionsDivRef}
-            onMouseEnter={() => setHighlightSelected(false)}
-          >
-            {items.map((item, index) => (
-              <div
-                data-select={selectedItem?.label === item.label}
-                key={index}
-                className={_optionStyle.css}
-                style={_optionStyle.style}
-                onClick={(event) => handleOptionClick(event, item)}
-              >
-                {item.name || item.label}
-              </div>
-            ))}
-          </div>
+          <BasicPortal>
+            <div
+              data-highlight={highlightSelected}
+              className={_optionsDivStyle.css}
+              style={_optionsDivStyle.style}
+              ref={optionsDivRef}
+              onMouseEnter={() => setHighlightSelected(false)}
+            >
+              {items.map((item, index) => (
+                <div
+                  data-select={selectedItem?.label === item.label}
+                  key={index}
+                  className={_optionStyle.css}
+                  style={_optionStyle.style}
+                  onClick={(event) => handleOptionClick(event, item)}
+                >
+                  {item.name || item.label}
+                </div>
+              ))}
+            </div>
+          </BasicPortal>
         )}
       </div>
     </>
