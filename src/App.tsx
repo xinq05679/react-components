@@ -82,20 +82,19 @@ const App: React.FC = () => {
           <div className="flex gap-[10px]">
             <BasicButton
               onClicked={() => {
-                open(ModalType.BasicProgressDialog, {
+                open(ModalType.BasicQueryDialog, {
                   // prgoressbar: <BasicProgressBar></BasicProgressBar>,
                   title: "hahb",
                   content: (
-                    <div className="flex flex-col justify-center grow h-1 overflow-auto">
+                    <div>
                       <div>123455555677777777778</div>
-                      <div>1</div>
-                      <div>1</div>
                       <div>1</div>
                     </div>
                   ),
-                  information: "QQ",
-                  icon: <img className="h-[100%] w-[100%]" src={QueryIcon} />,
-                  prgoressbar: <BasicProgressBar />,
+                  information: <div className="h-[1000px] w-[1000px]"></div>,
+                  // queryDialogType: QueryDialogType.Error,
+                  // icon: <img src={QueryIcon} />,
+                  // prgoressbar: <BasicProgressBar />,
                   buttons: (
                     <>
                       <BasicButton>Hi</BasicButton>
@@ -104,7 +103,7 @@ const App: React.FC = () => {
                   onCloseButtonClicked: () => {
                     close();
                   },
-                } as BasicProgressDialogProps);
+                } as BasicQueryDialogProps);
               }}
             >
               Open

@@ -17,12 +17,14 @@ export interface BasicQueryDialogProps {
   modalStyle?: ComponentStyleMerging;
   containerStyle?: ComponentStyleMerging;
   bodyStyle?: ComponentStyleMerging;
-  contentStyle?: ComponentStyleMerging;
+  outerContentStyle?: ComponentStyleMerging;
+  innerContentStyle?: ComponentStyleMerging;
   headerStyle?: ComponentStyleMerging;
   iconStyle?: ComponentStyleMerging;
   footerStyle?: ComponentStyleMerging;
   buttonStyle?: ComponentStyleMerging;
-  informationStyle?: ComponentStyleMerging;
+  outerInformationStyle?: ComponentStyleMerging;
+  innerInformationStyle?: ComponentStyleMerging;
   closeButtonStyle?: ComponentStyleMerging;
   onCloseButtonClicked?: () => void;
   reverseFooter?: boolean;
@@ -41,11 +43,13 @@ export const BasicQueryDialog: React.FC<BasicQueryDialogProps> = (props) => {
     containerStyle,
     bodyStyle,
     iconStyle,
-    contentStyle,
+    outerContentStyle,
+    innerContentStyle,
     headerStyle,
     footerStyle,
     buttonStyle,
-    informationStyle,
+    outerInformationStyle,
+    innerInformationStyle,
     closeButtonStyle,
     onCloseButtonClicked,
     reverseFooter,
@@ -67,25 +71,36 @@ export const BasicQueryDialog: React.FC<BasicQueryDialogProps> = (props) => {
 
   const _bodyStyle = MergeComponentStyle(
     {
-      css: classNames("flex items-center"),
+      css: classNames("flex items-center gap-[10px]", "pl-[20px]"),
     },
     bodyStyle
   );
 
-  const _contentStyle = MergeComponentStyle(
+  const _outerContentStyle = MergeComponentStyle(
     {
-      css: classNames("grow", "flex items-center", "h-[100%]"),
+      css: classNames("grow", "relative", "h-[100%]"),
     },
-    contentStyle
+    outerContentStyle
+  );
+
+  const _innerContentStyle = MergeComponentStyle(
+    {
+      css: classNames(
+        "absolute",
+        "flex items-center",
+        "overflow-auto",
+        "h-[100%] w-[100%]"
+      ),
+    },
+    innerContentStyle
   );
 
   const _iconStyle = MergeComponentStyle(
     {
       css: classNames(
         "h-[128px] w-[128px]",
-        "mx-[10px]",
         "text-[128px] text-[#f00]",
-        "shrink-0 grow-0"
+        "shrink-0"
       ),
     },
     iconStyle
@@ -109,29 +124,57 @@ export const BasicQueryDialog: React.FC<BasicQueryDialogProps> = (props) => {
     buttonStyle
   );
 
-  const _informationStyle = MergeComponentStyle(
+  const _outerInformationStyle = MergeComponentStyle(
     {
-      css: classNames("grow", "h-1 overflow-auto", "bg-[#eee]", "shadow-inner"),
+      css: classNames("grow", "relative", "h-[100%]"),
     },
-    informationStyle
+    outerInformationStyle
+  );
+
+  const _innerInformationStyle = MergeComponentStyle(
+    {
+      css: classNames(
+        "absolute",
+        "overflow-auto",
+        "h-[100%] w-[100%]",
+        "bg-[#eee]",
+        "shadow-inner"
+      ),
+    },
+    innerInformationStyle
   );
 
   const _closeButtonStyle = MergeComponentStyle({}, closeButtonStyle);
 
   const renderIcon = () => {
-    if (icon) return icon;
+    if (icon)
+      return (
+        <div className={_iconStyle.css} style={_iconStyle.style}>
+          {icon}
+        </div>
+      );
 
     switch (queryDialogType) {
       case QueryDialogType.Error:
         return (
-          <MdOutlineError className={_iconStyle.css} style={_iconStyle.style} />
+          <div className={_iconStyle.css} style={_iconStyle.style}>
+            <MdOutlineError
+              className={_iconStyle.css}
+              style={_iconStyle.style}
+            />
+          </div>
         );
       case QueryDialogType.Info:
       case QueryDialogType.Query:
       case QueryDialogType.Warning:
         return (
           <div className={_iconStyle.css} style={_iconStyle.style}>
-            <img src={QueryIcon} alt="query icon" />
+            <img
+              className={_iconStyle.css}
+              style={_iconStyle.style}
+              src={QueryIcon}
+              alt="query icon"
+            />
           </div>
         );
     }
@@ -169,19 +212,19 @@ export const BasicQueryDialog: React.FC<BasicQueryDialogProps> = (props) => {
 
   const renderInformation = () => {
     if (!information) return null;
-    if (typeof information === "string") {
-      return (
-        <pre className={_informationStyle.css} style={_informationStyle.style}>
-          {information}
-        </pre>
-      );
-    } else {
-      return (
-        <div className={_informationStyle.css} style={_informationStyle.style}>
+    return (
+      <div
+        className={_outerInformationStyle.css}
+        style={_outerInformationStyle.style}
+      >
+        <div
+          className={_innerInformationStyle.css}
+          style={_innerInformationStyle.style}
+        >
           {information}
         </div>
-      );
-    }
+      </div>
+    );
   };
 
   return (
@@ -194,8 +237,16 @@ export const BasicQueryDialog: React.FC<BasicQueryDialogProps> = (props) => {
             {/* ICON */}
             {renderIcon()}
             {/* CONTENT */}
-            <div className={_contentStyle.css} style={_contentStyle.style}>
-              {content}
+            <div
+              className={_outerContentStyle.css}
+              style={_outerContentStyle.style}
+            >
+              <div
+                className={_innerContentStyle.css}
+                style={_innerContentStyle.style}
+              >
+                {content}
+              </div>
             </div>
           </>
         }

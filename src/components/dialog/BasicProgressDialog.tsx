@@ -14,13 +14,15 @@ export interface BasicProgressDialogProps {
   modalStyle?: ComponentStyleMerging;
   containerStyle?: ComponentStyleMerging;
   bodyStyle?: ComponentStyleMerging;
-  contentStyle?: ComponentStyleMerging;
+  outerContentStyle?: ComponentStyleMerging;
+  innerContentStyle?: ComponentStyleMerging;
   iconStyle?: ComponentStyleMerging;
   progressbarStyle?: ComponentStyleMerging;
   headerStyle?: ComponentStyleMerging;
   footerStyle?: ComponentStyleMerging;
   buttonStyle?: ComponentStyleMerging;
-  informationStyle?: ComponentStyleMerging;
+  outerInformationStyle?: ComponentStyleMerging;
+  innerInformationStyle?: ComponentStyleMerging;
   closeButtonStyle?: ComponentStyleMerging;
   onCloseButtonClicked?: () => void;
   reverseFooter?: boolean;
@@ -38,13 +40,15 @@ export function BasicProgressDialog(props: BasicProgressDialogProps) {
     modalStyle,
     containerStyle,
     bodyStyle,
-    contentStyle,
+    outerContentStyle,
+    innerContentStyle,
     iconStyle,
     progressbarStyle,
     headerStyle,
     footerStyle,
     buttonStyle,
-    informationStyle,
+    outerInformationStyle,
+    innerInformationStyle,
     closeButtonStyle,
     onCloseButtonClicked,
     reverseFooter,
@@ -73,11 +77,23 @@ export function BasicProgressDialog(props: BasicProgressDialogProps) {
     bodyStyle
   );
 
-  const _contentStyle = MergeComponentStyle(
+  const _outerContentStyle = MergeComponentStyle(
     {
-      css: classNames("grow", "flex items-center", "h-[100%]"),
+      css: classNames("grow", "relative", "h-[100%]"),
     },
-    contentStyle
+    outerContentStyle
+  );
+
+  const _innerContentStyle = MergeComponentStyle(
+    {
+      css: classNames(
+        "absolute",
+        "flex items-center",
+        "overflow-auto",
+        "h-[100%] w-[100%]"
+      ),
+    },
+    innerContentStyle
   );
 
   const _iconStyle = MergeComponentStyle(
@@ -114,11 +130,24 @@ export function BasicProgressDialog(props: BasicProgressDialogProps) {
     buttonStyle
   );
 
-  const _informationStyle = MergeComponentStyle(
+  const _outerInformationStyle = MergeComponentStyle(
     {
-      css: classNames("grow", "h-1 overflow-auto", "bg-[#eee]", "shadow-inner"),
+      css: classNames("grow", "relative", "h-[100%]"),
     },
-    informationStyle
+    outerInformationStyle
+  );
+
+  const _innerInformationStyle = MergeComponentStyle(
+    {
+      css: classNames(
+        "absolute",
+        "overflow-auto",
+        "h-[100%] w-[100%]",
+        "bg-[#eee]",
+        "shadow-inner"
+      ),
+    },
+    innerInformationStyle
   );
 
   const _closeButtonStyle = MergeComponentStyle({}, closeButtonStyle);
@@ -167,19 +196,19 @@ export function BasicProgressDialog(props: BasicProgressDialogProps) {
 
   const renderInformation = () => {
     if (!information) return null;
-    if (typeof information === "string") {
-      return (
-        <pre className={_informationStyle.css} style={_informationStyle.style}>
-          {information}
-        </pre>
-      );
-    } else {
-      return (
-        <div className={_informationStyle.css} style={_informationStyle.style}>
+    return (
+      <div
+        className={_outerInformationStyle.css}
+        style={_outerInformationStyle.style}
+      >
+        <div
+          className={_innerInformationStyle.css}
+          style={_innerInformationStyle.style}
+        >
           {information}
         </div>
-      );
-    }
+      </div>
+    );
   };
 
   return (
@@ -197,8 +226,16 @@ export function BasicProgressDialog(props: BasicProgressDialogProps) {
           )}
 
           {/* CONTENT */}
-          <div className={_contentStyle?.css} style={_contentStyle?.style}>
-            {content}
+          <div
+            className={_outerContentStyle.css}
+            style={_outerContentStyle.style}
+          >
+            <div
+              className={_innerContentStyle.css}
+              style={_innerContentStyle.style}
+            >
+              {content}
+            </div>
           </div>
         </>
       }
