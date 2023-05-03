@@ -18,16 +18,15 @@ export type ToolTipPosition =
   | "LC"
   | "LB";
 
-export interface BasicToolTip {
-  children: React.ReactElement;
+export interface BasicToolTipProps {
+  children: React.ReactNode;
   text?: string;
   delayTimeOpen?: number;
   tooltipStyle?: ComponentStyleMerging;
   position?: ToolTipPosition;
-  hold?: boolean;
 }
 
-export const BasicToolTip: React.FC<BasicToolTip> = ({
+export const BasicToolTip: React.FC<BasicToolTipProps> = ({
   children,
   text = "",
   delayTimeOpen = 0,
@@ -153,26 +152,28 @@ export const BasicToolTip: React.FC<BasicToolTip> = ({
         {children}
       </div>
 
-      {ReactDOM.createPortal(
-        <span
-          ref={tooltipRef}
-          data-visible={visible}
-          className={_tooltipStyle.css}
-          style={_tooltipStyle.style}
-        >
-          {text}
-        </span>,
-        (() => {
-          const divId = "tooltip-portal";
-          let portal = document.querySelector(divId);
-          if (portal === null) {
-            portal = document.createElement(divId);
-            portal.id = divId;
-            document.querySelector("body")?.appendChild(portal);
-          }
-          return portal;
-        })()
-      )}
+      {text
+        ? ReactDOM.createPortal(
+            <span
+              ref={tooltipRef}
+              data-visible={visible}
+              className={_tooltipStyle.css}
+              style={_tooltipStyle.style}
+            >
+              {text}
+            </span>,
+            (() => {
+              const divId = "tooltip-portal";
+              let portal = document.querySelector(divId);
+              if (portal === null) {
+                portal = document.createElement(divId);
+                portal.id = divId;
+                document.querySelector("body")?.appendChild(portal);
+              }
+              return portal;
+            })()
+          )
+        : null}
     </>
   );
 };

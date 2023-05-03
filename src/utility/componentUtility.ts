@@ -3,7 +3,6 @@ import {
   ComponentStyleMerging,
   StyleMergingMode,
 } from "../metadata/ComponentStyle";
-import classNames from "classnames";
 import { twMerge } from "tailwind-merge";
 
 export function MergeComponentStyle(
