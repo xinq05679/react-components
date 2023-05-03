@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import { ModalProvider } from "./components/modal/useModal";
+import { QueryDialogProvider } from "./hooks/useQueryDialog";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <ModalProvider>
+    <QueryDialogProvider>
       <App />
-    </ModalProvider>
+    </QueryDialogProvider>
   </React.StrictMode>
 );

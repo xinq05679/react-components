@@ -19,6 +19,8 @@ export interface BasicTwoNumericProps<T extends BasicNumericProps> {
   onlyInteger?: boolean;
   digits?: number;
   numericProps?: BasicNumericProps;
+  enableSelectAll?: boolean;
+  readOnly?: boolean;
 }
 
 export function BasicTwoNumeric<T extends BasicNumericProps>(
@@ -33,6 +35,8 @@ export function BasicTwoNumeric<T extends BasicNumericProps>(
     digits = -1,
     onlyInteger,
     numericProps,
+    enableSelectAll,
+    readOnly,
   } = props;
 
   const [value, setValue] = useState(initValue);
@@ -65,6 +69,8 @@ export function BasicTwoNumeric<T extends BasicNumericProps>(
             },
             onlyInteger,
             digits,
+            readOnly,
+            enableSelectAll,
           } as T)}
           {...numericProps}
         />
@@ -78,6 +84,8 @@ export function BasicTwoNumeric<T extends BasicNumericProps>(
             },
             onlyInteger,
             digits,
+            readOnly,
+            enableSelectAll,
           } as T)}
           {...numericProps}
         />

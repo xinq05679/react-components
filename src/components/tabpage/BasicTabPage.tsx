@@ -1,22 +1,21 @@
 import BasicTab from "./BasicTab";
-import { BasicTabProps } from "./BasicTabProps";
-import { BasicTabPageProps } from "./BasicTabPageProps";
+import { BasicTabProps } from "./BasicTab";
 import { MergeComponentStyle } from "../../utility/componentUtility";
+import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { Fragment } from "react";
+
+export interface BasicTabPageProps<T extends BasicTabProps> {
+  tabs: { [name: string]: T };
+  Tab?: React.FC<T>;
+  containerStyle?: ComponentStyleMerging;
+  tabDivStyle?: ComponentStyleMerging;
+  tabPageDivStyle?: ComponentStyleMerging;
+}
 
 export function BasicTabPage<T extends BasicTabProps>(
   props: BasicTabPageProps<T>
 ): React.ReactElement<BasicTabPageProps<T>> {
-  const {
-    tabs,
-    Tab,
-    onTabClicked,
-    onTabClosed,
-    onTabContextMenuClicked,
-    containerStyle,
-    tabDivStyle,
-    tabPageDivStyle,
-  } = props;
+  const { tabs, Tab, containerStyle, tabDivStyle, tabPageDivStyle } = props;
 
   const _containerStyle = MergeComponentStyle(
     {
@@ -34,7 +33,7 @@ export function BasicTabPage<T extends BasicTabProps>(
 
   const _tabPageDivStyle = MergeComponentStyle(
     {
-      css: "flex flex-col grow h-[100%]",
+      css: "flex flex-col grow h-[100%] border-t-[2px]",
     },
     tabPageDivStyle
   );
@@ -42,26 +41,17 @@ export function BasicTabPage<T extends BasicTabProps>(
   return (
     <div className={_containerStyle.css} style={_containerStyle.style}>
       <div className={_tabDivStyle.css} style={_tabDivStyle.style}>
-        {tabs.map((tab) => {
+        {Object.entries(tabs).map(([key, tab]) => {
           const TabFC = Tab || BasicTab;
           return (
-            <Fragment key={`${tab.id}`}>
-              <TabFC
-                onClicked={(params) => onTabClicked?.(params)}
-                onClosed={(params) => onTabClosed?.(params)}
-                onContextMenuClicked={(params) =>
-                  onTabContextMenuClicked?.(params)
-                }
-                {...tab}
-              />
+            <Fragment key={key}>
+              <TabFC {...tab} />
             </Fragment>
           );
         })}
       </div>
       <div className={_tabPageDivStyle.css} style={_tabPageDivStyle.style}>
-        {(() => {
-          return tabs.find((tab) => tab.isSelected)?.page;
-        })()}
+        {Object.values(tabs).find((tab) => tab.isSelected)?.page}
       </div>
     </div>
   );

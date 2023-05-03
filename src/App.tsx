@@ -1,6 +1,5 @@
 import QueryIcon from "./resources/image/query.png";
 import BasicTemplate from "./template/BasicTemplate";
-import TabPageExample from "./example/TabPageExample";
 import BasicButton from "./components/button/BasicButton";
 import BasicQueryDialog, {
   BasicQueryDialogProps,
@@ -12,9 +11,16 @@ import BasicCheckBox, {
 import { useState } from "react";
 import BasicToolBar from "./components/toolbar/BasicToolBar";
 import { AiFillAlert } from "react-icons/ai";
+import BasicTreeView from "./components/treeview/BasicTreeView";
+import BasicTextInput from "./components/input/BasicTextInput";
+import BasicSelect from "./components/select/BasicSelect";
+import BasicNumberInput from "./components/numeric/BasicNumberInput";
+import BasicTable from "./components/table/BasicTable";
+import BasicTabPage from "./components/tabpage/BasicTabPage";
+import useQueryDialog from "./hooks/useQueryDialog";
+import { QueryDialogType } from "./metadata/QueryDialogType";
 
 const App: React.FC = () => {
-  const { open, close } = useModal();
   const [checkedList, setCheckedList] = useState([
     CheckBoxStatus.unchecked,
     CheckBoxStatus.unchecked,
@@ -24,65 +30,59 @@ const App: React.FC = () => {
     <>
       <BasicTemplate
         SideBar={
-          <BasicToolBar
-            items={[
+          <BasicTreeView
+            roots={[
               {
-                label: "0",
-                icon: <img src={QueryIcon} width={24} />,
-                tooltip: "hi",
-                selected: true,
-                itemStyle: {
-                  // css: "[&]:hover:bg-[#ff0]",
-                },
-                onContentMenu: (evt) => {
-                  evt.preventDefault();
-                  alert("QQ");
-                },
+                id: "0",
+                text: "Workspace",
+                children: [
+                  {
+                    id: "0-1",
+                  },
+                ],
               },
               {
-                label: "1",
-                tooltip: "QQ",
-                icon: <AiFillAlert size={24} />,
-                itemStyle: {
-                  css: "[&]:hover:text-[#ff0]",
-                },
+                id: "1",
+                text: "Feature 1",
+              },
+              {
+                id: "2",
+                text: "Feature 1",
+              },
+              {
+                id: "3",
+                text: "Feature 1",
+              },
+              {
+                id: "4",
+                text: "Feature 1",
+              },
+              {
+                id: "5",
+                text: "Feature 1",
               },
             ]}
           />
         }
-        ContentPage={<TabPageExample />}
-        // Footer={
-        //   <div className="flex gap-[10px]">
-        //     <BasicButton
-        //       onClicked={() => {
-        //         open(ModalType.BasicQueryDialog, {
-        //           // prgoressbar: <BasicProgressBar></BasicProgressBar>,
-        //           title: "hahb",
-        //           content: (
-        //             <div>
-        //               <div>123455555677777777778</div>
-        //               <div>1</div>
-        //             </div>
-        //           ),
-        //           information: <div className="h-[1000px] w-[1000px]"></div>,
-        //           // queryDialogType: QueryDialogType.Error,
-        //           // icon: <img src={QueryIcon} />,
-        //           // prgoressbar: <BasicProgressBar />,
-        //           buttons: (
-        //             <>
-        //               <BasicButton>Hi</BasicButton>
-        //             </>
-        //           ),
-        //           onCloseButtonClicked: () => {
-        //             close();
-        //           },
-        //         } as BasicQueryDialogProps);
-        //       }}
-        //     >
-        //       Open
-        //     </BasicButton>
-        //   </div>
-        // }
+        ContentPage={
+          // <BasicTable
+          //   headerCell={[<th className="w-[30%]">1</th>, <th>2</th>]}
+          //   tableCell={[
+          //     [<td>1-1</td>, <td>1-2</td>],
+          //     [<td>2-1</td>, <td>2-2</td>],
+          //     [<td>2-1</td>, <td>2-2</td>],
+          //     [<td>2-1</td>, <td>2-2</td>],
+          //     [<td>2-1</td>, <td>2-2</td>],
+          //     [<td>2-1</td>, <td>2-2</td>],
+          //   ]}
+          // />
+          <BasicTabPage
+            tabs={{
+              "tab 1": { text: "tab 1", isModified: true },
+              "tab 2": { text: "tab 2" },
+            }}
+          />
+        }
       ></BasicTemplate>
     </>
   );

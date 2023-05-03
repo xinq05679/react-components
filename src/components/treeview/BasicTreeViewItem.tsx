@@ -1,12 +1,26 @@
-import { BasicTreeViewItemProps } from "./BasicTreeViewItemProps";
+import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { MergeComponentStyle } from "../../utility/componentUtility";
 import { AiFillCaretDown, AiFillCaretRight } from "react-icons/ai";
 import classNames from "classnames";
+
+export interface BasicTreeViewItemProps {
+  id: string;
+  text?: React.ReactNode;
+  isSelected?: boolean;
+  isExpanded?: boolean;
+  children?: BasicTreeViewItemProps[];
+  arrow?: React.ReactNode;
+  containerStyle?: ComponentStyleMerging;
+  arrowStyle?: ComponentStyleMerging;
+  textStyle?: ComponentStyleMerging;
+  onClicked?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onContextMenuClicked?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+}
+
 export const BasicTreeViewItem: React.FC<BasicTreeViewItemProps> = ({
   id,
   text,
   children,
-  unselectable,
   isSelected,
   isExpanded,
   containerStyle,
@@ -23,15 +37,15 @@ export const BasicTreeViewItem: React.FC<BasicTreeViewItemProps> = ({
         ["text-[#000]"],
         ["hover:bg-[#e5f3ff]"],
         [
-          "data-[selected=true]:bg-[#cce8ff]",
-          "data-[selected=true]:border-[#99d1ff]",
-          "data-[selected=true]:border",
-          "data-[selected=true]:font-semibold",
+          "[&[data-selected='true']]:bg-[#cce8ff]",
+          "[&[data-selected='true']]:border-[#99d1ff]",
+          "[&[data-selected='true']]:border",
+          "[&[data-selected='true']]:font-semibold",
         ],
         [
-          "data-[type=branch]:text-[16px]",
-          "data-[type=branch]:font-bold",
-          "data-[type=node]:text-[16px]",
+          "[&[data-type='branch']]:text-[16px]",
+          "[&[data-type='branch']]:font-bold",
+          "[&[data-type='node']]:text-[16px]",
         ]
       ),
     },
@@ -65,22 +79,12 @@ export const BasicTreeViewItem: React.FC<BasicTreeViewItemProps> = ({
 
   return (
     <button
-      {...{
-        "data-type": children ? "branch" : "node",
-        "data-selected": isSelected,
-      }}
+      data-type={children ? "branch" : "node"}
+      data-selected={isSelected}
       className={_containerStyle.css}
       style={_containerStyle.style}
-      onClick={(event) => {
-        onClicked?.({ event, id });
-      }}
-      onContextMenuCapture={(event) => {
-        onContextMenuClicked?.({
-          event,
-          id,
-          pos: { x: event.clientX, y: event.clientY },
-        });
-      }}
+      onClick={onClicked}
+      onContextMenuCapture={onContextMenuClicked}
     >
       {/* ARROW */}
       {renderedArrow()}

@@ -5,9 +5,9 @@ import classNames from "classnames";
 
 type ToolTipProps = Omit<BasicToolTipProps, "text" | "children">;
 
-type ToolBarItemProps = {
-  label: string;
+export interface BasicToolBarItemProps {
   icon: React.ReactNode;
+  position?: number;
   tooltip?: string;
   selected?: boolean;
   itemStyle?: ComponentStyleMerging;
@@ -16,16 +16,16 @@ type ToolBarItemProps = {
   onMouseEnter?: (event: React.MouseEvent<HTMLDivElement>) => void;
   onMouseLevel?: (event: React.MouseEvent<HTMLDivElement>) => void;
   onContentMenu?: (event: React.MouseEvent<HTMLDivElement>) => void;
-};
+}
 
-export interface BasicToolBar {
-  items: ToolBarItemProps[];
+export interface BasicToolBarProps {
+  items: BasicToolBarItemProps[];
   containerStyle?: ComponentStyleMerging;
   genericItemStyle?: ComponentStyleMerging;
   genericTooltipProps?: ToolTipProps;
 }
 
-export const BasicToolBar: React.FC<BasicToolBar> = ({
+export const BasicToolBar: React.FC<BasicToolBarProps> = ({
   items,
   containerStyle,
   genericItemStyle,
@@ -33,7 +33,7 @@ export const BasicToolBar: React.FC<BasicToolBar> = ({
 }) => {
   const _containerStyle = MergeComponentStyle(
     {
-      css: classNames("w-[32px] h-[100%]", "bg-[#0e6db7]", "flex flex-col"),
+      css: classNames("h-[100%]", "bg-[#0e6db7]", "flex flex-col items-center"),
     },
     containerStyle
   );
@@ -41,15 +41,14 @@ export const BasicToolBar: React.FC<BasicToolBar> = ({
   const _genericItemStyle = MergeComponentStyle(
     {
       css: classNames(
-        ["flex justify-center", "relative", "w-[32px]"],
+        ["flex justify-center items-center", "relative"],
         ["[&]:hover:text-[#fff]", "[&]:hover:cursor-pointer"],
         [
-          "[&[data-selected]]:before:absolute",
-          "[&[data-selected]]:before:left-[0px]",
-          "[&[data-selected]]:before:bg-[#fff]",
-          "[&[data-selected]]:before:h-[100%]",
-          "[&[data-selected]]:before:w-[2px]",
-          "[&[data-selected]]:text-[#fff]",
+          "[&[data-selected=true]]:before:absolute",
+          "[&[data-selected=true]]:before:left-[0px]",
+          "[&[data-selected=true]]:before:bg-[#fff]",
+          "[&[data-selected=true]]:before:h-[100%]",
+          "[&[data-selected=true]]:before:w-[3px]",
         ]
       ),
     },
@@ -61,40 +60,63 @@ export const BasicToolBar: React.FC<BasicToolBar> = ({
     genericTooltipProps?.tooltipStyle
   );
 
+  const getItem = (item: BasicToolBarItemProps, key: string) => {
+    const itemStyle = MergeComponentStyle(_genericItemStyle, item.itemStyle);
+
+    return (
+      <BasicToolTip
+        key={key}
+        {...genericTooltipProps}
+        {...item.tooltipProps}
+        text={item.tooltip}
+        tooltipStyle={MergeComponentStyle(
+          _genericTooltipStyle,
+          item.tooltipProps?.tooltipStyle
+        )}
+      >
+        <div
+          data-selected={item.selected}
+          className={itemStyle.css}
+          style={itemStyle.style}
+          onClick={item.onClicked}
+          onMouseEnter={item.onMouseEnter}
+          onMouseLeave={item.onMouseLevel}
+          onContextMenuCapture={item.onContentMenu}
+        >
+          {item.icon}
+        </div>
+      </BasicToolTip>
+    );
+  };
+
   return (
     <>
       <div className={_containerStyle.css} style={_containerStyle.style}>
-        {items.map((item) => {
-          const itemStyle = MergeComponentStyle(
-            _genericItemStyle,
-            item.itemStyle
-          );
-
-          return (
-            <BasicToolTip
-              key={item.label}
-              {...genericTooltipProps}
-              {...item.tooltipProps}
-              text={item.tooltip}
-              tooltipStyle={MergeComponentStyle(
-                _genericTooltipStyle,
-                item.tooltipProps?.tooltipStyle
-              )}
-            >
-              <div
-                data-selected={item.selected}
-                className={itemStyle.css}
-                style={itemStyle.style}
-                onClick={item.onClicked}
-                onMouseEnter={item.onMouseEnter}
-                onMouseLeave={item.onMouseLevel}
-                onContextMenuCapture={item.onContentMenu}
-              >
-                {item.icon}
-              </div>
-            </BasicToolTip>
-          );
-        })}
+        {
+          // Start Items
+          items
+            .filter((item) => !item.position || item.position >= 0)
+            .sort((a, b) => {
+              if (!a.position) return -1;
+              if (!b.position) return 1;
+              const comparison =
+                (a.position as number) - (b.position as number);
+              return comparison ? comparison : 1;
+            })
+            .map((item, index) => getItem(item, index.toString()))
+        }
+        {<div className="grow"></div>}
+        {
+          // End Items
+          items
+            .filter((item) => item.position && item.position < 0)
+            .sort((a, b) => {
+              const comparison =
+                (a.position as number) - (b.position as number);
+              return comparison ? comparison : -1;
+            })
+            .map((item, index) => getItem(item, index.toString()))
+        }
       </div>
     </>
   );

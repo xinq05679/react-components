@@ -1,23 +1,33 @@
-import { BasicTreeViewItemProps } from "./BasicTreeViewItemProps";
-import { BasicTreeViewProps } from "./BasicTreeViewProps";
+import { BasicTreeViewItemProps } from "./BasicTreeViewItem";
 import { MergeComponentStyle } from "../../utility/componentUtility";
 import BasicTreeViewItem from "./BasicTreeViewItem";
+import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { Fragment } from "react";
+import classNames from "classnames";
+
+export interface BasicTreeViewProps<T extends BasicTreeViewItemProps> {
+  roots: T[];
+  TreeViewItemFC?: React.FC<T>;
+  outerContainerStyle?: ComponentStyleMerging;
+  innerContainerStyle?: ComponentStyleMerging;
+}
 
 export function BasicTreeView<T extends BasicTreeViewItemProps>(
   props: BasicTreeViewProps<T>
 ): React.ReactElement<BasicTreeViewProps<T>> {
-  const {
-    roots,
-    TreeViewItemFC,
-    onClicked,
-    onContextMenuClicked,
-    containerStyle,
-  } = props;
+  const { roots, TreeViewItemFC, outerContainerStyle, innerContainerStyle } =
+    props;
 
-  const _containerStyle = MergeComponentStyle(
-    { css: "flex flex-col grow shrink-0 overflow-y-auto h-1" },
-    containerStyle
+  const _outerContainerStyle = MergeComponentStyle(
+    {
+      css: classNames("h-[100%] w-[100%]", "overflow-auto", "relative"),
+    },
+    outerContainerStyle
+  );
+
+  const _innerContainerStyle = MergeComponentStyle(
+    { css: classNames("flex flex-col", " w-[100%]", "absolute") },
+    innerContainerStyle
   );
 
   const renderedTreeViewItems = (item: T, layer: number): React.ReactNode => {
@@ -26,11 +36,7 @@ export function BasicTreeView<T extends BasicTreeViewItemProps>(
 
     return (
       <Fragment key={item.id}>
-        <ItemFC
-          {...item}
-          onClicked={(params) => onClicked?.(params)}
-          onContextMenuClicked={(params) => onContextMenuClicked?.(params)}
-        />
+        <ItemFC {...item} />
         {(() => {
           if (!item.children || !item.isExpanded) return null;
           return (
@@ -46,8 +52,16 @@ export function BasicTreeView<T extends BasicTreeViewItemProps>(
   };
 
   return (
-    <div className={_containerStyle.css} style={_containerStyle.style}>
-      {roots.map((item) => renderedTreeViewItems(item, 0))}
+    <div
+      className={_outerContainerStyle.css}
+      style={_outerContainerStyle.style}
+    >
+      <div
+        className={_innerContainerStyle.css}
+        style={_innerContainerStyle.style}
+      >
+        {roots.map((item) => renderedTreeViewItems(item, 0))}
+      </div>
     </div>
   );
 }

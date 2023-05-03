@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { useLayoutEffect, useRef, useState } from "react";
 import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { MergeComponentStyle } from "../../utility/componentUtility";
+import { Fragment } from "react";
 
 export interface BasicTableProps {
   headerCell?: React.ReactNode[];
@@ -20,11 +21,10 @@ export const BasicTable: React.FC<BasicTableProps> = ({
   tableStyle,
   headerStyle,
   rowStyle,
-  cellStyle,
 }) => {
   const _tableDivStyle = MergeComponentStyle(
     {
-      css: `overflow-auto m-auto h-[100%] w-[100%]`,
+      css: `overflow-auto m-auto h-[100%] w-[100%] relative`,
     },
     tableDivStyle
   );
@@ -32,7 +32,7 @@ export const BasicTable: React.FC<BasicTableProps> = ({
   const _tableStyle = MergeComponentStyle(
     {
       css: classNames(
-        "w-[100%] relative table-auto border-separate border-spacing-y-1"
+        "w-[100%] absolute table-auto border-separate border-spacing-y-1"
       ),
     },
     tableStyle
@@ -40,7 +40,7 @@ export const BasicTable: React.FC<BasicTableProps> = ({
 
   const _headerStyle = MergeComponentStyle(
     {
-      css: "sticky top-0 capitalize bg-[#0e6db7] text-[#fff] text-xl",
+      css: classNames("sticky top-0", "bg-[#0e6db7] text-[#fff]"),
     },
     headerStyle
   );
@@ -52,22 +52,14 @@ export const BasicTable: React.FC<BasicTableProps> = ({
     rowStyle
   );
 
-  const _cellStyle = MergeComponentStyle({}, cellStyle);
-
   return (
     <div className={_tableDivStyle.css} style={_tableDivStyle.style}>
       <table className={_tableStyle.css} style={_tableStyle.style}>
-        <thead>
+        <thead className={_headerStyle.css} style={_headerStyle.style}>
           {headerCell && (
             <tr>
               {headerCell.map((cell, index) => (
-                <th
-                  className={_headerStyle.css}
-                  style={_headerStyle.style}
-                  key={index}
-                >
-                  {cell}
-                </th>
+                <Fragment key={index}>{cell}</Fragment>
               ))}
             </tr>
           )}
@@ -81,13 +73,7 @@ export const BasicTable: React.FC<BasicTableProps> = ({
                 style={_rowStyle.style}
               >
                 {row.map((cell, colIdx) => (
-                  <td
-                    key={`cell-${rowIdx}-${colIdx}`}
-                    className={_cellStyle.css}
-                    style={_cellStyle.style}
-                  >
-                    {cell}
-                  </td>
+                  <Fragment key={`cell-${rowIdx}-${colIdx}`}>{cell}</Fragment>
                 ))}
               </tr>
             );

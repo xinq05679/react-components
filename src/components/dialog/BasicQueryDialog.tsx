@@ -119,7 +119,7 @@ export const BasicQueryDialog: React.FC<BasicQueryDialogProps> = (props) => {
 
   const _buttonStyle = MergeComponentStyle(
     {
-      css: classNames("grow-0 self-end"),
+      css: classNames("grow-0 self-end", "flex items-cetner gap-[10px]"),
     },
     buttonStyle
   );

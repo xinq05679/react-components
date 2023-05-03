@@ -14,6 +14,8 @@ export interface BasicNumberInputProps {
   inputStyle?: ComponentStyleMerging;
   onlyInteger?: boolean;
   digits?: number;
+  enableSelectAll?: boolean;
+  readOnly?: boolean;
 }
 
 export const BasicNumberInput: React.FC<BasicNumberInputProps> = ({
@@ -25,16 +27,20 @@ export const BasicNumberInput: React.FC<BasicNumberInputProps> = ({
   inputStyle,
   digits = -1,
   onlyInteger,
+  enableSelectAll,
+  readOnly,
 }) => {
   const [value, setValue] = useState(formatNumber(initValue));
   const [oldValue, setOldValue] = useState(formatNumber(initValue));
   const submitRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const _initValue = formatNumber(initValue);
 
     if (_initValue !== value) {
       setValue(_initValue);
+      setOldValue(_initValue);
     }
   }, [initValue]);
 
@@ -55,7 +61,7 @@ export const BasicNumberInput: React.FC<BasicNumberInputProps> = ({
 
   const _containerStyle = MergeComponentStyle(
     {
-      css: classNames("flex items-center", "w-[100%]", "text-[16px]"),
+      css: classNames("flex items-center", "w-[100%] h-[32px]", "text-[16px]"),
     },
     containerStyle
   );
@@ -63,14 +69,16 @@ export const BasicNumberInput: React.FC<BasicNumberInputProps> = ({
   const _inputStyle = MergeComponentStyle(
     {
       css: classNames(
-        "w-[100%]",
+        "h-[100%]",
+        "grow",
         "outline-0",
-        "h-[32px]",
-        "text-[16px] text-center",
-        "cursor-pointer",
-        "border border-[#ddd]",
-        "hover:border-[#00f]",
-        "focus:border-[#00f]"
+        "text-center",
+        ["border border-[#ddd]", "hover:border-[#00f]", "focus:border-[#00f]"],
+        [
+          "[&[readOnly]]:bg-[#ccc]",
+          "[&[readOnly]]:hover:border-0",
+          "[&[readOnly]]:focus:border-0",
+        ]
       ),
     },
     inputStyle
@@ -119,16 +127,21 @@ export const BasicNumberInput: React.FC<BasicNumberInputProps> = ({
       noValidate
     >
       <input
+        ref={inputRef}
         className={_inputStyle.css}
         style={_inputStyle.style}
         type={"text"}
         id={id}
         onChange={handleValueChanged}
         onBlur={handleBlue}
+        onClick={() => {
+          if (enableSelectAll) inputRef.current?.select();
+        }}
         onDrop={(event) => {
           event.preventDefault();
         }}
         value={value}
+        readOnly={readOnly}
       />
       <input ref={submitRef} type="submit" className="hidden" />
     </form>

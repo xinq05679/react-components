@@ -21,6 +21,7 @@ export interface BasicSelectProps {
   optionsDivStyle?: ComponentStyleMerging;
   optionStyle?: ComponentStyleMerging;
   onSelectedItemChanged?: (selectedItem: string) => void;
+  readOnly?: boolean;
 }
 
 export const BasicSelect: React.FC<BasicSelectProps> = ({
@@ -34,6 +35,7 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
   optionsDivStyle,
   optionStyle,
   onSelectedItemChanged,
+  readOnly,
 }) => {
   const [selectedItem, setSelectedItem] = useState<SelectItem | undefined>();
   const [openDropDown, setOpenDropDown] = useState(false);
@@ -85,11 +87,16 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
     {
       css: classNames(
         "w-[100%] h-[24px]",
-        "cursor-[pointer]",
+        "cursor-pointer",
+        "pl-[5px]",
         "outline-0",
         "border border-[#888]",
         "flex items-center",
-        "bg-[#fff]"
+        "bg-[#fff]",
+        [
+          "[&[data-readonly='true']]:bg-[#ccc]",
+          "[&[data-readonly='true']]:cursor-default",
+        ]
       ),
     },
     selectStyle
@@ -160,12 +167,16 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
       <div className={_containerStyle.css} style={_containerStyle.style}>
         {/* Select */}
         <div
+          data-readonly={readOnly}
           className={_selectStyle.css}
           style={_selectStyle.style}
           ref={selectRef}
           onClick={() => {
-            setOpenDropDown(!openDropDown);
-            setHighlightSelected(true);
+            if (readOnly) setOpenDropDown(false);
+            else {
+              setOpenDropDown(!openDropDown);
+              setHighlightSelected(true);
+            }
           }}
         >
           <div className="grow">

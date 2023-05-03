@@ -23,6 +23,13 @@ export const BasicHeader: React.FC<BasicHeaderProps> = ({
     containerStyle
   );
 
+  const _iconStyle = MergeComponentStyle(
+    {
+      css: "shrink-0",
+    },
+    iconStyle
+  );
+
   const _titleStyle = MergeComponentStyle(
     {
       css: "text-4xl text-[#fff] font-bold",
@@ -32,7 +39,7 @@ export const BasicHeader: React.FC<BasicHeaderProps> = ({
 
   return (
     <div className={_containerStyle.css} style={_containerStyle.style}>
-      <div className={iconStyle?.css} style={iconStyle?.style}>
+      <div className={_iconStyle.css} style={_iconStyle.style}>
         <img src={icon} alt="header icon" />
       </div>
       <div className={_titleStyle.css} style={_titleStyle.style}>

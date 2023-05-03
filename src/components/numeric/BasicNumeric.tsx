@@ -15,6 +15,8 @@ export interface BasicNumericProps {
   labelStyle?: ComponentStyleMerging;
   onlyInteger?: boolean;
   digits?: number;
+  enableSelectAll?: boolean;
+  readOnly?: boolean;
 }
 
 export const BasicNumeric: React.FC<BasicNumericProps> = ({
@@ -26,16 +28,20 @@ export const BasicNumeric: React.FC<BasicNumericProps> = ({
   inputStyle,
   digits = -1,
   onlyInteger,
+  enableSelectAll,
+  readOnly,
 }) => {
   const [value, setValue] = useState(formatNumber(initValue));
   const [oldValue, setOldValue] = useState(formatNumber(initValue));
   const submitRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const _initValue = formatNumber(initValue);
 
     if (_initValue !== value) {
       setValue(_initValue);
+      setOldValue(_initValue);
     }
   }, [initValue]);
 
@@ -49,7 +55,11 @@ export const BasicNumeric: React.FC<BasicNumericProps> = ({
 
   const _containerStyle = MergeComponentStyle(
     {
-      css: classNames("flex gap-[5px] items-center", "w-[100%]", "text-[16px]"),
+      css: classNames(
+        "flex gap-[5px] items-center",
+        "w-[100%] h-[32px]",
+        "text-[16px]"
+      ),
     },
     containerStyle
   );
@@ -57,14 +67,17 @@ export const BasicNumeric: React.FC<BasicNumericProps> = ({
   const _inputStyle = MergeComponentStyle(
     {
       css: classNames(
+        "h-[100%]",
         "grow",
         "outline-0",
-        "h-[32px]",
-        "text-[16px] text-center",
+        "text-center",
         "cursor-pointer",
-        "border border-[#ddd]",
-        "hover:border-[#00f]",
-        "focus:border-[#00f]"
+        ["border border-[#ddd]", "hover:border-[#00f]", "focus:border-[#00f]"],
+        [
+          "[&[readOnly]]:bg-[#ccc]",
+          "[&[readOnly]]:hover:border-0",
+          "[&[readOnly]]:focus:border-0",
+        ]
       ),
     },
     inputStyle
@@ -114,12 +127,16 @@ export const BasicNumeric: React.FC<BasicNumericProps> = ({
           id={id}
           onChange={handleValueChanged}
           onBlur={handleBlue}
+          onClick={() => {
+            if (enableSelectAll) inputRef.current?.select();
+          }}
           onDrop={(event) => {
             event.preventDefault();
           }}
           value={value}
           min={range.min}
           max={range.max}
+          readOnly={readOnly}
         />
         <input ref={submitRef} type="submit" className="hidden" />
       </form>

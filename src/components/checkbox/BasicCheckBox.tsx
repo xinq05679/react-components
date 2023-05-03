@@ -18,6 +18,7 @@ export interface BasicCheckBoxProps {
   inputStyle?: ComponentStyleMerging;
   labelStyle?: ComponentStyleMerging;
   indeterminate?: boolean;
+  readOnly?: boolean;
 }
 
 export const BasicCheckBox: React.FC<BasicCheckBoxProps> = ({
@@ -29,6 +30,7 @@ export const BasicCheckBox: React.FC<BasicCheckBoxProps> = ({
   inputStyle,
   labelStyle,
   indeterminate = false,
+  readOnly,
 }) => {
   const [value, setValue] = useState(checked);
 
@@ -45,30 +47,43 @@ export const BasicCheckBox: React.FC<BasicCheckBoxProps> = ({
 
   const _inputStyle = MergeComponentStyle(
     {
-      css: classNames("relative", "cursor-pointer", "w-[20px] h-[20px]", [
-        "after:absolute",
-        "after:flex after:items-center after:justify-center",
-        "after:w-[20px] after:h-[20px]",
-        "after:border after:border-[#888]",
-        "after:hover:border-[#00f]",
-        "after:text-[#fff]",
-        "after:bg-[#fff]",
-        "checked:after:bg-[#0075ff]",
-        "data-[checked='2']:after:content-['-']",
-        "data-[checked='0']:after:content-[&#10004;]",
-      ]),
+      css: classNames(
+        "relative",
+        "cursor-pointer",
+        "w-[20px] h-[20px]",
+        [
+          "data-[checked='2']:after:content-['-']",
+          "data-[checked='0']:after:content-[&#10004;]",
+          "after:absolute",
+          "after:w-[20px] after:h-[20px]",
+          "after:border after:border-[#888]",
+          "after:hover:border-[#00f]",
+          "after:text-[#fff]",
+          "after:bg-[#fff]",
+        ],
+        [
+          "[&[data-readonly='true']]:after:bg-[#ccc]",
+          "[&[data-readonly='true']]:after:hover:border-[#888]",
+          "[&[data-readonly='true']]:cursor-default",
+          "[&[data-readonly='true']]:accent-[#ccc]",
+        ]
+      ),
     },
     inputStyle
   );
 
   const _labelStyle = MergeComponentStyle(
     {
-      css: classNames("cursor-pointer"),
+      css: classNames("cursor-pointer", [
+        "[&[data-readonly='true']]:cursor-default",
+      ]),
     },
     labelStyle
   );
 
   const handleValueChanged = () => {
+    if (readOnly) return;
+
     let _checked = value;
 
     switch (_checked) {
@@ -98,6 +113,7 @@ export const BasicCheckBox: React.FC<BasicCheckBoxProps> = ({
         style={_containerStyle.style}
       >
         <input
+          data-readonly={readOnly}
           data-checked={value.toString()}
           className={_inputStyle.css}
           style={_inputStyle.style}
@@ -107,6 +123,7 @@ export const BasicCheckBox: React.FC<BasicCheckBoxProps> = ({
           onChange={handleValueChanged}
         />
         <label
+          data-readonly={readOnly}
           className={_labelStyle.css}
           style={_labelStyle.style}
           htmlFor={id}

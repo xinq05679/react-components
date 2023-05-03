@@ -14,6 +14,7 @@ export interface BasicMultiCheckBoxProps<T extends BasicCheckBoxProps> {
   containerStyle?: ComponentStyleMerging;
   onCheckedChanged?: (item: T, checked: CheckBoxStatus) => void;
   vertical?: boolean;
+  readOnly?: boolean;
 }
 
 export function BasicMultiCheckBox<T extends BasicCheckBoxProps>(
@@ -25,6 +26,7 @@ export function BasicMultiCheckBox<T extends BasicCheckBoxProps>(
     containerStyle,
     onCheckedChanged,
     vertical = false,
+    readOnly,
   } = props;
 
   const [checkedList, setCheckedList] = useState(
@@ -68,6 +70,7 @@ export function BasicMultiCheckBox<T extends BasicCheckBoxProps>(
                 );
                 onCheckedChanged?.(item, checked);
               }}
+              readOnly={readOnly}
             />
           </Fragment>
         ))}

@@ -19,6 +19,8 @@ export interface BasicTwoNumberInputProps {
   onlyInteger?: boolean;
   digits?: number;
   numberInputProps?: BasicNumberInputProps;
+  enableSelectAll?: boolean;
+  readOnly?: boolean;
 }
 
 export const BasicTwoNumberInput: React.FC<BasicTwoNumberInputProps> = ({
@@ -29,6 +31,8 @@ export const BasicTwoNumberInput: React.FC<BasicTwoNumberInputProps> = ({
   digits = -1,
   onlyInteger,
   numberInputProps,
+  enableSelectAll,
+  readOnly,
 }) => {
   const [value, setValue] = useState(initValue);
 
@@ -65,6 +69,8 @@ export const BasicTwoNumberInput: React.FC<BasicTwoNumberInputProps> = ({
           }}
           onlyInteger={onlyInteger}
           digits={digits}
+          readOnly={readOnly}
+          enableSelectAll={enableSelectAll}
           {...numberInputProps}
         />
         <div className="shrink-0">-</div>
@@ -81,6 +87,8 @@ export const BasicTwoNumberInput: React.FC<BasicTwoNumberInputProps> = ({
           }}
           onlyInteger={onlyInteger}
           digits={digits}
+          readOnly={readOnly}
+          enableSelectAll={enableSelectAll}
           {...numberInputProps}
         />
       </div>
