@@ -19,6 +19,8 @@ import BasicTable from "./components/table/BasicTable";
 import BasicTabPage from "./components/tabpage/BasicTabPage";
 import useQueryDialog from "./hooks/useQueryDialog";
 import { QueryDialogType } from "./metadata/QueryDialogType";
+import BasicList from "./components/list/BasicList";
+import BasicToolTip from "./components/tooltip/BasicToolTip";
 
 const App: React.FC = () => {
   const [checkedList, setCheckedList] = useState([
@@ -30,58 +32,91 @@ const App: React.FC = () => {
     <>
       <BasicTemplate
         SideBar={
-          <BasicTreeView
-            roots={[
-              {
-                id: "0",
-                text: "Workspace",
-                children: [
-                  {
-                    id: "0-1",
-                  },
-                ],
-              },
+          <BasicList
+            items={[
               {
                 id: "1",
-                text: "Feature 1",
+                textReactNode: "1",
               },
               {
                 id: "2",
-                text: "Feature 1",
+                textReactNode: "2",
               },
               {
                 id: "3",
-                text: "Feature 1",
-              },
-              {
-                id: "4",
-                text: "Feature 1",
-              },
-              {
-                id: "5",
-                text: "Feature 1",
+                textReactNode: "3",
               },
             ]}
           />
-        }
-        ContentPage={
-          // <BasicTable
-          //   headerCell={[<th className="w-[30%]">1</th>, <th>2</th>]}
-          //   tableCell={[
-          //     [<td>1-1</td>, <td>1-2</td>],
-          //     [<td>2-1</td>, <td>2-2</td>],
-          //     [<td>2-1</td>, <td>2-2</td>],
-          //     [<td>2-1</td>, <td>2-2</td>],
-          //     [<td>2-1</td>, <td>2-2</td>],
-          //     [<td>2-1</td>, <td>2-2</td>],
+          // <BasicTreeView
+          //   roots={[
+          //     {
+          //       id: "0",
+          //       text: "Workspace",
+          //       children: [
+          //         {
+          //           id: "0-1",
+          //         },
+          //       ],
+          //     },
+          //     {
+          //       id: "1",
+          //       text: "Feature 1",
+          //     },
+          //     {
+          //       id: "2",
+          //       text: "Feature 1",
+          //     },
+          //     {
+          //       id: "3",
+          //       text: "Feature 1",
+          //     },
+          //     {
+          //       id: "4",
+          //       text: "Feature 1",
+          //     },
+          //     {
+          //       id: "5",
+          //       text: "Feature 1",
+          //     },
           //   ]}
           // />
-          <BasicTabPage
-            tabs={{
-              "tab 1": { text: "tab 1", isModified: true },
-              "tab 2": { text: "tab 2" },
-            }}
+        }
+        ContentPage={
+          <BasicTable
+            headerCell={[<th className="w-[30%]">1</th>, <th>2</th>]}
+            tableCell={[
+              [<td>1-1</td>, <td>1-2</td>],
+              [<td>2-1</td>, <td>2-2</td>],
+              [<td>2-1</td>, <td>2-2</td>],
+              [<td>2-1</td>, <td>2-2</td>],
+              [<td>2-1</td>, <td>2-2</td>],
+              [
+                <td>
+                  <BasicSelect
+                    items={[{ label: "1" }, { label: "2" }]}
+                    selectedLabel="1"
+                    readOnly
+                  />
+                </td>,
+                <td>
+                  <BasicToolTip text="QQ" position="TC">
+                    <BasicTextInput
+                      value=""
+                      onValueChanged={(value) => console.log(value)}
+                      onBlur={(value) => console.log(value)}
+                    />
+                  </BasicToolTip>
+                </td>,
+              ],
+            ]}
           />
+          // <BasicTabPage
+          //   tabs={{
+          //     "tab 1": { text: "tab 1", isModified: true },
+          //     "tab 2": { text: "tab 2" },
+          //   }}
+          // />
         }
       ></BasicTemplate>
     </>

@@ -37,7 +37,7 @@ export const BasicTab: React.FC<BasicTabProps> = ({
         [
           "flex items-center",
           "mx-[3px] py-[2px]",
-          "w-[120px]",
+          "w-fit",
           "relative",
           "cursor-pointer",
           "bg-[#bcc3c9] hover:bg-[#eee]",
@@ -82,6 +82,7 @@ export const BasicTab: React.FC<BasicTabProps> = ({
         "text-center",
         "grow",
         "flex justify-center",
+        "px-[25px]",
       ]),
     },
     textStyle

@@ -5,8 +5,8 @@ import {
 } from "../components/dialog/BasicQueryDialog";
 
 interface QueryDialogContextValue {
-  open: (props: BasicQueryDialogProps) => void;
-  close: () => void;
+  openQueryDialog: (props: BasicQueryDialogProps) => void;
+  closeQueryDialog: () => void;
 }
 
 const QueryDialogContext = createContext<QueryDialogContextValue | null>(null);
@@ -17,17 +17,17 @@ export const QueryDialogProvider: React.FC<{
   const [props, setProps] = useState<BasicQueryDialogProps>({});
   const [isOpen, setIsOpen] = useState(false);
 
-  const open = (props: BasicQueryDialogProps) => {
+  const openQueryDialog = (props: BasicQueryDialogProps) => {
     setProps(props);
     setIsOpen(true);
   };
 
-  const close = () => {
+  const closeQueryDialog = () => {
     setIsOpen(false);
   };
 
   return (
-    <QueryDialogContext.Provider value={{ open, close }}>
+    <QueryDialogContext.Provider value={{ openQueryDialog, closeQueryDialog }}>
       {isOpen && <BasicQueryDialog {...props} />}
       {children}
     </QueryDialogContext.Provider>

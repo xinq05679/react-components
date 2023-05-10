@@ -2,10 +2,12 @@ import classNames from "classnames";
 import { MergeComponentStyle } from "../../utility/componentUtility";
 import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { useState, useRef, useEffect } from "react";
+import { KeyObject } from "crypto";
 
 export interface BasicTextInputProps {
   value: string;
   onValueChanged?: (value: string) => void;
+  onBlur?: (value: string) => void;
   formStyle?: ComponentStyleMerging;
   inputStyle?: ComponentStyleMerging;
   enableSelectAll?: boolean;
@@ -19,6 +21,7 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
   enableSelectAll,
   readOnly,
   onValueChanged,
+  onBlur,
 }) => {
   const [inputValue, setInputValue] = useState(value);
   const [oldValue, setOldValue] = useState(value);
@@ -42,11 +45,19 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
   const _inputStyle = MergeComponentStyle(
     {
       css: classNames(
-        "h-[100%]",
-        "grow",
-        "outline-0",
-        "pl-[5px]",
-        ["border border-[#ddd]", "hover:border-[#00f]", "focus:border-[#00f]"],
+        [
+          "h-[100%]",
+          "outline-0",
+          "border border-[#ddd]",
+          "cursor-pointer",
+          "pl-[5px]",
+          "grow",
+        ],
+        [
+          "[&]:hover:border-[#00f]",
+          "[&]:focus:border-[#00f]",
+          "[&]:focus:cursor-text",
+        ],
         [
           "[&[readOnly]]:bg-[#ccc]",
           "[&[readOnly]]:hover:border-0",
@@ -86,7 +97,15 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
         onClick={() => {
           if (enableSelectAll) inputRef.current?.select();
         }}
-        onBlur={() => submitRef.current?.click()}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            inputRef.current?.blur();
+          }
+        }}
+        onBlur={() => {
+          submitRef.current?.click();
+          onBlur?.(inputValue);
+        }}
         readOnly={readOnly}
       />
       <input ref={submitRef} type="submit" className="hidden" />

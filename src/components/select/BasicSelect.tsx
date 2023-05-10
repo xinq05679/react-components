@@ -35,7 +35,7 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
   optionsDivStyle,
   optionStyle,
   onSelectedItemChanged,
-  readOnly,
+  readOnly = false,
 }) => {
   const [selectedItem, setSelectedItem] = useState<SelectItem | undefined>();
   const [openDropDown, setOpenDropDown] = useState(false);
@@ -93,10 +93,7 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
         "border border-[#888]",
         "flex items-center",
         "bg-[#fff]",
-        [
-          "[&[data-readonly='true']]:bg-[#ccc]",
-          "[&[data-readonly='true']]:cursor-default",
-        ]
+        ["[&[data-readonly=true]]:bg-[#ccc]"]
       ),
     },
     selectStyle
@@ -131,15 +128,16 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
   const _optionStyle = MergeComponentStyle(
     {
       css: classNames(
-        "cursor-pointer",
+        "group-[&[data-readonly=false]]:cursor-pointer",
         [
-          "[&:hover]:bg-[#1e90ff]",
-          "[&:hover]:text-[#fff]",
-          "[&:hover]:font-bold",
+          "group-[&[data-readonly=false]]:[&:hover]:bg-[#1e90ff]",
+          "group-[&[data-readonly=false]]:[&:hover]:text-[#fff]",
+          "group-[&[data-readonly=false]]:[&:hover]:font-bold",
         ],
-        "group-[&[data-highlight='true']]:[&[data-select='true']]:bg-[#1e90ff]",
-        "group-[&[data-highlight='true']]:[&[data-select='true']]:text-[#fff]",
-        "group-[&[data-highlight='true']]:[&[data-select='true']]:font-bold"
+        "group-[&[data-highlight=true]]:[&[data-select='true']]:bg-[#1e90ff]",
+        "group-[&[data-highlight=true]]:[&[data-select='true']]:text-[#fff]",
+        "group-[&[data-highlight=true]]:[&[data-select='true']]:font-bold",
+        "group-[&[data-readonly=true]]:bg-[#ccc]"
       ),
     },
     optionStyle
@@ -157,6 +155,8 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
     event: React.MouseEvent<HTMLDivElement>,
     option: SelectItem
   ) => {
+    if (readOnly) return setOpenDropDown(false);
+
     setSelectedItem(option);
     setOpenDropDown(false);
     onSelectedItemChanged?.(option.label);
@@ -172,11 +172,8 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
           style={_selectStyle.style}
           ref={selectRef}
           onClick={() => {
-            if (readOnly) setOpenDropDown(false);
-            else {
-              setOpenDropDown(!openDropDown);
-              setHighlightSelected(true);
-            }
+            setOpenDropDown(!openDropDown);
+            setHighlightSelected(!readOnly);
           }}
         >
           <div className="grow">
@@ -198,6 +195,7 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
           <BasicPortal>
             <div
               data-highlight={highlightSelected}
+              data-readonly={readOnly}
               className={_optionsDivStyle.css}
               style={_optionsDivStyle.style}
               ref={optionsDivRef}

@@ -12,6 +12,10 @@ export interface BasicTableProps {
   headerStyle?: ComponentStyleMerging;
   rowStyle?: ComponentStyleMerging;
   cellStyle?: ComponentStyleMerging;
+  onRowClicked?: (
+    event: React.MouseEvent<HTMLTableRowElement>,
+    rowIdx: number
+  ) => void;
 }
 
 export const BasicTable: React.FC<BasicTableProps> = ({
@@ -21,6 +25,7 @@ export const BasicTable: React.FC<BasicTableProps> = ({
   tableStyle,
   headerStyle,
   rowStyle,
+  onRowClicked,
 }) => {
   const _tableDivStyle = MergeComponentStyle(
     {
@@ -71,6 +76,9 @@ export const BasicTable: React.FC<BasicTableProps> = ({
                 key={`row-${rowIdx}`}
                 className={_rowStyle.css}
                 style={_rowStyle.style}
+                onClick={(event) => {
+                  onRowClicked?.(event, rowIdx);
+                }}
               >
                 {row.map((cell, colIdx) => (
                   <Fragment key={`cell-${rowIdx}-${colIdx}`}>{cell}</Fragment>

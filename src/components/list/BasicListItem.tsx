@@ -1,59 +1,85 @@
-import { BasicListItemProps } from "./BasicListItemProps";
+import { ReactNode } from "react";
+import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { MergeComponentStyle } from "../../utility/componentUtility";
 import classNames from "classnames";
 
+export interface BasicListItemProps {
+  id: string;
+  prevReactNode?: ReactNode;
+  postReactNode?: ReactNode;
+  textReactNode?: React.ReactNode;
+  isSelected?: boolean;
+  onClicked?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onContextMenuClicked?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  listContainerStyle?: ComponentStyleMerging;
+  textStyle?: ComponentStyleMerging;
+  prevStyle?: ComponentStyleMerging;
+  postStyle?: ComponentStyleMerging;
+}
+
 export const BasicListItem: React.FC<BasicListItemProps> = ({
-  text,
-  icon,
+  textReactNode,
+  prevReactNode,
+  postReactNode,
   isSelected,
   onClicked,
   onContextMenuClicked,
-  listStyle,
-  iconStyle,
+  listContainerStyle,
   textStyle,
+  prevStyle,
+  postStyle,
 }) => {
-  const _listStyle = MergeComponentStyle(
+  const _listContainerStyle = MergeComponentStyle(
     {
       css: classNames(
-        "flex items-center rounded font-semibold py-3 w-[100%] text-xl",
-        "text-[color:#333] bg-[color:#fff0]",
-        "hover:text-[color:#333] hover:bg-[color:#9ff8]",
-        "aria-selected:text-[color:#00f] aria-selected:bg-[color:#9ff]"
+        ["flex items-center", "w-[100%] h-[32px]", "text-[#333]", "bg-[#fff0]"],
+        ["[&]:hover:text-[#333]", "[&]:hover:bg-[#9ff8]"],
+        [
+          "[&[data-selected='true']]:text-[color:#00f]",
+          "[&[data-selected='true']]:bg-[color:#9ff]",
+        ]
       ),
     },
-    listStyle
+    listContainerStyle
   );
 
-  const _iconStyle = MergeComponentStyle(
-    {
-      css: "mx-2 shrink-0 grow-0",
-    },
-    iconStyle
-  );
+  const _prevStyle = MergeComponentStyle({}, prevStyle);
 
   const _textStyle = MergeComponentStyle(
     {
-      css: "flex flex-col items-start shrink-0 grow",
+      css: "grow",
     },
     textStyle
   );
 
+  const _postStyle = MergeComponentStyle({}, postStyle);
+
   return (
     <button
-      aria-selected={isSelected}
-      style={_listStyle.style}
-      className={_listStyle.css}
-      onClick={() => onClicked?.()}
-      onContextMenuCapture={(evt) =>
-        onContextMenuClicked?.({ x: evt.clientX, y: evt.clientY })
-      }
+      data-selected={isSelected}
+      style={_listContainerStyle.style}
+      className={_listContainerStyle.css}
+      onClick={onClicked}
+      onContextMenuCapture={onContextMenuClicked}
     >
-      {icon && (
-        <img src={icon} className={_iconStyle.css} style={_iconStyle.style} />
+      {/* PREV React Node */}
+      {prevReactNode && (
+        <div className={_prevStyle.css} style={_prevStyle.style}>
+          {prevReactNode}
+        </div>
       )}
+
+      {/* Text React Node */}
       <div className={_textStyle.css} style={_textStyle.style}>
-        {text}
+        {textReactNode}
       </div>
+
+      {/* POST React Node */}
+      {postReactNode && (
+        <div className={_postStyle.css} style={_postStyle.style}>
+          {postReactNode}
+        </div>
+      )}
     </button>
   );
 };
