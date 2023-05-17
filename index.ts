@@ -37,6 +37,7 @@ export * from "./src/components/tabpage/BasicTabPage";
 
 //#region Hooks
 export * from "./src/hooks/useQueryDialog";
+export * from "./src/hooks/useProgressDialog";
 //#endregion
 
 //#region MetaData
