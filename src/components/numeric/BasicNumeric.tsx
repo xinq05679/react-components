@@ -72,11 +72,17 @@ export const BasicNumeric: React.FC<BasicNumericProps> = ({
         "outline-0",
         "text-center",
         "cursor-pointer",
-        ["border border-[#ddd]", "hover:border-[#00f]", "focus:border-[#00f]"],
+        [
+          "border border-[#ddd]",
+          "[&]:hover:border-[#00f]",
+          "[&]:focus:border-[#00f]",
+          "[&]:focus:cursor-auto",
+        ],
         [
           "[&[readOnly]]:bg-[#ccc]",
-          "[&[readOnly]]:hover:border-0",
-          "[&[readOnly]]:focus:border-0",
+          "[&[readOnly]]:hover:border-[#ddd]",
+          "[&[readOnly]]:focus:border-[#ddd]",
+          "[&[readOnly]]:cursor-auto",
         ]
       ),
     },

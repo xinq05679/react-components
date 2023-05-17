@@ -79,6 +79,7 @@ export const BasicTreeViewItem: React.FC<BasicTreeViewItemProps> = ({
 
   return (
     <button
+      id={id}
       data-type={children ? "branch" : "node"}
       data-selected={isSelected}
       className={_containerStyle.css}

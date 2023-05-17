@@ -56,12 +56,13 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
         [
           "[&]:hover:border-[#00f]",
           "[&]:focus:border-[#00f]",
-          "[&]:focus:cursor-text",
+          "[&]:focus:cursor-auto",
         ],
         [
           "[&[readOnly]]:bg-[#ccc]",
-          "[&[readOnly]]:hover:border-0",
-          "[&[readOnly]]:focus:border-0",
+          "[&[readOnly]]:hover:border-[#ddd]",
+          "[&[readOnly]]:focus:border-[#ddd]",
+          "[&[readOnly]]:cursor-auto",
         ]
       ),
     },

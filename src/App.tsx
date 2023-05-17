@@ -21,6 +21,7 @@ import useQueryDialog from "./hooks/useQueryDialog";
 import { QueryDialogType } from "./metadata/QueryDialogType";
 import BasicList from "./components/list/BasicList";
 import BasicToolTip from "./components/tooltip/BasicToolTip";
+import BasicNumeric from "./components/numeric/BasicNumeric";
 
 const App: React.FC = () => {
   const [checkedList, setCheckedList] = useState([
@@ -89,8 +90,20 @@ const App: React.FC = () => {
               [<td>1-1</td>, <td>1-2</td>],
               [<td>2-1</td>, <td>2-2</td>],
               [<td>2-1</td>, <td>2-2</td>],
-              [<td>2-1</td>, <td>2-2</td>],
-              [<td>2-1</td>, <td>2-2</td>],
+              [
+                <td>
+                  <BasicCheckBox readOnly />
+                </td>,
+                <td>2-2</td>,
+              ],
+              [
+                <td>
+                  <BasicNumberInput />
+                </td>,
+                <td>
+                  <BasicNumeric readOnly />
+                </td>,
+              ],
               [
                 <td>
                   <BasicSelect
@@ -102,6 +115,7 @@ const App: React.FC = () => {
                 <td>
                   <BasicToolTip text="QQ" position="TC">
                     <BasicTextInput
+                      readOnly
                       value=""
                       onValueChanged={(value) => console.log(value)}
                       onBlur={(value) => console.log(value)}
