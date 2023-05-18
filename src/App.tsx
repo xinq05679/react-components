@@ -105,7 +105,7 @@ const App: React.FC = () => {
                 <td>
                   <BasicSelect
                     items={[{ label: "1" }, { label: "2" }]}
-                    selectedLabel="1"
+                    selectedLabel="5"
                     readOnly
                   />
                 </td>,

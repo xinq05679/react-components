@@ -45,11 +45,12 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
   const selectRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setSelectedItem(
-      selectedLabel
-        ? items.find((item) => item.label === selectedLabel)
-        : undefined
-    );
+    if (selectedLabel) {
+      const foundLabel = items.find((item) => item.label === selectedLabel);
+      setSelectedItem(foundLabel || { label: selectedLabel });
+    } else {
+      setSelectedItem(undefined);
+    }
   }, [selectedLabel]);
 
   useEffect(() => {
@@ -65,8 +66,12 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
     };
 
     document.addEventListener("click", closeDropDown, true);
+    document.addEventListener("scroll", closeDropDown, true);
 
-    return document.removeEventListener("click", closeDropDown);
+    return () => {
+      document.removeEventListener("click", closeDropDown);
+      document.removeEventListener("scroll", closeDropDown);
+    };
   }, []);
 
   const _containerStyle = MergeComponentStyle(
