@@ -49,45 +49,42 @@ const App: React.FC = () => {
               },
             ]}
           />
-          // <BasicTreeView
-          //   roots={[
-          //     {
-          //       id: "0",
-          //       text: "Workspace",
-          //       children: [
-          //         {
-          //           id: "0-1",
-          //         },
-          //       ],
-          //     },
-          //     {
-          //       id: "1",
-          //       text: "Feature 1",
-          //     },
-          //     {
-          //       id: "2",
-          //       text: "Feature 1",
-          //     },
-          //     {
-          //       id: "3",
-          //       text: "Feature 1",
-          //     },
-          //     {
-          //       id: "4",
-          //       text: "Feature 1",
-          //     },
-          //     {
-          //       id: "5",
-          //       text: "Feature 1",
-          //     },
-          //   ]}
-          // />
         }
         ContentPage={
           <BasicTable
             headerCell={[<th className="w-[30%]">1</th>, <th>2</th>]}
             tableCell={[
-              [<td>1-1</td>, <td>1-2</td>],
+              [
+                <td>
+                  <BasicTabPage
+                    tabs={{
+                      "tab 1": { text: "tab 1", isModified: true },
+                      "tab 2": { text: "tab 2" },
+                    }}
+                  />
+                </td>,
+                <td>
+                  <BasicToolBar
+                    items={[
+                      {
+                        icon: <img src={QueryIcon} />,
+                        tooltip: "1",
+                        position: -5,
+                      },
+                      {
+                        icon: <img src={QueryIcon} />,
+                        tooltip: "2",
+                        position: -2,
+                      },
+                      {
+                        icon: <img src={QueryIcon} />,
+                        tooltip: "3",
+                        position: -3,
+                      },
+                    ]}
+                  />
+                </td>,
+              ],
               [<td>2-1</td>, <td>2-2</td>],
               [<td>2-1</td>, <td>2-2</td>],
               [
@@ -125,12 +122,6 @@ const App: React.FC = () => {
               ],
             ]}
           />
-          // <BasicTabPage
-          //   tabs={{
-          //     "tab 1": { text: "tab 1", isModified: true },
-          //     "tab 2": { text: "tab 2" },
-          //   }}
-          // />
         }
       ></BasicTemplate>
     </>

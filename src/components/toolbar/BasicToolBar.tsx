@@ -97,10 +97,9 @@ export const BasicToolBar: React.FC<BasicToolBarProps> = ({
           items
             .filter((item) => !item.position || item.position >= 0)
             .sort((a, b) => {
-              if (!a.position) return -1;
-              if (!b.position) return 1;
-              const comparison =
-                (a.position as number) - (b.position as number);
+              if (!a.position && a.position !== 0) return 1;
+              if (!b.position && b.position !== 0) return 1;
+              const comparison = a.position - b.position;
               return comparison ? comparison : 1;
             })
             .map((item, index) => getItem(item, index.toString()))
