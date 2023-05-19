@@ -32,12 +32,15 @@ export * from "./src/components/select/BasicSelect";
 export * from "./src/components/toolbar/BasicToolBar";
 export * from "./src/components/tabpage/BasicTab";
 export * from "./src/components/tabpage/BasicTabPage";
+export * from "./src/components/contextmenu/BasicContextMenu";
+export * from "./src/components/contextmenu/BasicContextMenuItem";
 
 //#endregion
 
 //#region Hooks
 export * from "./src/hooks/useQueryDialog";
 export * from "./src/hooks/useProgressDialog";
+export * from "./src/hooks/useContextMenu";
 //#endregion
 
 //#region MetaData
@@ -47,6 +50,7 @@ export * from "./src/metadata/Point";
 export * from "./src/metadata/QueryDialogType";
 export * from "./src/metadata/SelectionMode";
 export * from "./src/metadata/NumericRange";
+export * from "./src/metadata/ContextMenuItemType";
 //#endregion
 
 //#region Utility

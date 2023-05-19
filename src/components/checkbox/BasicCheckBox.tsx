@@ -50,11 +50,13 @@ export const BasicCheckBox: React.FC<BasicCheckBoxProps> = ({
       css: classNames(
         "relative",
         "cursor-pointer",
+        "rounded-sm",
         "w-[20px] h-[20px]",
         [
           "data-[checked='2']:after:content-['-']",
           "data-[checked='0']:after:content-[&#10004;]",
           "after:absolute",
+          "after:rounded-sm",
           "after:w-[20px] after:h-[20px]",
           "after:border after:border-[#888]",
           "after:hover:border-[#00f]",

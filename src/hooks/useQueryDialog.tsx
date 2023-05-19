@@ -34,7 +34,7 @@ export const QueryDialogProvider: React.FC<{
   );
 };
 
-export const useQueryDialog = (): QueryDialogContextValue => {
+export const useQueryDialog = () => {
   return useContext(QueryDialogContext) as QueryDialogContextValue;
 };
 

@@ -98,6 +98,7 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
         "border border-[#888]",
         "flex items-center",
         "bg-[#fff]",
+        "text-left",
         ["[&[data-readonly=true]]:bg-[#ccc]"]
       ),
     },
@@ -119,7 +120,7 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
         "absolute",
         "bg-[#fff]",
         "group",
-        "text-center"
+        "text-left"
       ),
       style: {
         top: selectRef.current?.getBoundingClientRect().bottom,
@@ -133,6 +134,7 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
   const _optionStyle = MergeComponentStyle(
     {
       css: classNames(
+        "pl-[5px]",
         "group-[&[data-readonly=false]]:cursor-pointer",
         [
           "group-[&[data-readonly=false]]:[&:hover]:bg-[#1e90ff]",

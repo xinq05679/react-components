@@ -22,12 +22,16 @@ import { QueryDialogType } from "./metadata/QueryDialogType";
 import BasicList from "./components/list/BasicList";
 import BasicToolTip from "./components/tooltip/BasicToolTip";
 import BasicNumeric from "./components/numeric/BasicNumeric";
+import BasicContextMenuItem from "./components/contextmenu/BasicContextMenuItem";
+import { ContextMenuItemType } from "./metadata/ContextMenuItemType";
+import useContextMenu from "./hooks/useContextMenu";
 
 const App: React.FC = () => {
   const [checkedList, setCheckedList] = useState([
     CheckBoxStatus.unchecked,
     CheckBoxStatus.unchecked,
   ]);
+  const { openContextMenu } = useContextMenu();
 
   return (
     <>
@@ -89,9 +93,55 @@ const App: React.FC = () => {
               [<td>2-1</td>, <td>2-2</td>],
               [
                 <td>
-                  <BasicCheckBox readOnly />
+                  <BasicCheckBox text={10} checked={CheckBoxStatus.checked} />
                 </td>,
-                <td>2-2</td>,
+                <td>
+                  <div
+                    onClick={(event) => {
+                      openContextMenu({
+                        items: [
+                          {
+                            id: "1",
+                            text: "1",
+                            type: ContextMenuItemType.Action,
+                          },
+                          {
+                            id: "1",
+                            text: "1",
+                            type: ContextMenuItemType.Bar,
+                          },
+                          {
+                            id: "2",
+                            text: "2222222222222222",
+                            type: ContextMenuItemType.Branch,
+                            children: [
+                              {
+                                id: "2-1",
+                                text: "2-1",
+                                type: ContextMenuItemType.Branch,
+                                children: [
+                                  {
+                                    id: "2-1-1",
+                                    text: "2-1-1",
+                                    type: ContextMenuItemType.Action,
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                          {
+                            id: "3",
+                            text: "3",
+                            type: ContextMenuItemType.Action,
+                          },
+                        ],
+                        position: { x: event.clientX, y: event.clientY },
+                      });
+                    }}
+                  >
+                    111
+                  </div>
+                </td>,
               ],
               [
                 <td>

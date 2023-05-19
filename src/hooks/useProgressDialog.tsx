@@ -38,7 +38,7 @@ export const ProgressDialogProvider: React.FC<{
   );
 };
 
-export const useProgressDialog = (): ProgressDialogContextValue => {
+export const useProgressDialog = () => {
   return useContext(ProgressDialogContext) as ProgressDialogContextValue;
 };
 

@@ -2,12 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { QueryDialogProvider } from "./hooks/useQueryDialog";
+import { ContextMenuProvider } from "./hooks/useContextMenu";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <QueryDialogProvider>
-      <App />
-    </QueryDialogProvider>
+    <ContextMenuProvider>
+      <QueryDialogProvider>
+        <App />
+      </QueryDialogProvider>
+    </ContextMenuProvider>
   </React.StrictMode>
 );
