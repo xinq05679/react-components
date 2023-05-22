@@ -34,7 +34,7 @@ export const BasicContextMenu: React.FC<BasicContextMenuProps> = ({
 
   // close context menu when user clicks any place on the UI
   useEffect(() => {
-    document.addEventListener("click", closeContextMenu, true);
+    document.addEventListener("click", closeContextMenu);
     return () => {
       document.removeEventListener("click", closeContextMenu);
     };

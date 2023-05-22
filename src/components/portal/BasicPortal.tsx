@@ -14,7 +14,7 @@ export const BasicPortal: React.FC<BasicPortal> = ({
     (() => {
       let portal = document.getElementById(portalId);
       if (!portal) {
-        portal = document.createElement(portalId);
+        portal = document.createElement("div");
         portal.id = portalId;
         document.querySelector("body")?.appendChild(portal);
       }

@@ -33,7 +33,7 @@ export const BasicModal: React.FC<BasicModalProps> = ({
 }) => {
   const _modalStyle = MergeComponentStyle(
     {
-      css: classNames("flex justify-center items-center", "fixed inset-0"),
+      css: classNames("flex justify-center items-center", "fixed inset-[0px]"),
     },
     modalStyle
   );

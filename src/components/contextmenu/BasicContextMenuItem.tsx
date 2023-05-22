@@ -11,7 +11,7 @@ export interface BasicContextMenuItemProps {
   arrow?: React.ReactNode;
   type: ContextMenuItemType;
   children?: BasicContextMenuItemProps[];
-  onClicked?: (event: React.MouseEvent<HTMLElement>) => void;
+  onClicked?: (event: React.MouseEvent<HTMLDivElement>) => void;
   disable?: boolean;
   selected?: boolean;
   containerDivStyle?: ComponentStyleMerging;
