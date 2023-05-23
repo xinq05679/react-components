@@ -1,4 +1,5 @@
 import QueryIcon from "../../resources/image/query.png";
+import ErrorIcon from "../../resources/image/error.png";
 import { MdOutlineError } from "react-icons/md";
 import BasicModal from "../modal/BasicModal";
 import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
@@ -67,7 +68,16 @@ export const BasicQueryDialog: React.FC<BasicQueryDialogProps> = (props) => {
     containerStyle
   );
 
-  const _headerStyle = MergeComponentStyle({}, headerStyle);
+  const _headerStyle = MergeComponentStyle(
+    {
+      css: classNames({
+        "bg-[#0e6eb8]": queryDialogType == QueryDialogType.Info,
+        "bg-[#bb2d3b]": queryDialogType == QueryDialogType.Error,
+        "bg-[#ffcd39]": queryDialogType == QueryDialogType.Warning,
+      }),
+    },
+    headerStyle
+  );
 
   const _bodyStyle = MergeComponentStyle(
     {
@@ -98,8 +108,8 @@ export const BasicQueryDialog: React.FC<BasicQueryDialogProps> = (props) => {
   const _iconStyle = MergeComponentStyle(
     {
       css: classNames(
-        "h-[128px] w-[128px]",
-        "text-[128px] text-[#f00]",
+        "h-[96px] w-[96px]",
+        "text-[96px] text-[#f00]",
         "shrink-0"
       ),
     },
@@ -154,30 +164,24 @@ export const BasicQueryDialog: React.FC<BasicQueryDialogProps> = (props) => {
         </div>
       );
 
+    let src = QueryIcon;
+
     switch (queryDialogType) {
       case QueryDialogType.Error:
-        return (
-          <div className={_iconStyle.css} style={_iconStyle.style}>
-            <MdOutlineError
-              className={_iconStyle.css}
-              style={_iconStyle.style}
-            />
-          </div>
-        );
-      case QueryDialogType.Info:
-      case QueryDialogType.Query:
-      case QueryDialogType.Warning:
-        return (
-          <div className={_iconStyle.css} style={_iconStyle.style}>
-            <img
-              className={_iconStyle.css}
-              style={_iconStyle.style}
-              src={QueryIcon}
-              alt="query icon"
-            />
-          </div>
-        );
+        src = ErrorIcon;
+        break;
     }
+
+    return (
+      <div className={_iconStyle.css} style={_iconStyle.style}>
+        <img
+          className={_iconStyle.css}
+          style={_iconStyle.style}
+          src={src}
+          alt="query icon"
+        />
+      </div>
+    );
   };
 
   const renderFooter = () => {

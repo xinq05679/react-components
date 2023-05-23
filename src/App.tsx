@@ -25,6 +25,7 @@ import BasicNumeric from "./components/numeric/BasicNumeric";
 import BasicContextMenuItem from "./components/contextmenu/BasicContextMenuItem";
 import { ContextMenuItemType } from "./metadata/ContextMenuItemType";
 import useContextMenu from "./hooks/useContextMenu";
+import { ButtonType } from "./metadata/ButtonType";
 
 const App: React.FC = () => {
   const [checkedList, setCheckedList] = useState([
@@ -90,28 +91,38 @@ const App: React.FC = () => {
                 </td>,
               ],
               [<td>2-1</td>, <td>2-2</td>],
-              [<td>2-1</td>, <td>2-2</td>],
+              [
+                <td>
+                  <BasicButton type={ButtonType.Primary} outline>
+                    Hi
+                  </BasicButton>
+                </td>,
+                <td>2-2</td>,
+              ],
               [
                 <td>
                   <BasicCheckBox text={10} checked={CheckBoxStatus.checked} />
                 </td>,
                 <td>
                   <div
-                    onClick={(event) => {
+                    onContextMenu={(event) => {
                       openContextMenu({
                         items: [
                           {
                             id: "1",
                             text: "1",
                             type: ContextMenuItemType.Action,
+                            onClicked: () => {
+                              console.log("QQ");
+                            },
                           },
                           {
-                            id: "1",
+                            id: "2",
                             text: "1",
                             type: ContextMenuItemType.Bar,
                           },
                           {
-                            id: "2",
+                            id: "3",
                             text: "2222222222222222",
                             type: ContextMenuItemType.Branch,
                             children: [
@@ -130,7 +141,7 @@ const App: React.FC = () => {
                             ],
                           },
                           {
-                            id: "3",
+                            id: "4",
                             text: "3",
                             type: ContextMenuItemType.Action,
                           },
