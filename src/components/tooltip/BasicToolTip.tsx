@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useState, useRef } from "react";
+import { useState, useRef, forwardRef, createRef } from "react";
 import ReactDOM from "react-dom";
 import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { MergeComponentStyle } from "../../utility/componentUtility";
@@ -19,7 +19,7 @@ export type ToolTipPosition =
   | "LB";
 
 export interface BasicToolTipProps {
-  children: React.ReactNode;
+  children: React.ReactElement;
   text?: string;
   delayTimeOpen?: number;
   tooltipStyle?: ComponentStyleMerging;
@@ -35,6 +35,7 @@ export const BasicToolTip: React.FC<BasicToolTipProps> = ({
 }) => {
   const [visible, setVisible] = useState(false);
   const divRef = useRef<HTMLDivElement>(null);
+  // const divRef = createRef();
   const tooltipRef = useRef<HTMLElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -48,6 +49,7 @@ export const BasicToolTip: React.FC<BasicToolTipProps> = ({
 
   const handleMouseEnter = () => {
     reset();
+    setVisible(true);
 
     timeoutRef.current = setTimeout(() => {
       if (!divRef.current || !tooltipRef.current) return;
@@ -119,8 +121,6 @@ export const BasicToolTip: React.FC<BasicToolTipProps> = ({
           }
           break;
       }
-
-      setVisible(true);
     }, delayTimeOpen);
   };
 
@@ -131,8 +131,6 @@ export const BasicToolTip: React.FC<BasicToolTipProps> = ({
       css: classNames(
         "px-[8px] py-[2px]",
         "bg-[#ff0] text-[#888]",
-        "invisible",
-        "data-[visible=true]:visible",
         "absolute",
         "rounded",
         "whitespace-nowrap"
@@ -143,37 +141,40 @@ export const BasicToolTip: React.FC<BasicToolTipProps> = ({
 
   return (
     <>
-      <div
+      <children.type
+        {...children.props}
         ref={divRef}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        className="inline-block"
-      >
-        {children}
-      </div>
+        onMouseEnter={() => {
+          handleMouseEnter();
+          children.props.onMouseEnter?.();
+        }}
+        onMouseLeave={() => {
+          handleMouseLeave();
+          children.props.onMouseLeave?.();
+        }}
+      />
 
-      {text
-        ? ReactDOM.createPortal(
-            <span
-              ref={tooltipRef}
-              data-visible={visible}
-              className={_tooltipStyle.css}
-              style={_tooltipStyle.style}
-            >
-              {text}
-            </span>,
-            (() => {
-              const divId = "tooltip-portal";
-              let portal = document.querySelector(divId);
-              if (portal === null) {
-                portal = document.createElement(divId);
-                portal.id = divId;
-                document.querySelector("body")?.appendChild(portal);
-              }
-              return portal;
-            })()
-          )
-        : null}
+      {text &&
+        visible &&
+        ReactDOM.createPortal(
+          <span
+            ref={tooltipRef}
+            className={_tooltipStyle.css}
+            style={_tooltipStyle.style}
+          >
+            {text}
+          </span>,
+          (() => {
+            const divId = "tooltip-portal";
+            let portal = document.querySelector(divId);
+            if (portal === null) {
+              portal = document.createElement(divId);
+              portal.id = divId;
+              document.querySelector("body")?.appendChild(portal);
+            }
+            return portal;
+          })()
+        )}
     </>
   );
 };
