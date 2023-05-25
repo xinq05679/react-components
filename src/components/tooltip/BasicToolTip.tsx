@@ -3,6 +3,7 @@ import { useState, useRef, forwardRef, createRef } from "react";
 import ReactDOM from "react-dom";
 import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { MergeComponentStyle } from "../../utility/componentUtility";
+import BasicPortal from "../portal/BasicPortal";
 
 export type ToolTipPosition =
   | "TL"
@@ -154,27 +155,17 @@ export const BasicToolTip: React.FC<BasicToolTipProps> = ({
         }}
       />
 
-      {text &&
-        visible &&
-        ReactDOM.createPortal(
+      {text && visible && (
+        <BasicPortal portalId="tooltip-portal">
           <span
             ref={tooltipRef}
             className={_tooltipStyle.css}
             style={_tooltipStyle.style}
           >
             {text}
-          </span>,
-          (() => {
-            const divId = "tooltip-portal";
-            let portal = document.querySelector(divId);
-            if (portal === null) {
-              portal = document.createElement(divId);
-              portal.id = divId;
-              document.querySelector("body")?.appendChild(portal);
-            }
-            return portal;
-          })()
-        )}
+          </span>
+        </BasicPortal>
+      )}
     </>
   );
 };

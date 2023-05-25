@@ -104,7 +104,7 @@ export const BasicContextMenu: React.FC<BasicContextMenuProps> = ({
         {renderContextMenu(
           item.id,
           item.children as BasicContextMenuItemProps[],
-          { x: divElementRect.right + 1, y: divElementRect.top - 1 }
+          { x: divElementRect.right, y: divElementRect.top - 1 }
         )}
       </BasicPortal>
     );

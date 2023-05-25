@@ -137,6 +137,9 @@ const App: React.FC = () => {
                                     type: ContextMenuItemType.Action,
                                   },
                                 ],
+                                onClicked: () => {
+                                  console.log("QQ");
+                                },
                               },
                             ],
                           },
@@ -150,7 +153,7 @@ const App: React.FC = () => {
                       });
                     }}
                   >
-                    111
+                    222
                   </div>
                 </td>,
               ],

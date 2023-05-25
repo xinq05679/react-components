@@ -40,7 +40,12 @@ export const BasicContextMenuItem: React.FC<BasicContextMenuItemProps> = ({
   const _containerStyle = MergeComponentStyle(
     {
       css: classNames(
-        ["flex items-center", "h-[24px]", "cursor-pointer"],
+        [
+          "flex items-center",
+          "h-[24px]",
+          "cursor-pointer",
+          "border border-[#fff0]",
+        ],
         [
           "[&[data-selected=true]]:bg-[#e5f3ff]",
           "[&[data-selected=true]]:border-[#99d1ff]",
@@ -61,9 +66,10 @@ export const BasicContextMenuItem: React.FC<BasicContextMenuItemProps> = ({
   const _textDivStyle = MergeComponentStyle(
     {
       css: classNames(
-        "text-left text-[12px]",
+        "text-left text-[14px]",
         "grow",
-        "px-[0.5em]",
+        "pl-[0.5em]",
+        "pr-[2em]",
         "whitespace-nowrap"
       ),
     },
