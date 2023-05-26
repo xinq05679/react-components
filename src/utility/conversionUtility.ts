@@ -1,4 +1,4 @@
-export function convertNumberToString(params: {
+function convertNumberToString(params: {
   value: number;
   digits?: number;
   onlyInteger?: boolean;
@@ -15,3 +15,7 @@ export function convertNumberToString(params: {
 
   return _formedValue;
 }
+
+export const ConversionUtiltiy = {
+  convertNumberToString,
+};

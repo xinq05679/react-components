@@ -1,6 +1,6 @@
 import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { MergeComponentStyle } from "../../utility/componentUtility";
-import { convertNumberToString } from "../../utility/conversionUtility";
+import { ConversionUtiltiy } from "../../utility/conversionUtility";
 import { useEffect, useState, useRef } from "react";
 import classNames from "classnames";
 import { NumericRange } from "../../metadata/NumericRange";
@@ -51,7 +51,7 @@ export const BasicNumberInput: React.FC<BasicNumberInputProps> = ({
     if (isNaN(number)) {
       return "";
     } else {
-      return convertNumberToString({
+      return ConversionUtiltiy.convertNumberToString({
         value: parseFloat(value),
         digits,
         onlyInteger,

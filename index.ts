@@ -55,4 +55,6 @@ export * from "./src/metadata/ContextMenuItemType";
 
 //#region Utility
 export * from "./src/utility/componentUtility";
+export * from "./src/utility/commonUtility";
+export * from "./src/utility/conversionUtility";
 //#endregion

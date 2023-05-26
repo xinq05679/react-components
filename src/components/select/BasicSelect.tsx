@@ -120,12 +120,14 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
         "absolute",
         "bg-[#fff]",
         "group",
-        "text-left"
+        "text-left",
+        "overflow-auto"
       ),
       style: {
         top: selectRef.current?.getBoundingClientRect().bottom,
         left: selectRef.current?.getBoundingClientRect().left,
         width: selectRef.current?.getBoundingClientRect().width,
+        height: selectRef.current?.getBoundingClientRect().width,
       },
     },
     optionsDivStyle

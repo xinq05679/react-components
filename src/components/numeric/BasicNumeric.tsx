@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import classNames from "classnames";
 import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { MergeComponentStyle } from "../../utility/componentUtility";
-import { convertNumberToString } from "../../utility/conversionUtility";
+import { ConversionUtiltiy } from "../../utility/conversionUtility";
 import { NumericRange } from "../../metadata/NumericRange";
 
 export interface BasicNumericProps {
@@ -46,7 +46,7 @@ export const BasicNumeric: React.FC<BasicNumericProps> = ({
   }, [initValue]);
 
   function formatNumber(value: number) {
-    return convertNumberToString({
+    return ConversionUtiltiy.convertNumberToString({
       value,
       digits,
       onlyInteger,
