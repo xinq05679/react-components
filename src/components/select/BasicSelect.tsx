@@ -127,7 +127,6 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
         top: selectRef.current?.getBoundingClientRect().bottom,
         left: selectRef.current?.getBoundingClientRect().left,
         width: selectRef.current?.getBoundingClientRect().width,
-        height: selectRef.current?.getBoundingClientRect().width,
       },
     },
     optionsDivStyle

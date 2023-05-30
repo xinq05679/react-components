@@ -29,7 +29,7 @@ export const BasicTextarea: React.FC<BasicTextarea> = ({
     {
       css: classNames(
         [
-          "h-[200px] w-[100%]",
+          "h-[100%] w-[100%]",
           "resize-none",
           "outline-0",
           "border border-[#ddd]",
@@ -51,7 +51,10 @@ export const BasicTextarea: React.FC<BasicTextarea> = ({
     textareaStyle
   );
 
-  const _formStyle = MergeComponentStyle({ css: classNames("") }, formStyle);
+  const _formStyle = MergeComponentStyle(
+    { css: classNames("h-[100%] w-[100%]") },
+    formStyle
+  );
 
   function handleValueChanged(event: React.ChangeEvent<HTMLTextAreaElement>) {
     setInputValue(event.target.value);
