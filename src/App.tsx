@@ -26,6 +26,7 @@ import BasicContextMenuItem from "./components/contextmenu/BasicContextMenuItem"
 import { ContextMenuItemType } from "./metadata/ContextMenuItemType";
 import useContextMenu from "./hooks/useContextMenu";
 import { ButtonType } from "./metadata/ButtonType";
+import BasicTextarea from "./components/input/BasicTextarea";
 
 const App: React.FC = () => {
   const [checkedList, setCheckedList] = useState([
@@ -90,7 +91,16 @@ const App: React.FC = () => {
                   />
                 </td>,
               ],
-              [<td>2-1</td>, <td>2-2</td>],
+              [
+                <td>
+                  <BasicTextarea
+                    onValueChanged={(value) => console.log(value)}
+                    onBlur={(value) => console.log(value + "QQQ")}
+                    // readOnly
+                  />
+                </td>,
+                <td>2-2</td>,
+              ],
               [
                 <td>
                   <BasicButton type={ButtonType.Primary} outline>
@@ -183,14 +193,14 @@ const App: React.FC = () => {
                   />
                 </td>,
                 <td>
-                  <BasicToolTip text="QQ" position="TC">
-                    <BasicTextInput
-                      readOnly
-                      value=""
-                      onValueChanged={(value) => console.log(value)}
-                      onBlur={(value) => console.log(value)}
-                    />
-                  </BasicToolTip>
+                  {/* <BasicToolTip text="QQ" position="TC"> */}
+                  <BasicTextInput
+                    readOnly
+                    value=""
+                    onValueChanged={(value) => console.log(value)}
+                    onBlur={(value) => console.log(value)}
+                  />
+                  {/* </BasicToolTip> */}
                 </td>,
               ],
             ]}
