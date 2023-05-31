@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { MergeComponentStyle } from "../../utility/componentUtility";
 import classNames from "classnames";
@@ -8,7 +8,8 @@ export interface BasicTextarea {
   textareaStyle?: ComponentStyleMerging;
   formStyle?: ComponentStyleMerging;
   onValueChanged?: (value: string) => void;
-  onBlur?: (value: string) => void;
+  onSubmit?: (value: string) => void;
+  onFocus?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
   readOnly?: boolean;
   [key: string]: any;
 }
@@ -18,12 +19,19 @@ export const BasicTextarea: React.FC<BasicTextarea> = ({
   textareaStyle,
   formStyle,
   onValueChanged,
-  onBlur,
+  onSubmit,
+  onFocus,
   readOnly,
   ...others
 }) => {
   const [inputValue, setInputValue] = useState(text);
   const btnRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (inputValue !== text) {
+      setInputValue(text);
+    }
+  }, [text]);
 
   const _textareaStyle = MergeComponentStyle(
     {
@@ -63,11 +71,7 @@ export const BasicTextarea: React.FC<BasicTextarea> = ({
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    onBlur?.(inputValue);
-  }
-
-  function handleBlur() {
-    btnRef.current?.click();
+    onSubmit?.(inputValue);
   }
 
   return (
@@ -79,7 +83,10 @@ export const BasicTextarea: React.FC<BasicTextarea> = ({
       <textarea
         value={inputValue}
         onChange={handleValueChanged}
-        onBlur={handleBlur}
+        onBlur={() => {
+          btnRef.current?.click();
+        }}
+        onFocus={onFocus}
         className={_textareaStyle.css}
         style={_textareaStyle.style}
         readOnly={readOnly}

@@ -95,7 +95,7 @@ const App: React.FC = () => {
                 <td>
                   <BasicTextarea
                     onValueChanged={(value) => console.log(value)}
-                    onBlur={(value) => console.log(value + "QQQ")}
+                    onSubmit={(value) => console.log(value + "QQQ")}
                     // readOnly
                   />
                 </td>,
@@ -195,7 +195,6 @@ const App: React.FC = () => {
                 <td>
                   {/* <BasicToolTip text="QQ" position="TC"> */}
                   <BasicTextInput
-                    readOnly
                     value="123"
                     onValueChanged={(value) => console.log(value)}
                     onSubmit={(value) => console.log(value)}
