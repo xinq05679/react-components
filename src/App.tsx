@@ -196,9 +196,10 @@ const App: React.FC = () => {
                   {/* <BasicToolTip text="QQ" position="TC"> */}
                   <BasicTextInput
                     readOnly
-                    value=""
+                    value="123"
                     onValueChanged={(value) => console.log(value)}
-                    onBlur={(value) => console.log(value)}
+                    onSubmit={(value) => console.log(value)}
+                    onFocus={() => console.log("QQ")}
                   />
                   {/* </BasicToolTip> */}
                 </td>,

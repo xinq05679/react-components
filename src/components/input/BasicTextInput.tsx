@@ -7,7 +7,8 @@ import { KeyObject } from "crypto";
 export interface BasicTextInputProps {
   value: string;
   onValueChanged?: (value: string) => void;
-  onBlur?: (value: string) => void;
+  onSubmit?: (value: string) => void;
+  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
   formStyle?: ComponentStyleMerging;
   inputStyle?: ComponentStyleMerging;
   enableSelectAll?: boolean;
@@ -21,17 +22,16 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
   enableSelectAll,
   readOnly,
   onValueChanged,
-  onBlur,
+  onSubmit,
+  onFocus,
 }) => {
   const [inputValue, setInputValue] = useState(value);
-  const [oldValue, setOldValue] = useState(value);
   const inputRef = useRef<HTMLInputElement>(null);
   const submitRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (inputValue !== value) {
       setInputValue(value);
-      setOldValue(value);
     }
   }, [value]);
 
@@ -55,10 +55,10 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
         ],
         ["hover:border-[#00f]", "focus:border-[#00f]", "focus:cursor-auto"],
         [
-          "[readOnly]:bg-[#ccc]",
-          "[readOnly]:hover:border-[#ddd]",
-          "[readOnly]:focus:border-[#ddd]",
-          "[readOnly]:cursor-auto",
+          "[&[readOnly]]:bg-[#ccc]",
+          "[&[readOnly]]:hover:border-[#ddd]",
+          "[&[readOnly]]:focus:border-[#ddd]",
+          "[&[readOnly]]:cursor-auto",
         ]
       ),
     },
@@ -67,15 +67,12 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
 
   const handleValueChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
+    onValueChanged?.(event.target.value);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    if (oldValue !== inputValue) {
-      setOldValue(inputValue);
-      onValueChanged?.(inputValue);
-    }
+    onSubmit?.(inputValue);
   };
 
   return (
@@ -85,6 +82,7 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
       onSubmit={handleSubmit}
     >
       <input
+        readOnly={readOnly}
         ref={inputRef}
         className={_inputStyle.css}
         style={_inputStyle.style}
@@ -101,9 +99,8 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
         }}
         onBlur={() => {
           submitRef.current?.click();
-          onBlur?.(inputValue);
         }}
-        readOnly={readOnly}
+        onFocus={onFocus}
       />
       <input ref={submitRef} type="submit" className="hidden" />
     </form>
