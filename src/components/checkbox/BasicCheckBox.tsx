@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { MergeComponentStyle } from "../../utility/componentUtility";
-import { useState, useEffect } from "react";
 
 export enum CheckBoxStatus {
   checked = 0,
@@ -32,14 +31,6 @@ export const BasicCheckBox: React.FC<BasicCheckBoxProps> = ({
   indeterminate = false,
   readOnly,
 }) => {
-  const [value, setValue] = useState(checked);
-
-  useEffect(() => {
-    if (checked != value) {
-      setValue(checked);
-    }
-  }, [checked]);
-
   const _containerStyle = MergeComponentStyle(
     { css: classNames("flex gap-[5px] items-center", "text-[14px]") },
     containerStyle
@@ -86,7 +77,7 @@ export const BasicCheckBox: React.FC<BasicCheckBoxProps> = ({
   const handleValueChanged = () => {
     if (readOnly) return;
 
-    let _checked = value;
+    let _checked = checked;
 
     switch (_checked) {
       case CheckBoxStatus.checked:
@@ -102,8 +93,6 @@ export const BasicCheckBox: React.FC<BasicCheckBoxProps> = ({
         break;
     }
 
-    setValue(_checked);
-
     onCheckedChagned?.(_checked);
   };
 
@@ -116,12 +105,12 @@ export const BasicCheckBox: React.FC<BasicCheckBoxProps> = ({
       >
         <input
           data-readonly={readOnly}
-          data-checked={value.toString()}
+          data-checked={checked.toString()}
           className={_inputStyle.css}
           style={_inputStyle.style}
           type="checkbox"
           id={id}
-          checked={value !== CheckBoxStatus.unchecked}
+          checked={checked !== CheckBoxStatus.unchecked}
           onChange={handleValueChanged}
         />
         <label
