@@ -1,8 +1,7 @@
 import classNames from "classnames";
 import { MergeComponentStyle } from "../../utility/componentUtility";
 import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
-import { useState, useRef, useEffect } from "react";
-import { KeyObject } from "crypto";
+import { useState, useRef } from "react";
 
 export interface BasicTextInputProps {
   value: string;
@@ -25,15 +24,15 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
   onSubmit,
   onFocus,
 }) => {
+  const [textboxValue, setTextBoxValue] = useState(value);
   const [inputValue, setInputValue] = useState(value);
   const inputRef = useRef<HTMLInputElement>(null);
   const submitRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    if (inputValue !== value) {
-      setInputValue(value);
-    }
-  }, [value]);
+  if (inputValue !== value) {
+    setTextBoxValue(value);
+    setInputValue(value);
+  }
 
   const _formStyle = MergeComponentStyle(
     {
@@ -66,13 +65,13 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
   );
 
   const handleValueChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
+    setTextBoxValue(event.target.value);
     onValueChanged?.(event.target.value);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSubmit?.(inputValue);
+    onSubmit?.(textboxValue);
   };
 
   return (
@@ -87,7 +86,7 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
         className={_inputStyle.css}
         style={_inputStyle.style}
         type="text"
-        value={inputValue}
+        value={textboxValue}
         onChange={handleValueChanged}
         onClick={() => {
           if (enableSelectAll) inputRef.current?.select();
