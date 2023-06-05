@@ -5,13 +5,14 @@ import { MergeComponentStyle } from "../../utility/componentUtility";
 import classNames from "classnames";
 import { useState } from "react";
 
-export interface BasicDateTimePickerProps {
+export interface BasicDateTimePickerProps
+  extends Omit<ReactDatePickerProps, "selected" | "onChange" | "dateFormat"> {
   dateTimePickerStyle?: ComponentStyleMerging;
   dateTime?: Date;
   dateFormat?: string;
   onDateTimeChanged?: (date: Date) => void;
   onSubmit?: (date: Date) => void;
-  others?: Omit<ReactDatePickerProps, "selected" | "onChange" | "dateFormat">;
+  [key: string]: any;
 }
 
 export const BasicDateTimePicker: React.FC<BasicDateTimePickerProps> = ({

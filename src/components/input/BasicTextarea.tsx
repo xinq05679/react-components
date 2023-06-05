@@ -1,15 +1,24 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { MergeComponentStyle } from "../../utility/componentUtility";
 import classNames from "classnames";
 
-export interface BasicTextarea {
+export interface BasicTextarea
+  extends Omit<
+    React.HTMLAttributes<HTMLTextAreaElement>,
+    | "onSubmit"
+    | "onSubmitCapture"
+    | "onChange"
+    | "value"
+    | "className"
+    | "readOnly"
+    | "style"
+  > {
   text?: string;
   textareaStyle?: ComponentStyleMerging;
   formStyle?: ComponentStyleMerging;
   onValueChanged?: (value: string) => void;
   onSubmit?: (value: string) => void;
-  onFocus?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
   readOnly?: boolean;
   [key: string]: any;
 }
@@ -20,18 +29,18 @@ export const BasicTextarea: React.FC<BasicTextarea> = ({
   formStyle,
   onValueChanged,
   onSubmit,
-  onFocus,
+  onBlur,
   readOnly,
   ...others
 }) => {
   const [inputValue, setInputValue] = useState(text);
+  const [currentText, setCurrentText] = useState("");
   const btnRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    if (inputValue !== text) {
-      setInputValue(text);
-    }
-  }, [text]);
+  if (text !== currentText) {
+    setCurrentText(text);
+    setInputValue(text);
+  }
 
   const _textareaStyle = MergeComponentStyle(
     {
@@ -59,6 +68,11 @@ export const BasicTextarea: React.FC<BasicTextarea> = ({
     textareaStyle
   );
 
+  others.onBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
+    btnRef.current?.click();
+    onBlur?.(event);
+  };
+
   const _formStyle = MergeComponentStyle(
     { css: classNames("h-[100%] w-[100%]") },
     formStyle
@@ -83,10 +97,6 @@ export const BasicTextarea: React.FC<BasicTextarea> = ({
       <textarea
         value={inputValue}
         onChange={handleValueChanged}
-        onBlur={() => {
-          btnRef.current?.click();
-        }}
-        onFocus={onFocus}
         className={_textareaStyle.css}
         style={_textareaStyle.style}
         readOnly={readOnly}
