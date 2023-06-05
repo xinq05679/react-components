@@ -10,6 +10,7 @@ export interface BasicDateTimePickerProps
   dateTimePickerStyle?: ComponentStyleMerging;
   dateTime: Date | null;
   dateFormat?: string;
+  placeholderText?: string;
   onDateTimeChanged?: (date: Date | null) => void;
   onSubmit?: (date: Date | null) => void;
   [key: string]: any;
@@ -19,6 +20,7 @@ export const BasicDateTimePicker: React.FC<BasicDateTimePickerProps> = ({
   dateTimePickerStyle,
   onDateTimeChanged,
   onSubmit,
+  placeholderText = "",
   dateFormat = "yyyy-MM-dd, h:mm aa",
   dateTime = null,
   onCalendarClose,
@@ -88,6 +90,7 @@ export const BasicDateTimePicker: React.FC<BasicDateTimePickerProps> = ({
       showTimeInput
       dropdownMode="select"
       dateFormat={dateFormat}
+      placeholderText={placeholderText}
       {...others}
     />
   );
