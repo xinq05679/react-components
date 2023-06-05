@@ -33,7 +33,7 @@ export const BasicTextarea: React.FC<BasicTextarea> = ({
   readOnly,
   ...others
 }) => {
-  const [inputValue, setInputValue] = useState(text);
+  const [inputValue, setInputValue] = useState("");
   const [currentText, setCurrentText] = useState("");
   const btnRef = useRef<HTMLButtonElement>(null);
 
@@ -85,6 +85,7 @@ export const BasicTextarea: React.FC<BasicTextarea> = ({
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setCurrentText(inputValue);
     onSubmit?.(inputValue);
   }
 

@@ -8,10 +8,10 @@ import { useState } from "react";
 export interface BasicDateTimePickerProps
   extends Omit<ReactDatePickerProps, "selected" | "onChange" | "dateFormat"> {
   dateTimePickerStyle?: ComponentStyleMerging;
-  dateTime?: Date;
+  dateTime: Date | null;
   dateFormat?: string;
-  onDateTimeChanged?: (date: Date) => void;
-  onSubmit?: (date: Date) => void;
+  onDateTimeChanged?: (date: Date | null) => void;
+  onSubmit?: (date: Date | null) => void;
   [key: string]: any;
 }
 
@@ -20,20 +20,21 @@ export const BasicDateTimePicker: React.FC<BasicDateTimePickerProps> = ({
   onDateTimeChanged,
   onSubmit,
   dateFormat = "yyyy-MM-dd, h:mm aa",
-  dateTime = new Date(),
+  dateTime = null,
+  onCalendarClose,
   others,
 }) => {
-  const [localDate, setLocaDate] = useState<Date>(new Date());
-  const [currentDateTime, setCurrentDateTime] = useState<string>("");
+  const [localDate, setLocaDate] = useState<Date | null>(null);
+  const [currentLocalDate, setCurrentLocalDate] = useState<Date | null>(null);
 
-  if (!dateTime) {
-    if (currentDateTime) {
-      setCurrentDateTime("");
+  if (dateTime) {
+    if (dateTime.toLocaleString() !== currentLocalDate?.toLocaleString()) {
+      setCurrentLocalDate(dateTime);
       setLocaDate(dateTime);
     }
   } else {
-    if (currentDateTime !== dateTime.toString()) {
-      setCurrentDateTime(dateTime.toString());
+    if (currentLocalDate) {
+      setCurrentLocalDate(dateTime);
       setLocaDate(dateTime);
     }
   }
@@ -67,6 +68,7 @@ export const BasicDateTimePicker: React.FC<BasicDateTimePickerProps> = ({
   }
 
   function handleCalendarClose() {
+    setCurrentLocalDate(localDate);
     onSubmit?.(localDate);
   }
 
@@ -75,8 +77,11 @@ export const BasicDateTimePicker: React.FC<BasicDateTimePickerProps> = ({
       className={_dateTimePickerStyle.css}
       selected={localDate}
       onYearChange={handleDateTimeChange}
+      onMonthChange={handleDateTimeChange}
       onChange={handleDateTimeChange}
-      onCalendarClose={handleCalendarClose}
+      onCalendarClose={() => {
+        handleCalendarClose(), onCalendarClose?.();
+      }}
       peekNextMonth
       showMonthDropdown
       showYearDropdown

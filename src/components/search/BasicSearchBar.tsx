@@ -17,7 +17,7 @@ export interface BasicSearchBarProps {
 }
 
 export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
-  text,
+  text = "",
   containerStyle,
   textboxStyle,
   placeholder,
@@ -26,8 +26,14 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
   onChanged,
   onSubmit,
 }) => {
-  const [input, setInput] = useState(text || "");
+  const [input, setInput] = useState("");
+  const [currentText, setCurrentText] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+
+  if (currentText !== text) {
+    setInput(text);
+    setCurrentText(text);
+  }
 
   const handleValueChanged = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setInput(evt.target.value);
@@ -36,6 +42,7 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
 
   const handleSubmit = (evt: React.FormEvent) => {
     evt.preventDefault();
+    setCurrentText(input);
     onSubmit?.(input);
   };
 

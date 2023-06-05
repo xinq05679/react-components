@@ -4,7 +4,7 @@ import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { useState, useRef } from "react";
 
 export interface BasicTextInputProps {
-  value: string;
+  value?: string;
   onValueChanged?: (value: string) => void;
   onSubmit?: (value: string) => void;
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
@@ -15,7 +15,7 @@ export interface BasicTextInputProps {
 }
 
 export const BasicTextInput: React.FC<BasicTextInputProps> = ({
-  value,
+  value = "",
   formStyle,
   inputStyle,
   enableSelectAll,
@@ -24,14 +24,14 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
   onSubmit,
   onFocus,
 }) => {
-  const [textboxValue, setTextBoxValue] = useState(value);
-  const [inputValue, setInputValue] = useState(value);
+  const [inputValue, setInputValue] = useState("");
+  const [currentValue, setCurrentValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const submitRef = useRef<HTMLInputElement>(null);
 
-  if (inputValue !== value) {
-    setTextBoxValue(value);
+  if (currentValue !== value) {
     setInputValue(value);
+    setCurrentValue(value);
   }
 
   const _formStyle = MergeComponentStyle(
@@ -65,13 +65,14 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
   );
 
   const handleValueChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTextBoxValue(event.target.value);
+    setInputValue(event.target.value);
     onValueChanged?.(event.target.value);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSubmit?.(textboxValue);
+    setCurrentValue(inputValue);
+    onSubmit?.(inputValue);
   };
 
   return (
@@ -86,7 +87,7 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
         className={_inputStyle.css}
         style={_inputStyle.style}
         type="text"
-        value={textboxValue}
+        value={inputValue}
         onChange={handleValueChanged}
         onClick={() => {
           if (enableSelectAll) inputRef.current?.select();

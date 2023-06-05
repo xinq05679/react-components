@@ -26,7 +26,7 @@ export interface BasicSelectProps {
 
 export const BasicSelect: React.FC<BasicSelectProps> = ({
   items,
-  selectedLabel,
+  selectedLabel = "",
   placeholder,
   placeholderStyle,
   selectStyle,
@@ -37,21 +37,13 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
   onSelectedItemChanged,
   readOnly = false,
 }) => {
-  const [selectedItem, setSelectedItem] = useState<SelectItem | undefined>();
   const [openDropDown, setOpenDropDown] = useState(false);
   const [optionDivHeight, setOptionDivHeight] = useState(0);
   const [highlightSelected, setHighlightSelected] = useState(false);
   const optionsDivRef = useRef<HTMLDivElement>(null);
   const selectRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (selectedLabel) {
-      const foundLabel = items.find((item) => item.label === selectedLabel);
-      setSelectedItem(foundLabel || { label: selectedLabel });
-    } else {
-      setSelectedItem(undefined);
-    }
-  }, [selectedLabel]);
+  const selectedItem = items.find((item) => item.label === selectedLabel);
 
   useEffect(() => {
     const closeDropDown = (event: any) => {
@@ -165,7 +157,6 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
   ) => {
     if (readOnly) return setOpenDropDown(false);
 
-    setSelectedItem(option);
     setOpenDropDown(false);
     onSelectedItemChanged?.(option.label);
   };
@@ -211,7 +202,7 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
             >
               {items.map((item, index) => (
                 <div
-                  data-select={selectedItem?.label === item.label}
+                  data-select={selectedLabel === item.label}
                   key={index}
                   className={_optionStyle.css}
                   style={_optionStyle.style}

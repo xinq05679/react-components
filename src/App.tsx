@@ -30,6 +30,10 @@ import BasicTextarea from "./components/input/BasicTextarea";
 import BasicDateTimePicker from "./components/datetime/BasicDateTimePicker";
 
 const App: React.FC = () => {
+  const [value, setValue] = useState("444");
+  const [selectedLabel, setSelectedLabel] = useState("5");
+  const [dateTime, setDateTime] = useState<Date | null>(null);
+  const [checkedState, setCheckedState] = useState(CheckBoxStatus.checked);
   const [checkedList, setCheckedList] = useState([
     CheckBoxStatus.unchecked,
     CheckBoxStatus.unchecked,
@@ -96,12 +100,18 @@ const App: React.FC = () => {
                 <td>
                   <BasicTextarea
                     onValueChanged={(value) => console.log(value)}
-                    onSubmit={(value) => console.log(value + "QQQ")}
+                    onSubmit={(value) => setValue(value)}
+                    text={value}
                     // readOnly
                   />
                 </td>,
                 <td>
-                  <BasicDateTimePicker />
+                  <BasicDateTimePicker
+                    onDateTimeChanged={(date) => {
+                      setDateTime(date);
+                    }}
+                    dateTime={dateTime}
+                  />
                 </td>,
               ],
               [
@@ -114,7 +124,13 @@ const App: React.FC = () => {
               ],
               [
                 <td>
-                  <BasicCheckBox text={10} checked={CheckBoxStatus.checked} />
+                  <BasicCheckBox
+                    text={10}
+                    checked={checkedState}
+                    onCheckedChagned={(checked) => {
+                      setCheckedState(checked);
+                    }}
+                  />
                 </td>,
                 <td>
                   <div
@@ -191,17 +207,21 @@ const App: React.FC = () => {
                       { label: "7" },
                       { label: "8" },
                     ]}
-                    selectedLabel="5"
-                    readOnly
+                    selectedLabel={selectedLabel}
+                    // onSelectedItemChanged={setSelectedLabel}
+                    placeholder="Please select one item"
                   />
                 </td>,
                 <td>
                   {/* <BasicToolTip text="QQ" position="TC"> */}
                   <BasicTextInput
-                    value="123"
-                    onValueChanged={(value) => console.log(value)}
-                    onSubmit={(value) => console.log(value)}
-                    onFocus={() => console.log("QQ")}
+                    value={value}
+                    // onValueChanged={(value) => console.log(value)}
+                    onSubmit={(value) => {
+                      setValue(value);
+                      // console.log(value + "55");
+                      // setValue(new Date().toLocaleString());
+                    }}
                   />
                   {/* </BasicToolTip> */}
                 </td>,

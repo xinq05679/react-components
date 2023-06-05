@@ -1,10 +1,11 @@
 import classNames from "classnames";
 import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { MergeComponentStyle } from "../../utility/componentUtility";
+import { useState } from "react";
 
 export enum CheckBoxStatus {
-  checked = 0,
-  unchecked,
+  unchecked = 0,
+  checked,
   indeterminate,
 }
 
@@ -45,7 +46,7 @@ export const BasicCheckBox: React.FC<BasicCheckBoxProps> = ({
         "w-[20px] h-[20px]",
         [
           "data-[checked='2']:after:content-['-']",
-          "data-[checked='0']:after:content-[&#10004;]",
+          "data-[checked='1']:after:content-[&#10004;]",
           "after:absolute",
           "after:rounded-sm",
           "after:w-[20px] after:h-[20px]",
@@ -77,23 +78,22 @@ export const BasicCheckBox: React.FC<BasicCheckBoxProps> = ({
   const handleValueChanged = () => {
     if (readOnly) return;
 
-    let _checked = checked;
+    let updatedCheckState = checked;
 
-    switch (_checked) {
+    switch (updatedCheckState) {
       case CheckBoxStatus.checked:
-        _checked = indeterminate
+        updatedCheckState = indeterminate
           ? CheckBoxStatus.indeterminate
           : CheckBoxStatus.unchecked;
         break;
       case CheckBoxStatus.unchecked:
-        _checked = CheckBoxStatus.checked;
+        updatedCheckState = CheckBoxStatus.checked;
         break;
       case CheckBoxStatus.indeterminate:
-        _checked = CheckBoxStatus.unchecked;
+        updatedCheckState = CheckBoxStatus.unchecked;
         break;
     }
-
-    onCheckedChagned?.(_checked);
+    onCheckedChagned?.(updatedCheckState);
   };
 
   return (
