@@ -27,6 +27,7 @@ import { ContextMenuItemType } from "./metadata/ContextMenuItemType";
 import useContextMenu from "./hooks/useContextMenu";
 import { ButtonType } from "./metadata/ButtonType";
 import BasicTextarea from "./components/input/BasicTextarea";
+import BasicDateTimePicker from "./components/datetime/BasicDateTimePicker";
 
 const App: React.FC = () => {
   const [checkedList, setCheckedList] = useState([
@@ -99,7 +100,9 @@ const App: React.FC = () => {
                     // readOnly
                   />
                 </td>,
-                <td>2-2</td>,
+                <td>
+                  <BasicDateTimePicker />
+                </td>,
               ],
               [
                 <td>

@@ -35,6 +35,7 @@ export * from "./src/components/tabpage/BasicTab";
 export * from "./src/components/tabpage/BasicTabPage";
 export * from "./src/components/contextmenu/BasicContextMenu";
 export * from "./src/components/contextmenu/BasicContextMenuItem";
+export * from "./src/components/datetime/BasicDateTimePicker";
 
 //#endregion
 
