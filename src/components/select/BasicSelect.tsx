@@ -158,7 +158,10 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
     if (readOnly) return setOpenDropDown(false);
 
     setOpenDropDown(false);
-    onSelectedItemChanged?.(option.label);
+
+    if (option.label !== selectedLabel) {
+      onSelectedItemChanged?.(option.label);
+    }
   };
 
   return (

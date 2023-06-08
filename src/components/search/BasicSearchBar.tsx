@@ -27,12 +27,12 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
   onSubmit,
 }) => {
   const [input, setInput] = useState("");
-  const [currentText, setCurrentText] = useState("");
+  const [submitValue, setSubmitValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  if (currentText !== text) {
+  if (submitValue !== text) {
     setInput(text);
-    setCurrentText(text);
+    setSubmitValue(text);
   }
 
   const handleValueChanged = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,8 +42,10 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
 
   const handleSubmit = (evt: React.FormEvent) => {
     evt.preventDefault();
-    setCurrentText(input);
-    onSubmit?.(input);
+    if (submitValue !== input) {
+      setSubmitValue(input);
+      onSubmit?.(input);
+    }
   };
 
   const _containerStyle = MergeComponentStyle(

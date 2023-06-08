@@ -25,13 +25,13 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
   onFocus,
 }) => {
   const [inputValue, setInputValue] = useState("");
-  const [currentValue, setCurrentValue] = useState("");
+  const [submitValue, setSubmitValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const submitRef = useRef<HTMLInputElement>(null);
 
-  if (currentValue !== value) {
+  if (submitValue !== value) {
     setInputValue(value);
-    setCurrentValue(value);
+    setSubmitValue(value);
   }
 
   const _formStyle = MergeComponentStyle(
@@ -71,8 +71,10 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setCurrentValue(inputValue);
-    onSubmit?.(inputValue);
+    if (submitValue !== inputValue) {
+      setSubmitValue(inputValue);
+      onSubmit?.(inputValue);
+    }
   };
 
   return (

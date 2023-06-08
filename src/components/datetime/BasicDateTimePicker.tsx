@@ -27,18 +27,11 @@ export const BasicDateTimePicker: React.FC<BasicDateTimePickerProps> = ({
   others,
 }) => {
   const [localDate, setLocaDate] = useState<Date | null>(null);
-  const [currentLocalDate, setCurrentLocalDate] = useState<Date | null>(null);
+  const [submitLocalDate, setSubmitLocalDate] = useState<Date | null>(null);
 
-  if (dateTime) {
-    if (dateTime.toLocaleString() !== currentLocalDate?.toLocaleString()) {
-      setCurrentLocalDate(dateTime);
-      setLocaDate(dateTime);
-    }
-  } else {
-    if (currentLocalDate) {
-      setCurrentLocalDate(dateTime);
-      setLocaDate(dateTime);
-    }
+  if (dateTime?.toLocaleString() !== submitLocalDate?.toLocaleString()) {
+    setSubmitLocalDate(dateTime);
+    setLocaDate(dateTime);
   }
 
   const _dateTimePickerStyle = MergeComponentStyle(
@@ -70,7 +63,9 @@ export const BasicDateTimePicker: React.FC<BasicDateTimePickerProps> = ({
   }
 
   function handleCalendarClose() {
-    setCurrentLocalDate(localDate);
+    if (localDate?.toLocaleString() === submitLocalDate?.toLocaleString())
+      return;
+    setSubmitLocalDate(localDate);
     onSubmit?.(localDate);
   }
 
