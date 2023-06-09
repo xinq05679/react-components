@@ -1,5 +1,5 @@
 interface ScrollToOptions extends ScrollIntoViewOptions {
-  mode?: "always" | "normal";
+  mode?: "always" | "normal" | "partial-hidden";
   containerSelector?: string;
 }
 
@@ -17,25 +17,28 @@ function scrollTo(selector: string, options?: ScrollToOptions) {
 
   const trgRect = trgItem.getBoundingClientRect();
 
+  const containerRect = _options.containerSelector
+    ? document
+        .querySelector(_options.containerSelector)
+        ?.getBoundingClientRect()
+    : null;
+
+  const border = {
+    top: containerRect?.top || 0,
+    bottom: containerRect?.bottom || window.innerHeight,
+  };
+
   switch (_options.mode) {
     case "always":
       trgItem.scrollIntoView(_options);
       break;
     case "normal":
-      const containerRect = _options.containerSelector
-        ? document
-            .querySelector(_options.containerSelector)
-            ?.getBoundingClientRect()
-        : null;
-
-      if (containerRect) {
-        if (
-          trgRect.top < containerRect.top ||
-          trgRect.bottom > containerRect.bottom
-        ) {
-          trgItem.scrollIntoView(_options);
-        }
-      } else if (trgRect.top < 0 || trgRect.bottom > window.innerHeight) {
+      if (trgRect.top < border.top || trgRect.top > border.bottom) {
+        trgItem.scrollIntoView(_options);
+      }
+      break;
+    case "partial-hidden":
+      if (trgRect.top < border.top || trgRect.bottom > border.bottom) {
         trgItem.scrollIntoView(_options);
       }
       break;
