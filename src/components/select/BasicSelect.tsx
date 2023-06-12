@@ -91,7 +91,14 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
         "flex items-center",
         "bg-[#fff]",
         "text-left",
-        ["[&[data-readonly=true]]:bg-[#ccc]"]
+        [
+          "[&[data-readonly=true]]:bg-[#eee]",
+          "[&[data-readonly=true]]:border-[#ddd]",
+          "[&[data-readonly=true]]:hover:border-[#ddd]",
+          "[&[data-readonly=true]]:focus:border-[#ddd]",
+          "[&[data-readonly=true]]:text-[#888]",
+          "[&[data-readonly=true]]:cursor-auto",
+        ]
       ),
     },
     selectStyle
@@ -99,7 +106,9 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
 
   const _arrowStyle = MergeComponentStyle(
     {
-      css: classNames("border-l-[1px] border-l-[#888]", "h-[100%]"),
+      css: classNames("border-l-[1px] border-l-[#888]", "h-[100%]", [
+        "[&[data-readonly=true]]:border-[#ddd]",
+      ]),
     },
     arrowStyle
   );
@@ -113,7 +122,12 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
         "bg-[#fff]",
         "group",
         "text-left",
-        "overflow-auto"
+        "overflow-auto",
+        [
+          "[&[data-readonly=true]]:bg-[#eee]",
+          "[&[data-readonly=true]]:border-[#ddd]",
+          "[&[data-readonly=true]]:text-[#888]",
+        ]
       ),
       style: {
         top: selectRef.current?.getBoundingClientRect().bottom,
@@ -134,10 +148,10 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
           "group-[&[data-readonly=false]]:[&:hover]:text-[#fff]",
           "group-[&[data-readonly=false]]:[&:hover]:font-bold",
         ],
-        "group-[&[data-highlight=true]]:[&[data-select='true']]:bg-[#1e90ff]",
-        "group-[&[data-highlight=true]]:[&[data-select='true']]:text-[#fff]",
-        "group-[&[data-highlight=true]]:[&[data-select='true']]:font-bold",
-        "group-[&[data-readonly=true]]:bg-[#ccc]"
+        [
+          "group-[&[data-highlight=true]]:[&[data-select='true']]:bg-[#1e90ff]",
+          "group-[&[data-highlight=true]]:[&[data-select='true']]:font-bold",
+        ]
       ),
     },
     optionStyle
@@ -190,7 +204,11 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
               </div>
             )}
           </div>
-          <BiDownArrow className={_arrowStyle.css} style={_arrowStyle.style} />
+          <BiDownArrow
+            data-readonly={readOnly}
+            className={_arrowStyle.css}
+            style={_arrowStyle.style}
+          />
         </div>
         {/* Option */}
         {openDropDown && (

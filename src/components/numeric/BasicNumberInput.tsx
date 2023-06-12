@@ -75,15 +75,17 @@ export const BasicNumberInput: React.FC<BasicNumberInputProps> = ({
         "text-center",
         "cursor-pointer",
         [
-          "border border-[#ddd]",
+          "border border-[#888]",
           "[&]:hover:border-[#00f]",
           "[&]:focus:border-[#00f]",
           "[&]:focus:cursor-auto",
         ],
         [
-          "[&[readOnly]]:bg-[#ccc]",
+          "[&[readOnly]]:bg-[#eee]",
+          "[&[readOnly]]:border-[#ddd]",
           "[&[readOnly]]:hover:border-[#ddd]",
           "[&[readOnly]]:focus:border-[#ddd]",
+          "[&[readOnly]]:text-[#888]",
           "[&[readOnly]]:cursor-auto",
         ]
       ),

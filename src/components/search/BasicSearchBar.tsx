@@ -14,6 +14,7 @@ export interface BasicSearchBarProps {
   iconStyle?: ComponentStyleMerging;
   onChanged?: (value: string) => void;
   onSubmit?: (value: string) => void;
+  readOnly?: boolean;
 }
 
 export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
@@ -25,6 +26,7 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
   iconStyle,
   onChanged,
   onSubmit,
+  readOnly,
 }) => {
   const [input, setInput] = useState("");
   const [submitValue, setSubmitValue] = useState("");
@@ -64,9 +66,17 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
         "px-2",
         "cursor-pointer",
         "rounded",
-        "border border-[#ddd]",
+        "border border-[#888]",
         "[&:hover]:border-[#00f]",
-        "[&:focus]:border-[#00f]"
+        "[&:focus]:border-[#00f]",
+        [
+          "[&[readOnly]]:bg-[#eee]",
+          "[&[readOnly]]:border-[#ddd]",
+          "[&[readOnly]]:hover:border-[#ddd]",
+          "[&[readOnly]]:focus:border-[#ddd]",
+          "[&[readOnly]]:text-[#888]",
+          "[&[readOnly]]:cursor-auto",
+        ]
       ),
     },
     textboxStyle
@@ -87,6 +97,7 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
         style={_containerStyle.style}
       >
         <input
+          readOnly={readOnly}
           className={_textboxStyle.css}
           style={_textboxStyle.style}
           type="text"

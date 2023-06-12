@@ -49,8 +49,9 @@ export const BasicTextarea: React.FC<BasicTextarea> = ({
           "h-[100%] w-[100%]",
           "resize-none",
           "outline-0",
-          "border border-[#ddd]",
+          "border border-[#888]",
           "cursor-pointer",
+          "p-[5px]",
         ],
         [
           "[&]:hover:border-[#00f]",
@@ -58,9 +59,11 @@ export const BasicTextarea: React.FC<BasicTextarea> = ({
           "[&]:focus:cursor-auto",
         ],
         [
-          "[&[readOnly]]:bg-[#ccc]",
+          "[&[readOnly]]:bg-[#eee]",
+          "[&[readOnly]]:border-[#ddd]",
           "[&[readOnly]]:hover:border-[#ddd]",
           "[&[readOnly]]:focus:border-[#ddd]",
+          "[&[readOnly]]:text-[#888]",
           "[&[readOnly]]:cursor-auto",
         ]
       ),

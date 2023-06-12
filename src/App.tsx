@@ -102,7 +102,7 @@ const App: React.FC = () => {
                     onValueChanged={(value) => console.log(value)}
                     onSubmit={(value) => setValue(value)}
                     text={value}
-                    // readOnly
+                    readOnly
                   />
                 </td>,
                 <td>
@@ -222,6 +222,7 @@ const App: React.FC = () => {
                       // console.log(value + "55");
                       // setValue(new Date().toLocaleString());
                     }}
+                    readOnly
                   />
                   {/* </BasicToolTip> */}
                 </td>,
