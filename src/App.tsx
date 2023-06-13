@@ -111,6 +111,7 @@ const App: React.FC = () => {
                       setDateTime(date);
                     }}
                     dateTime={dateTime}
+                    readOnly
                   />
                 </td>,
               ],

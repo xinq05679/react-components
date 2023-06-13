@@ -13,6 +13,7 @@ export interface BasicDateTimePickerProps
   placeholderText?: string;
   onDateTimeChanged?: (date: Date | null) => void;
   onSubmit?: (date: Date | null) => void;
+  readOnly?: boolean;
   [key: string]: any;
 }
 
@@ -24,6 +25,7 @@ export const BasicDateTimePicker: React.FC<BasicDateTimePickerProps> = ({
   dateFormat = "yyyy-MM-dd, h:mm aa",
   dateTime = null,
   onCalendarClose,
+  readOnly,
   others,
 }) => {
   const [localDate, setLocaDate] = useState<Date | null>(null);
@@ -40,16 +42,16 @@ export const BasicDateTimePicker: React.FC<BasicDateTimePickerProps> = ({
         [
           "h-[100%] w-[100%]",
           "outline-0",
-          "border border-[#ddd]",
+          "border border-[#888]",
           "cursor-pointer",
           "pl-[5px]",
           "grow",
         ],
         ["hover:border-[#00f]", "focus:border-[#00f]", "focus:cursor-auto"],
         [
-          "[&[readOnly]]:bg-[#ccc]",
-          "[&[readOnly]]:hover:border-[#ddd]",
-          "[&[readOnly]]:focus:border-[#ddd]",
+          "[&[readOnly]]:bg-[#eee]",
+          "[&[readOnly]]:border-[#ddd]",
+          "[&[readOnly]]:text-[#888]",
           "[&[readOnly]]:cursor-auto",
         ]
       ),
@@ -71,6 +73,7 @@ export const BasicDateTimePicker: React.FC<BasicDateTimePickerProps> = ({
 
   return (
     <DatePicker
+      readOnly={readOnly}
       className={_dateTimePickerStyle.css}
       selected={localDate}
       onYearChange={handleDateTimeChange}
