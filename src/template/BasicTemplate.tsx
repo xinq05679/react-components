@@ -42,7 +42,7 @@ export const BasicTemplate: React.FC<BasicTemplateProps> = ({
 
   const _sidebarStyle = MergeComponentStyle(
     {
-      css: "grow-0 shrink-0 w-1/4",
+      css: "grow-0",
     },
     sidebarStyle
   );

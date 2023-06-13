@@ -1,105 +1,68 @@
-import React, { useEffect, useState } from "react";
-import { TreeViewItemProps } from "./TreeViewItemProps";
-import { TreeViewProps } from "./TreeViewProps";
-import _ from "lodash";
+import { BasicTreeViewItemProps } from "./BasicTreeViewItem";
+import { MergeComponentStyle } from "../../utility/componentUtility";
+import BasicTreeViewItem from "./BasicTreeViewItem";
+import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
+import { Fragment } from "react";
+import classNames from "classnames";
 
-export interface BasicTreeViewProps<T extends TreeViewItemProps<T>>
-  extends TreeViewProps<T> {}
+export interface BasicTreeViewProps<T extends BasicTreeViewItemProps> {
+  roots: T[];
+  TreeViewItemFC?: React.FC<T>;
+  outerContainerStyle?: ComponentStyleMerging;
+  innerContainerStyle?: ComponentStyleMerging;
+}
 
-export function BasicTreeView<T extends TreeViewItemProps<T>>(
+export function BasicTreeView<T extends BasicTreeViewItemProps>(
   props: BasicTreeViewProps<T>
 ): React.ReactElement<BasicTreeViewProps<T>> {
-  const { roots, onClicked, onHovered, onContextMenuClicked, TreeViewItem } =
+  const { roots, TreeViewItemFC, outerContainerStyle, innerContainerStyle } =
     props;
-  const [items, setItems] = useState<Map<string, T>>(new Map());
-  const [selectedId, setSelectedId] = useState("");
-  const [hoveredId, setHoveredId] = useState("");
 
-  useEffect(() => {
-    const newItems = new Map<string, T>();
+  const _outerContainerStyle = MergeComponentStyle(
+    {
+      css: classNames("h-[100%] w-[100%]", "overflow-auto", "relative"),
+    },
+    outerContainerStyle
+  );
 
-    roots.forEach((root) => {
-      newItems.set(root.id, root);
-      root.children?.forEach((child) => newItems.set(child.id, child));
-    });
+  const _innerContainerStyle = MergeComponentStyle(
+    { css: classNames("flex flex-col", " w-[100%]", "absolute") },
+    innerContainerStyle
+  );
 
-    setItems(newItems);
-  }, [roots]);
-
-  const handleClicked = (id: string) => {
-    const newItems = _.cloneDeep(items);
-    const newItem = newItems.get(id) as T;
-
-    if (newItem.children) {
-      newItem.isExpanded = !newItem.isExpanded;
-    } else {
-      newItem.isSelected = true;
-      if (selectedId) {
-        (newItems.get(selectedId) as T).isSelected = false;
-      }
-      setSelectedId(id);
-    }
-
-    onClicked?.(id);
-
-    setItems(newItems);
-  };
-
-  const handleHovered = (id: string, hovered: boolean) => {
-    const newItems = _.cloneDeep(items);
-    const newItem = newItems.get(id) as T;
-
-    if (hovered) {
-      if (hoveredId) {
-        (newItems.get(hoveredId) as T).isHovered = false;
-      }
-      setHoveredId(id);
-    } else {
-      setHoveredId("");
-    }
-    newItem.isHovered = hovered;
-
-    onHovered?.(id);
-
-    setItems(newItems);
-  };
-
-  const renderItem = (itemProps: T): React.ReactNode => {
-    const item = items.get(itemProps.id);
+  const renderedTreeViewItems = (item: T, layer: number): React.ReactNode => {
+    const ItemFC = TreeViewItemFC || BasicTreeViewItem;
     if (!item) return null;
 
-    const { id, children, isExpanded } = item;
-
     return (
-      <li key={id} id={id}>
-        <TreeViewItem
-          {...item}
-          onClicked={() => {
-            handleClicked(id);
-          }}
-          onHovered={() => {
-            handleHovered(id, true);
-          }}
-          onUnhovered={() => {
-            handleHovered(id, false);
-          }}
-          onContextMenuClicked={(pos) => {
-            onContextMenuClicked?.(id, pos);
-          }}
-        />
-        {children && isExpanded && (
-          <ul key={`${id}-children`}>
-            {children.map((child) => renderItem(child))}
-          </ul>
-        )}
-      </li>
+      <Fragment key={item.id}>
+        <ItemFC {...item} />
+        {(() => {
+          if (!item.children || !item.isExpanded) return null;
+          return (
+            <div key={`${item.id}-children`}>
+              {item.children.map((child) =>
+                renderedTreeViewItems(child as T, layer + 1)
+              )}
+            </div>
+          );
+        })()}
+      </Fragment>
     );
   };
 
   return (
-    <ul className="flex flex-col grow shrink-0 overflow-y-auto h-1">
-      {roots.map((root) => renderItem(root))}
-    </ul>
+    <div
+      className={_outerContainerStyle.css}
+      style={_outerContainerStyle.style}
+    >
+      <div
+        className={_innerContainerStyle.css}
+        style={_innerContainerStyle.style}
+      >
+        {roots.map((item) => renderedTreeViewItems(item, 0))}
+      </div>
+    </div>
   );
 }
 

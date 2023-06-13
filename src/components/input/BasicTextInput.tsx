@@ -1,91 +1,110 @@
-import { useState, useRef, useEffect } from "react";
-import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
-import { MergeComponentStyle } from "../../utility/componentUtility";
 import classNames from "classnames";
+import { MergeComponentStyle } from "../../utility/componentUtility";
+import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
+import { useState, useRef } from "react";
 
 export interface BasicTextInputProps {
-  text?: string;
-  editable?: boolean;
-  onChanged?: () => string;
+  value?: string;
+  onValueChanged?: (value: string) => void;
+  onSubmit?: (value: string) => void;
+  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  formStyle?: ComponentStyleMerging;
   inputStyle?: ComponentStyleMerging;
+  enableSelectAll?: boolean;
+  readOnly?: boolean;
 }
 
 export const BasicTextInput: React.FC<BasicTextInputProps> = ({
-  text,
-  editable,
-  onChanged,
+  value = "",
+  formStyle,
   inputStyle,
+  enableSelectAll,
+  readOnly,
+  onValueChanged,
+  onSubmit,
+  onFocus,
 }) => {
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [inputHeight, setInputHeight] = useState(0);
-  const [errorMsg, setErrorMsg] = useState("");
-  const [input, setInput] = useState(text);
+  const [inputValue, setInputValue] = useState("");
+  const [submitValue, setSubmitValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-  const formRef = useRef<HTMLFormElement>(null);
+  const submitRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    if (inputRef.current) {
-      setInputHeight(inputRef.current?.clientHeight);
-    } else {
-      if (inputHeight != 0) {
-        setInputHeight(0);
-      }
-    }
-  }, []);
+  if (submitValue !== value) {
+    setInputValue(value);
+    setSubmitValue(value);
+  }
 
-  const handleClick = () => {
-    if (!editable) return;
-
-    setIsEditMode(true);
-    inputRef.current?.select();
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(event.target.value);
-  };
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-
-    const errorMsg = onChanged?.();
-
-    if (!errorMsg) {
-      setIsEditMode(false);
-      inputRef.current?.blur();
-    } else {
-      setErrorMsg(errorMsg);
-    }
-  };
+  const _formStyle = MergeComponentStyle(
+    {
+      css: classNames("flex items-center", "h-[32px] w-[100%]", "text-[16px]"),
+    },
+    formStyle
+  );
 
   const _inputStyle = MergeComponentStyle(
     {
       css: classNames(
-        "outline-0 border border-[#000] w-[100%] h-10 text-xl px-2 rounded m-0",
-        {
-          "border-0 bg-[#fff0]": !isEditMode,
-          "cursor-pointer": editable,
-          "cursor-text": isEditMode,
-        }
+        [
+          "h-[100%]",
+          "outline-0",
+          "border border-[#888]",
+          "cursor-pointer",
+          "pl-[5px]",
+          "grow",
+        ],
+        ["hover:border-[#00f]", "focus:border-[#00f]", "focus:cursor-auto"],
+        [
+          "[&[readOnly]]:bg-[#eee]",
+          "[&[readOnly]]:border-[#ddd]",
+          "[&[readOnly]]:text-[#888]",
+          "[&[readOnly]]:cursor-auto",
+        ]
       ),
     },
     inputStyle
   );
 
+  const handleValueChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+    onValueChanged?.(event.target.value);
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (submitValue !== inputValue) {
+      setSubmitValue(inputValue);
+      onSubmit?.(inputValue);
+    }
+  };
+
   return (
-    <form className="relative" onSubmit={handleSubmit} ref={formRef} noValidate>
+    <form
+      className={_formStyle.css}
+      style={_formStyle.style}
+      onSubmit={handleSubmit}
+    >
       <input
+        readOnly={readOnly}
+        ref={inputRef}
         className={_inputStyle.css}
         style={_inputStyle.style}
         type="text"
-        value={input}
-        onChange={handleChange}
-        onClick={handleClick}
-        onBlur={(evt) => {
-          formRef.current?.requestSubmit();
+        value={inputValue}
+        onChange={handleValueChanged}
+        onClick={() => {
+          if (enableSelectAll) inputRef.current?.select();
         }}
-        ref={inputRef}
-        disabled={!editable}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            inputRef.current?.blur();
+          }
+        }}
+        onBlur={() => {
+          submitRef.current?.click();
+        }}
+        onFocus={onFocus}
       />
+      <input ref={submitRef} type="submit" className="hidden" />
     </form>
   );
 };

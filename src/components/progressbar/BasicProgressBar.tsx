@@ -6,6 +6,7 @@ export interface BasicProgressBarProps {
   progressbarOuterStyle?: ComponentStyleMerging;
   progressbarInnerStyle?: ComponentStyleMerging;
   textStyle?: ComponentStyleMerging;
+  text?: string;
   value?: number;
 }
 
@@ -14,6 +15,7 @@ export const BasicProgressBar: React.FC<BasicProgressBarProps> = ({
   progressbarInnerStyle,
   textStyle,
   value = 45,
+  text,
 }) => {
   const _progressbarOuterStyle = MergeComponentStyle(
     {
@@ -58,7 +60,7 @@ export const BasicProgressBar: React.FC<BasicProgressBarProps> = ({
         style={_progressbarInnerStyle.style}
       ></div>
       <div className={_textStyle.css} style={_textStyle.style}>
-        {`${value} %`}
+        {text ?? `${value} %`}
       </div>
     </div>
   );

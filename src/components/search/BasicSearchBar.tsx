@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { MergeComponentStyle } from "../../utility/componentUtility";
 import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { BsSearch } from "react-icons/bs";
+import classNames from "classnames";
 
 export interface BasicSearchBarProps {
   text?: string;
@@ -13,10 +14,11 @@ export interface BasicSearchBarProps {
   iconStyle?: ComponentStyleMerging;
   onChanged?: (value: string) => void;
   onSubmit?: (value: string) => void;
+  readOnly?: boolean;
 }
 
 export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
-  text,
+  text = "",
   containerStyle,
   textboxStyle,
   placeholder,
@@ -24,20 +26,16 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
   iconStyle,
   onChanged,
   onSubmit,
+  readOnly,
 }) => {
-  const [input, setInput] = useState(text || "");
-  const [iconHeight, setIconHeight] = useState(0);
+  const [input, setInput] = useState("");
+  const [submitValue, setSubmitValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    if (inputRef.current) {
-      setIconHeight(inputRef.current?.clientHeight);
-    } else {
-      if (iconHeight != 0) {
-        setIconHeight(0);
-      }
-    }
-  }, []);
+  if (submitValue !== text) {
+    setInput(text);
+    setSubmitValue(text);
+  }
 
   const handleValueChanged = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setInput(evt.target.value);
@@ -46,26 +44,47 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
 
   const handleSubmit = (evt: React.FormEvent) => {
     evt.preventDefault();
-    onSubmit?.(input);
+    if (submitValue !== input) {
+      setSubmitValue(input);
+      onSubmit?.(input);
+    }
   };
 
   const _containerStyle = MergeComponentStyle(
     {
-      css: "flex w-[100%] relative",
+      css: "flex w-[100%] relative items-center",
     },
     containerStyle
   );
 
   const _textboxStyle = MergeComponentStyle(
     {
-      css: "border border-[#000] w-[100%] h-[100%] text-xl px-2 cursor-pointer rounded",
+      css: classNames(
+        "outline-0",
+        "w-[100%] h-[100%]",
+        "text-xl",
+        "px-2",
+        "cursor-pointer",
+        "rounded",
+        "border border-[#888]",
+        "[&:hover]:border-[#00f]",
+        "[&:focus]:border-[#00f]",
+        [
+          "[&[readOnly]]:bg-[#eee]",
+          "[&[readOnly]]:border-[#ddd]",
+          "[&[readOnly]]:hover:border-[#ddd]",
+          "[&[readOnly]]:focus:border-[#ddd]",
+          "[&[readOnly]]:text-[#888]",
+          "[&[readOnly]]:cursor-auto",
+        ]
+      ),
     },
     textboxStyle
   );
 
   const _iconStyle = MergeComponentStyle(
     {
-      css: "absolute right-0 h-[100%] p-2 cursor-pointer",
+      css: "absolute right-[5px] h-[100%] cursor-pointer",
     },
     iconStyle
   );
@@ -78,6 +97,7 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
         style={_containerStyle.style}
       >
         <input
+          readOnly={readOnly}
           className={_textboxStyle.css}
           style={_textboxStyle.style}
           type="text"
@@ -86,20 +106,32 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
           onFocus={(event) => event.target.select()}
           placeholder={placeholder}
           ref={inputRef}
-        />
-        <div
-          className={_iconStyle.css}
-          style={_iconStyle.style}
-          onClick={() => {
-            inputRef.current?.focus();
+          onDrop={(event) => {
+            event.preventDefault();
           }}
-        >
-          {(() => {
-            if (!icon)
-              return <BsSearch className="h-[100%]" size={iconHeight} />;
-            return <img src={icon} width={iconHeight} />;
-          })()}
-        </div>
+        />
+        {(() => {
+          if (!icon)
+            return (
+              <BsSearch
+                className={_iconStyle.css}
+                style={_iconStyle.style}
+                onClick={() => {
+                  inputRef.current?.focus();
+                }}
+              />
+            );
+          return (
+            <img
+              className={_iconStyle.css}
+              style={_iconStyle.style}
+              onClick={() => {
+                inputRef.current?.focus();
+              }}
+              src={icon}
+            />
+          );
+        })()}
       </form>
     </>
   );

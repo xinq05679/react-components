@@ -8,6 +8,7 @@ import classNames from "classnames";
 
 export interface BasicButtonProps {
   type?: ButtonType;
+  text?: string;
   children?: React.ReactNode;
   onClicked?: () => void;
   outline?: boolean;
@@ -17,6 +18,7 @@ export interface BasicButtonProps {
 
 export const BasicButton: React.FC<BasicButtonProps> = ({
   type = ButtonType.Primary,
+  text,
   children,
   onClicked,
   outline,
@@ -94,7 +96,7 @@ export const BasicButton: React.FC<BasicButtonProps> = ({
       onClick={onClicked}
       {...others}
     >
-      {children}
+      {children || text}
     </button>
   );
 };

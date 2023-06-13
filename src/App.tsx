@@ -1,164 +1,237 @@
-import BasicTreeViewItem, {
-  BasicTreeViewItemProps,
-} from "./components/treeview/BasicTreeViewItem";
-import BasicTreeView from "./components/treeview/BasicTreeView";
+import QueryIcon from "./resources/image/query.png";
 import BasicTemplate from "./template/BasicTemplate";
-import BasicHeader from "./components/header/BasicHeader";
 import BasicButton from "./components/button/BasicButton";
-import { StyleMergingMode } from "./metadata/ComponentStyle";
-import { ButtonType } from "./metadata/ButtonType";
-
-import BasicListItem from "./components/list/BasicListItem";
-import { BasicListItemProps } from "./components/list/BasicListItemProps";
-import List from "./components/list/List";
-import BasicSearchTextBox from "./components/search/BasicSearchBar";
-import BasicTable from "./components/table/BasicTable";
-import BasicLink from "./components/input/BasicLink";
+import BasicQueryDialog, {
+  BasicQueryDialogProps,
+} from "./components/dialog/BasicQueryDialog";
+import useModal, { ModalType } from "./components/modal/useModal";
+import BasicCheckBox, {
+  CheckBoxStatus,
+} from "./components/checkbox/BasicCheckBox";
+import { useState } from "react";
+import BasicToolBar from "./components/toolbar/BasicToolBar";
+import { AiFillAlert } from "react-icons/ai";
+import BasicTreeView from "./components/treeview/BasicTreeView";
 import BasicTextInput from "./components/input/BasicTextInput";
-import QueryDialog from "./dialog/query-dialog/QueryDialog";
-
-import BasicTab from "./components/tabpage/BasicTab";
+import BasicSelect from "./components/select/BasicSelect";
+import BasicNumberInput from "./components/numeric/BasicNumberInput";
+import BasicTable from "./components/table/BasicTable";
 import BasicTabPage from "./components/tabpage/BasicTabPage";
-import { SelectionMode } from "./metadata/SelectionMode";
-import { BasicProgressBar } from "./components/progressbar/BasicProgressBar";
-import useProgressBarDialog from "./dialog/progressbar-dialog/useProgressBarDialog";
-import useQueryDialog from "./dialog/query-dialog/useQueryDialog";
-import { useEffect } from "react";
-type T = BasicTreeViewItemProps;
+import useQueryDialog from "./hooks/useQueryDialog";
+import { QueryDialogType } from "./metadata/QueryDialogType";
+import BasicList from "./components/list/BasicList";
+import BasicToolTip from "./components/tooltip/BasicToolTip";
+import BasicNumeric from "./components/numeric/BasicNumeric";
+import BasicContextMenuItem from "./components/contextmenu/BasicContextMenuItem";
+import { ContextMenuItemType } from "./metadata/ContextMenuItemType";
+import useContextMenu from "./hooks/useContextMenu";
+import { ButtonType } from "./metadata/ButtonType";
+import BasicTextarea from "./components/input/BasicTextarea";
+import BasicDateTimePicker from "./components/datetime/BasicDateTimePicker";
 
 const App: React.FC = () => {
-  const { openProgressBarDialog, isOpen } = useProgressBarDialog();
-  const { openQueryDialog, closeQueryDialog } = useQueryDialog();
-
-  const roots: T[] = [
-    {
-      id: "root-1",
-      name: "root-1",
-      children: [
-        {
-          id: "child-1-1",
-          name: "child-1-1",
-        },
-      ],
-    },
-    {
-      id: "root-2",
-      name: "root-2",
-      children: [
-        {
-          id: "child-2-1",
-          name: "child-2-1",
-        },
-      ],
-    },
-  ];
-
-  const listFC = () => {
-    const listItem: React.FC<BasicListItemProps> = (props) => {
-      return <BasicListItem {...props} />;
-    };
-
-    return (
-      <div className="flex flex-col h-96">
-        <List
-          listItems={[
-            {
-              id: "list-1",
-              text: "list-1",
-            },
-            { id: "list-2", text: "list-2" },
-            { id: "list-3", text: "list-3" },
-          ]}
-          ListItem={listItem}
-          containerStyle={{
-            css: "items-center",
-          }}
-          mode={SelectionMode.Multi}
-        />
-      </div>
-    );
-  };
-
-  const treeView = (
-    <div className="flex flex-col h-96">
-      <BasicTreeView<T> roots={roots} TreeViewItem={BasicTreeViewItem} />
-    </div>
-  );
+  const [value, setValue] = useState("444");
+  const [selectedLabel, setSelectedLabel] = useState("5");
+  const [dateTime, setDateTime] = useState<Date | null>(null);
+  const [checkedState, setCheckedState] = useState(CheckBoxStatus.checked);
+  const [checkedList, setCheckedList] = useState([
+    CheckBoxStatus.unchecked,
+    CheckBoxStatus.unchecked,
+  ]);
+  const { openContextMenu } = useContextMenu();
 
   return (
-    <BasicTemplate
-      Header={<BasicHeader title="CVE" />}
-      SideBar={treeView}
-      ContentPage={
-        // <BasicButton
-        //   type={ButtonType.Dark}
-        //   customizedStyle={{
-        //     css: "bg-[#f00]",
-        //   }}
-        // >
-        //   Click me
-        // </BasicButton>
-        // ######
-        // <BasicListItem id="list-item" text="haha" />
-        // #####
-        // <div className="flex flex-col h-96">{listFC()}</div>
-        // ###
-        // <BasicSearchTextBox onSubmit={(val) => console.log(val)} />
-        // ###
-        // <BasicLabel value="1@1" editable />
-        // ###
-        // <BasicTable
-        //   headerCell={[<div className="min-w-[200px]">abc</div>, 2, 3, 4]}
-        //   tableCell={[
-        //     [
-        //       <BasicLink text="778" />,
-        //       <BasicLink text="5" />,
-        //       <BasicTextInput text="1@1" editable />,
-        //       listFC(),
-        //     ],
-        //     [
-        //       <BasicSearchTextBox
-        //         containerStyle={{ css: "w-[80%]" }}
-        //         onChanged={(val) => console.log(val)}
-        //       />,
-        //       <BasicTextInput text="1@1" />,
-        //       <BasicTextInput text="1@1" editable />,
-        //       7,
-        //     ],
-        //   ]}
-        //   headerStyle={{
-        //     css: "p-1 h-[35px] bg-[#fff] text-[color:#f00] border-y-[3px] border-solid border-[#0e6eb8] text-[18px] ",
-        //   }}
-        //   tableStyle={{ css: "text-2xl" }}
-        // />
-        // #
-        // <BasicTabPage
-        //   tabs={[
-        //     {
-        //       id: "tab-1",
-        //       text: "tab-1",
-        //       isSelected: true,
-        //     },
-        //     {
-        //       id: "tab-2",
-        //       text: "tab-2",
-        //     },
-        //   ]}
-        // />
-        // ###
-        <BasicProgressBar />
-      }
-      headerStyle={{
-        css: "h-40",
-        style: {
-          backgroundColor: "red",
-        },
-        cssMode: StyleMergingMode.replace,
-      }}
-      toolbarStyle={{
-        css: "w-64",
-      }}
-    />
+    <>
+      <BasicTemplate
+        SideBar={
+          <BasicList
+            items={[
+              {
+                id: "1",
+                textReactNode: "1",
+              },
+              {
+                id: "2",
+                textReactNode: "2",
+              },
+              {
+                id: "3",
+                textReactNode: "3",
+              },
+            ]}
+          />
+        }
+        ContentPage={
+          <BasicTable
+            headerCell={[<th className="w-[30%]">1</th>, <th>2</th>]}
+            tableCell={[
+              [
+                <td>
+                  <BasicTabPage
+                    tabs={{
+                      "tab 1": { text: "tab 1", isModified: true },
+                      "tab 2": { text: "tab 2" },
+                    }}
+                  />
+                </td>,
+                <td>
+                  <BasicToolBar
+                    items={[
+                      {
+                        icon: <img src={QueryIcon} />,
+                        tooltip: "1",
+                        position: -5,
+                      },
+                      {
+                        icon: <img src={QueryIcon} />,
+                        tooltip: "2",
+                        position: -2,
+                      },
+                      {
+                        icon: <img src={QueryIcon} />,
+                        tooltip: "3",
+                        position: -3,
+                      },
+                    ]}
+                  />
+                </td>,
+              ],
+              [
+                <td>
+                  <BasicTextarea
+                    onValueChanged={(value) => console.log(value)}
+                    onSubmit={(value) => setValue(value)}
+                    text={value}
+                    readOnly
+                  />
+                </td>,
+                <td>
+                  <BasicDateTimePicker
+                    onDateTimeChanged={(date) => {
+                      setDateTime(date);
+                    }}
+                    dateTime={dateTime}
+                  />
+                </td>,
+              ],
+              [
+                <td>
+                  <BasicButton type={ButtonType.Primary} outline>
+                    Hi
+                  </BasicButton>
+                </td>,
+                <td>2-2</td>,
+              ],
+              [
+                <td>
+                  <BasicCheckBox
+                    text={10}
+                    checked={checkedState}
+                    onCheckedChagned={(checked) => {
+                      setCheckedState(checked);
+                    }}
+                  />
+                </td>,
+                <td>
+                  <div
+                    onContextMenu={(event) => {
+                      openContextMenu({
+                        items: [
+                          {
+                            id: "1",
+                            text: "1",
+                            type: ContextMenuItemType.Action,
+                            onClicked: () => {
+                              console.log("QQ");
+                            },
+                          },
+                          {
+                            id: "2",
+                            text: "1",
+                            type: ContextMenuItemType.Bar,
+                          },
+                          {
+                            id: "3",
+                            text: "2222222222222222",
+                            type: ContextMenuItemType.Branch,
+                            children: [
+                              {
+                                id: "2-1",
+                                text: "2-1",
+                                type: ContextMenuItemType.Branch,
+                                children: [
+                                  {
+                                    id: "2-1-1",
+                                    text: "2-1-1",
+                                    type: ContextMenuItemType.Action,
+                                  },
+                                ],
+                                onClicked: () => {
+                                  console.log("QQ");
+                                },
+                              },
+                            ],
+                          },
+                          {
+                            id: "4",
+                            text: "3",
+                            type: ContextMenuItemType.Action,
+                          },
+                        ],
+                        position: { x: event.clientX, y: event.clientY },
+                      });
+                    }}
+                  >
+                    222
+                  </div>
+                </td>,
+              ],
+              [
+                <td>
+                  <BasicNumberInput />
+                </td>,
+                <td>
+                  <BasicNumeric readOnly />
+                </td>,
+              ],
+              [
+                <td>
+                  <BasicSelect
+                    items={[
+                      { label: "1" },
+                      { label: "2" },
+                      { label: "3" },
+                      { label: "4" },
+                      { label: "5" },
+                      { label: "6" },
+                      { label: "7" },
+                      { label: "8" },
+                    ]}
+                    selectedLabel={selectedLabel}
+                    // onSelectedItemChanged={setSelectedLabel}
+                    placeholder="Please select one item"
+                  />
+                </td>,
+                <td>
+                  {/* <BasicToolTip text="QQ" position="TC"> */}
+                  <BasicTextInput
+                    value={value}
+                    // onValueChanged={(value) => console.log(value)}
+                    onSubmit={(value) => {
+                      setValue(value);
+                      // console.log(value + "55");
+                      // setValue(new Date().toLocaleString());
+                    }}
+                    readOnly
+                  />
+                  {/* </BasicToolTip> */}
+                </td>,
+              ],
+            ]}
+          />
+        }
+      ></BasicTemplate>
+    </>
   );
 };
 

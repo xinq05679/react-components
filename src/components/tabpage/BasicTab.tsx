@@ -1,7 +1,21 @@
-import { BasicTabProps } from "./BasicTabProps";
+import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { MergeComponentStyle } from "../../utility/componentUtility";
 import classNames from "classnames";
 import { useState } from "react";
+
+export interface BasicTabProps {
+  icon?: React.ReactNode;
+  text?: string;
+  page?: React.ReactNode;
+  isSelected?: boolean;
+  isModified?: boolean;
+  onClicked?: (event: React.MouseEvent<HTMLDivElement>) => void;
+  onClosed?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onContextMenuClicked?: (event: React.MouseEvent<HTMLDivElement>) => void;
+  containerStyle?: ComponentStyleMerging;
+  textStyle?: ComponentStyleMerging;
+  crossStyle?: ComponentStyleMerging;
+}
 
 export const BasicTab: React.FC<BasicTabProps> = ({
   text,
@@ -12,7 +26,6 @@ export const BasicTab: React.FC<BasicTabProps> = ({
   onClosed,
   onContextMenuClicked,
   containerStyle,
-  iconStyle,
   textStyle,
   crossStyle,
 }) => {
@@ -21,26 +34,67 @@ export const BasicTab: React.FC<BasicTabProps> = ({
   const _containerStyle = MergeComponentStyle(
     {
       css: classNames(
-        "relative border-[2px] cursor-pointer",
-        "flex items-center gap-[5px]",
-        "px-[25px] pr-[35px] py-[5px]",
-        "bg-[#eee] hover:bg-[#9ff]",
-        "aria-selected:bg-[#0ff] aria-selected:hover:bg-[#9ff]"
+        [
+          "flex items-center",
+          "mx-[3px] py-[2px]",
+          "w-fit",
+          "relative",
+          "cursor-pointer",
+          "bg-[#bcc3c9] hover:bg-[#eee]",
+          "rounded-t-[5px]",
+        ],
+        [
+          "before:absolute",
+          "before:bg-[#bcc3c9] before:hover:bg-[#eee]",
+          "before:bottom-[-8px] before:left-[-5px]",
+          "before:h-[10px] before:w-[10px]",
+          "before:rotate-[-45deg]",
+          "before:z-[-1]",
+        ],
+        [
+          "after:absolute",
+          "after:bg-[#bcc3c9] after:hover:bg-[#eee]",
+          "after:bottom-[-8px] after:right-[-5px]",
+          "after:h-[10px] after:w-[10px]",
+          "after:rotate-[-45deg]",
+          "after:z-[-1]",
+        ],
+        [
+          "data-[selected=true]:bg-[#fff]",
+          "data-[selected=true]:hover:bg-[#eee]",
+          "data-[selected=true]:border-b-0",
+          "data-[selected=true]:before:bg-[#fff]",
+          "data-[selected=true]:before:hover:bg-[#eee]",
+          "data-[selected=true]:before:border-b-0",
+          "data-[selected=true]:after:bg-[#fff]",
+          "data-[selected=true]:after:hover:bg-[#eee]",
+          "data-[selected=true]:after:border-b-0",
+        ]
       ),
     },
     containerStyle
   );
 
-  const _iconStyle = MergeComponentStyle({}, iconStyle);
-
-  const _textStyle = MergeComponentStyle({ css: "cursor-pointer" }, textStyle);
+  const _textStyle = MergeComponentStyle(
+    {
+      css: classNames([
+        "cursor-pointer",
+        "text-center",
+        "grow",
+        "flex justify-center",
+        "px-[25px]",
+      ]),
+    },
+    textStyle
+  );
 
   const _crossStyle = MergeComponentStyle(
     {
       css: classNames(
-        "text-2xl cursor-pointer absolute right-[10px]",
+        "text-xl cursor-pointer",
+        "absolute right-[5px]",
         "hover:text-[#444] text-[#888]",
-        "aria-hidden:hidden"
+        "[&[data-hidden='true']]:invisible"
       ),
     },
     crossStyle
@@ -48,26 +102,26 @@ export const BasicTab: React.FC<BasicTabProps> = ({
 
   return (
     <div
-      aria-selected={isSelected}
+      data-selected={isSelected}
       className={_containerStyle.css}
-      onContextMenuCapture={(evt) => {
-        onContextMenuClicked?.({ x: evt.clientX, y: evt.clientY });
-      }}
-      onClick={() => onClicked?.()}
+      onContextMenuCapture={onContextMenuClicked}
+      onClick={onClicked}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {icon && (
-        <img className={_iconStyle.css} style={_iconStyle.style} src={icon} />
-      )}
+      {icon}
       <div className={_textStyle.css} style={_textStyle.style}>
         {text || ""}
+        {isModified && <div className="text-[16px] translate-x-[5px]">*</div>}
       </div>
       <button
-        aria-hidden={!isHoverd && !isSelected}
+        data-hidden={!isHoverd && !isSelected}
         className={_crossStyle.css}
         style={_crossStyle.style}
-        onClick={() => onClosed?.()}
+        onClickCapture={(event) => {
+          event.preventDefault();
+          onClosed?.(event);
+        }}
       >
         &times;
       </button>
