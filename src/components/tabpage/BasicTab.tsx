@@ -35,6 +35,7 @@ export const BasicTab: React.FC<BasicTabProps> = ({
     {
       css: classNames(
         [
+          "group",
           "flex items-center",
           "mx-[3px] py-[2px]",
           "w-fit",
@@ -60,15 +61,25 @@ export const BasicTab: React.FC<BasicTabProps> = ({
           "after:z-[-1]",
         ],
         [
-          "data-[selected=true]:bg-[#fff]",
-          "data-[selected=true]:hover:bg-[#eee]",
-          "data-[selected=true]:border-b-0",
-          "data-[selected=true]:before:bg-[#fff]",
-          "data-[selected=true]:before:hover:bg-[#eee]",
-          "data-[selected=true]:before:border-b-0",
-          "data-[selected=true]:after:bg-[#fff]",
-          "data-[selected=true]:after:hover:bg-[#eee]",
-          "data-[selected=true]:after:border-b-0",
+          "[&[data-selected='true']]:bg-[#0e6eb8]",
+          "[&[data-selected='true']]:text-[#fff]",
+          "[&[data-selected='true']]:border-[#0e6eb8]",
+          "[&[data-selected='true']]:border",
+          "[&[data-selected='true']]:border-b-0",
+          "[&[data-selected='true']]:border-b-[#fff]",
+        ],
+        [
+          "[&[data-selected='true']]:hover:bg-[#eee]",
+          "[&[data-selected='true']]:hover:text-[#444]",
+          "[&[data-selected='true']]:hover:border-0",
+        ],
+        [
+          "[&[data-selected='true']]:before:bg-[#0e6eb8]",
+          "[&[data-selected='true']]:before:border-[#004a83]",
+        ],
+        [
+          "[&[data-selected='true']]:after:bg-[#0e6eb8]",
+          "[&[data-selected='true']]:after:border-[#004a83]",
         ]
       ),
     },
@@ -91,10 +102,11 @@ export const BasicTab: React.FC<BasicTabProps> = ({
   const _crossStyle = MergeComponentStyle(
     {
       css: classNames(
-        "text-xl cursor-pointer",
+        "text-[#fff] text-[24px]",
+        "cursor-pointer",
         "absolute right-[5px]",
-        "hover:text-[#444] text-[#888]",
-        "[&[data-hidden='true']]:invisible"
+        "[&[data-hidden='true']]:invisible",
+        ["group-[&:hover]:hover:text-[#444]", "group-[&:hover]:text-[#888]"]
       ),
     },
     crossStyle
@@ -112,7 +124,7 @@ export const BasicTab: React.FC<BasicTabProps> = ({
       {icon}
       <div className={_textStyle.css} style={_textStyle.style}>
         {text || ""}
-        {isModified && <div className="text-[16px] translate-x-[5px]">*</div>}
+        {isModified && <div className="text-[16px]">*</div>}
       </div>
       <button
         data-hidden={!isHoverd && !isSelected}

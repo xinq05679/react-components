@@ -69,7 +69,12 @@ const App: React.FC = () => {
                 <td>
                   <BasicTabPage
                     tabs={{
-                      "tab 1": { text: "tab 1", isModified: true },
+                      "tab 1": {
+                        text: "tab 1",
+                        isModified: true,
+                        isSelected: true,
+                        page: <div className="bg-[#fff]">1</div>,
+                      },
                       "tab 2": { text: "tab 2" },
                     }}
                   />
