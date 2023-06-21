@@ -45,7 +45,7 @@ export const BasicNumberInput: React.FC<BasicNumberInputProps> = ({
   }, [initValue]);
 
   function formatNumber(value: string) {
-    if (value.replaceAll(" ", "") === "") return "";
+    if (!value.trim()) return "";
 
     const number = parseFloat(value);
     if (isNaN(number)) {
@@ -105,7 +105,7 @@ export const BasicNumberInput: React.FC<BasicNumberInputProps> = ({
     event.preventDefault();
 
     // Check if the value is vaild
-    if (value.replaceAll(" ", "") !== "") {
+    if (!value.trim()) {
       let inputValue = parseFloat(value);
 
       if (

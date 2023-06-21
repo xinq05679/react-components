@@ -11,6 +11,7 @@ export default defineConfig({
       entry: path.resolve(__dirname, "./index.ts"),
       name: "react-components",
       fileName: (format) => `index.${format}.js`,
+      formats: ["es"],
     },
     rollupOptions: {
       external: ["react", "react-dom"],
