@@ -28,6 +28,7 @@ import useContextMenu from "./hooks/useContextMenu";
 import { ButtonType } from "./metadata/ButtonType";
 import BasicTextarea from "./components/input/BasicTextarea";
 import BasicDateTimePicker from "./components/datetime/BasicDateTimePicker";
+import TextInput1 from "./components/input/TextInput1";
 
 const App: React.FC = () => {
   const [value, setValue] = useState("444");
@@ -220,15 +221,17 @@ const App: React.FC = () => {
                 </td>,
                 <td>
                   {/* <BasicToolTip text="QQ" position="TC"> */}
-                  <BasicTextInput
-                    value={value}
+                  <TextInput1
+                    icon="QQ"
+                    errorMessage="00000000000  000000000000000"
+                    placeholder="QQQQ"
+                    inputStyle={{ css: "h-[36px] rounded-xl" }}
                     // onValueChanged={(value) => console.log(value)}
                     onSubmit={(value) => {
                       setValue(value);
                       // console.log(value + "55");
                       // setValue(new Date().toLocaleString());
                     }}
-                    readOnly
                   />
                   {/* </BasicToolTip> */}
                 </td>,

@@ -1,11 +1,10 @@
 {
   "name": "react-components",
   "private": true,
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "Kenny Wu",
   "type": "module",
-  "types": "dist/index.d.ts",
-  "main": "./dist/index.es.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "/dist",
     "tailwind.config.js"

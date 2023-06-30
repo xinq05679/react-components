@@ -7,6 +7,7 @@ export * from "./src/components/button/BasicButton";
 export * from "./src/components/header/BasicHeader";
 export * from "./src/components/input/BasicLink";
 export * from "./src/components/input/BasicTextInput";
+export * from "./src/components/input/TextInput1";
 export * from "./src/components/input/BasicTextarea";
 export * from "./src/components/list/BasicList";
 export * from "./src/components/list/BasicListItem";

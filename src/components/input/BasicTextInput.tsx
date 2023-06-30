@@ -5,6 +5,8 @@ import { useState, useRef } from "react";
 
 export interface BasicTextInputProps {
   value?: string;
+  type?: "text" | "password";
+  placeholder?: string;
   onValueChanged?: (value: string) => void;
   onSubmit?: (value: string) => void;
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
@@ -16,6 +18,8 @@ export interface BasicTextInputProps {
 
 export const BasicTextInput: React.FC<BasicTextInputProps> = ({
   value = "",
+  type = "text",
+  placeholder = "",
   formStyle,
   inputStyle,
   enableSelectAll,
@@ -47,7 +51,7 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
         [
           "h-[100%]",
           "outline-0",
-          "border border-[#888]",
+          "border border-[#888] rounded-md",
           "cursor-pointer",
           "pl-[5px]",
           "grow",
@@ -58,7 +62,9 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
           "[&[readOnly]]:border-[#ddd]",
           "[&[readOnly]]:text-[#888]",
           "[&[readOnly]]:cursor-auto",
-        ]
+        ],
+        // Placeholder Style
+        ["placeholder:text-[#888]", "placeholder:text-center"]
       ),
     },
     inputStyle
@@ -88,7 +94,8 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
         ref={inputRef}
         className={_inputStyle.css}
         style={_inputStyle.style}
-        type="text"
+        type={type}
+        placeholder={placeholder}
         value={inputValue}
         onChange={handleValueChanged}
         onClick={() => {
