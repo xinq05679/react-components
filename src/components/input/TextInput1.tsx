@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { BiError } from "react-icons/bi";
 import { ComponentStyleMerging } from "../../..";
 import BasicTextInput, { BasicTextInputProps } from "./BasicTextInput";
 import { MergeComponentStyle } from "../../..";
@@ -6,7 +7,9 @@ import { MergeComponentStyle } from "../../..";
 export interface TextInput1Props extends BasicTextInputProps {
   icon?: React.ReactNode;
   errorMessage?: string;
+  divStyle?: ComponentStyleMerging;
   iconDivStyle?: ComponentStyleMerging;
+  errorMessageIconStyle?: ComponentStyleMerging;
   errorMessageStyle?: ComponentStyleMerging;
 }
 
@@ -28,9 +31,10 @@ export const TextInput1: React.FC<TextInput1Props> = ({
       css: classNames(
         { "pl-[40px]": icon },
         {
-          "border-[#f00]": errorMessage,
-          "hover:border-[#f00]": errorMessage,
-          "focus:border-[#f00]": errorMessage,
+          "bg-[#fef7ea]": errorMessage,
+          "border-[#f09b11]": errorMessage,
+          "hover:border-[#f09b11]": errorMessage,
+          "focus:border-[#f09b11]": errorMessage,
         }
       ),
     },
@@ -40,14 +44,35 @@ export const TextInput1: React.FC<TextInput1Props> = ({
 
   const _errorMessageStyle = MergeComponentStyle(
     {
-      css: classNames("absolute bottom-[-24px]", "h-[24px]", "text-[#f00]"),
+      css: classNames(
+        "flex items-start",
+        "absolute bottom-[-30px]",
+        "h-[24px]",
+        "text-sm text-[#f00]/80 text-start"
+      ),
     },
     //@ts-ignore
     others.errorMessageStyle
   );
 
+  const _divStyle = MergeComponentStyle(
+    {
+      css: classNames("relative", " w-[100%]", "flex items-center"),
+    },
+    //@ts-ignore
+    others.divStyle
+  );
+
+  const _errorMessageIconStyle = MergeComponentStyle(
+    {
+      css: classNames("shrink-0", "me-1", "w-[18px] h-[18px]"),
+    },
+    //@ts-ignore
+    others.errorMessageIconStyle
+  );
+
   return (
-    <div className={classNames("relative", " w-[100%]", "flex items-center")}>
+    <div className={classNames(_divStyle.css)} style={_divStyle.style}>
       {/* Image */}
       {icon && <div className={_iconDivStyle.css}>{icon}</div>}
       {/* Text Input */}
@@ -58,6 +83,10 @@ export const TextInput1: React.FC<TextInput1Props> = ({
           className={_errorMessageStyle.css}
           style={_errorMessageStyle.style}
         >
+          <BiError
+            className={_errorMessageIconStyle.css}
+            style={_errorMessageIconStyle.style}
+          />
           {errorMessage}
         </div>
       )}
