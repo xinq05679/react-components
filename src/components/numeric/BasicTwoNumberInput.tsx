@@ -58,7 +58,7 @@ export const BasicTwoNumberInput: React.FC<BasicTwoNumberInputProps> = ({
         <BasicNumberInput
           range={{
             min: range.min,
-            max: !value.right.trim() ? parseFloat(value.right) : range.max,
+            max: value.right.trim() ? parseFloat(value.right) : range.max,
           }}
           initValue={value.left}
           onValueChanged={(left: string) => {
@@ -73,7 +73,7 @@ export const BasicTwoNumberInput: React.FC<BasicTwoNumberInputProps> = ({
         <div className="shrink-0">-</div>
         <BasicNumberInput
           range={{
-            min: !value.left.trim() ? parseFloat(value.left) : range.min,
+            min: value.left.trim() ? parseFloat(value.left) : range.min,
             max: range.max,
           }}
           initValue={value.right}

@@ -11,7 +11,6 @@ export interface BasicTableProps {
   tableStyle?: ComponentStyleMerging;
   headerStyle?: ComponentStyleMerging;
   rowStyle?: ComponentStyleMerging;
-  cellStyle?: ComponentStyleMerging;
   onRowClicked?: (
     event: React.MouseEvent<HTMLTableRowElement>,
     rowIdx: number

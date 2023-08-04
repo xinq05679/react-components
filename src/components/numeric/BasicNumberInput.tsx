@@ -105,7 +105,7 @@ export const BasicNumberInput: React.FC<BasicNumberInputProps> = ({
     event.preventDefault();
 
     // Check if the value is vaild
-    if (!value.trim()) {
+    if (value.trim()) {
       let inputValue = parseFloat(value);
 
       if (
