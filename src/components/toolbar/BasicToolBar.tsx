@@ -42,7 +42,7 @@ export const BasicToolBar: React.FC<BasicToolBarProps> = ({
     {
       css: classNames(
         ["flex justify-center items-center", "relative"],
-        ["[&]:hover:text-[#fff]", "[&]:hover:cursor-pointer"],
+        ["hover:text-[#fff]", "hover:cursor-pointer"],
         [
           "[&[data-selected=true]]:before:absolute",
           "[&[data-selected=true]]:before:left-[0px]",

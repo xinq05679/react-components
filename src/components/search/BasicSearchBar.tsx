@@ -8,28 +8,35 @@ export interface BasicSearchBarProps {
   text?: string;
   items?: string[];
   icon?: string;
+  suffixText?: string;
   placeholder?: string;
   containerStyle?: ComponentStyleMerging;
   textboxStyle?: ComponentStyleMerging;
+  suffixTextStyle?: ComponentStyleMerging;
   iconStyle?: ComponentStyleMerging;
   onChanged?: (value: string) => void;
   onSubmit?: (value: string) => void;
+  onClicked?: (event: React.MouseEvent<HTMLInputElement>) => void;
   readOnly?: boolean;
 }
 
 export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
   text = "",
+  suffixText = "",
   containerStyle,
+  suffixTextStyle,
   textboxStyle,
-  placeholder,
+  placeholder = "",
   icon,
   iconStyle,
   onChanged,
   onSubmit,
+  onClicked,
   readOnly,
 }) => {
   const [input, setInput] = useState("");
   const [submitValue, setSubmitValue] = useState("");
+  const suffixDivRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   if (submitValue !== text) {
@@ -61,14 +68,13 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
     {
       css: classNames(
         "outline-0",
-        "w-[100%] h-[100%]",
-        "text-xl",
-        "px-2",
+        "w-[100%] h-[32px] rounded-2xl",
+        "pl-[40px]",
         "cursor-pointer",
         "rounded",
         "border border-[#888]",
-        "[&:hover]:border-[#00f]",
-        "[&:focus]:border-[#00f]",
+        "hover:border-[#00f]",
+        "focus:border-[#00f]",
         [
           "[&[readOnly]]:bg-[#eee]",
           "[&[readOnly]]:border-[#ddd]",
@@ -78,15 +84,37 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
           "[&[readOnly]]:cursor-auto",
         ]
       ),
+      style: {
+        paddingRight: `${
+          suffixDivRef.current
+            ? suffixDivRef.current.clientWidth +
+              suffixDivRef.current.getClientRects().length
+            : 15
+        }px`,
+      },
     },
     textboxStyle
   );
 
   const _iconStyle = MergeComponentStyle(
     {
-      css: "absolute right-[5px] h-[100%] cursor-pointer",
+      css: "absolute left-[10px] h-[24px] w-[24px] cursor-pointer",
     },
     iconStyle
+  );
+
+  const _suffixTextStyle = MergeComponentStyle(
+    {
+      css: classNames(
+        "flex items-center",
+        "absolute right-0",
+        //"rounded-r-2xl border-[#f00]", Add this line can change the background color of the suffix div which will fill up the right side of the input div.
+        "h-full",
+        "px-[15px]",
+        "text-[#9ca3af]"
+      ),
+    },
+    suffixTextStyle
   );
 
   return (
@@ -97,6 +125,7 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
         style={_containerStyle.style}
       >
         <input
+          ref={inputRef}
           readOnly={readOnly}
           className={_textboxStyle.css}
           style={_textboxStyle.style}
@@ -105,10 +134,10 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
           onChange={handleValueChanged}
           onFocus={(event) => event.target.select()}
           placeholder={placeholder}
-          ref={inputRef}
           onDrop={(event) => {
             event.preventDefault();
           }}
+          onClick={onClicked}
         />
         {(() => {
           if (!icon)
@@ -132,6 +161,15 @@ export const BasicSearchTextBox: React.FC<BasicSearchBarProps> = ({
             />
           );
         })()}
+        {suffixText && (
+          <div
+            ref={suffixDivRef}
+            className={classNames(_suffixTextStyle.css)}
+            style={_suffixTextStyle.style}
+          >
+            {suffixText}
+          </div>
+        )}
       </form>
     </>
   );

@@ -29,6 +29,8 @@ import { ButtonType } from "./metadata/ButtonType";
 import BasicTextarea from "./components/input/BasicTextarea";
 import BasicDateTimePicker from "./components/datetime/BasicDateTimePicker";
 import TextInput1 from "./components/input/TextInput1";
+import { BasicTwoNumberInput } from "..";
+import { BasicSearchTextBox } from "..";
 
 const App: React.FC = () => {
   const [value, setValue] = useState("444");
@@ -123,9 +125,11 @@ const App: React.FC = () => {
               ],
               [
                 <td>
-                  <BasicButton type={ButtonType.Primary} outline>
-                    Hi
-                  </BasicButton>
+                  <BasicTwoNumberInput
+                    initValue={{ left: "0", right: "10" }}
+                    range={{ min: 0, max: 10 }}
+                    digits={1}
+                  />
                 </td>,
                 <td>2-2</td>,
               ],
@@ -140,57 +144,7 @@ const App: React.FC = () => {
                   />
                 </td>,
                 <td>
-                  <div
-                    onContextMenu={(event) => {
-                      openContextMenu({
-                        items: [
-                          {
-                            id: "1",
-                            text: "1",
-                            type: ContextMenuItemType.Action,
-                            onClicked: () => {
-                              console.log("QQ");
-                            },
-                          },
-                          {
-                            id: "2",
-                            text: "1",
-                            type: ContextMenuItemType.Bar,
-                          },
-                          {
-                            id: "3",
-                            text: "2222222222222222",
-                            type: ContextMenuItemType.Branch,
-                            children: [
-                              {
-                                id: "2-1",
-                                text: "2-1",
-                                type: ContextMenuItemType.Branch,
-                                children: [
-                                  {
-                                    id: "2-1-1",
-                                    text: "2-1-1",
-                                    type: ContextMenuItemType.Action,
-                                  },
-                                ],
-                                onClicked: () => {
-                                  console.log("QQ");
-                                },
-                              },
-                            ],
-                          },
-                          {
-                            id: "4",
-                            text: "3",
-                            type: ContextMenuItemType.Action,
-                          },
-                        ],
-                        position: { x: event.clientX, y: event.clientY },
-                      });
-                    }}
-                  >
-                    222
-                  </div>
+                  <BasicSearchTextBox />
                 </td>,
               ],
               [
