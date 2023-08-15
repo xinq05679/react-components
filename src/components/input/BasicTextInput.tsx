@@ -14,6 +14,7 @@ export interface BasicTextInputProps {
   inputStyle?: ComponentStyleMerging;
   enableSelectAll?: boolean;
   readOnly?: boolean;
+  autoFocus?: boolean;
 }
 
 export const BasicTextInput: React.FC<BasicTextInputProps> = ({
@@ -24,6 +25,7 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
   inputStyle,
   enableSelectAll,
   readOnly,
+  autoFocus,
   onValueChanged,
   onSubmit,
   onFocus,
@@ -110,6 +112,7 @@ export const BasicTextInput: React.FC<BasicTextInputProps> = ({
           submitRef.current?.click();
         }}
         onFocus={onFocus}
+        autoFocus={autoFocus}
       />
       <input ref={submitRef} type="submit" className="hidden" />
     </form>
