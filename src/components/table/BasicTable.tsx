@@ -5,26 +5,21 @@ import { MergeComponentStyle } from "../../utility/componentUtility";
 import { Fragment } from "react";
 
 export interface BasicTableProps {
-  headerCell?: React.ReactNode[];
-  tableCell: React.ReactNode[][];
+  headRow?: React.ReactNode;
+  tableRows: React.ReactNode[];
   tableDivStyle?: ComponentStyleMerging;
   tableStyle?: ComponentStyleMerging;
-  headerStyle?: ComponentStyleMerging;
-  rowStyle?: ComponentStyleMerging;
-  onRowClicked?: (
-    event: React.MouseEvent<HTMLTableRowElement>,
-    rowIdx: number
-  ) => void;
+  theadStyle?: ComponentStyleMerging;
+  tbodyStyle?: ComponentStyleMerging;
 }
 
 export const BasicTable: React.FC<BasicTableProps> = ({
-  headerCell,
-  tableCell,
+  headRow,
+  tableRows,
   tableDivStyle,
   tableStyle,
-  headerStyle,
-  rowStyle,
-  onRowClicked,
+  theadStyle,
+  tbodyStyle,
 }) => {
   const _tableDivStyle = MergeComponentStyle(
     {
@@ -42,48 +37,32 @@ export const BasicTable: React.FC<BasicTableProps> = ({
     tableStyle
   );
 
-  const _headerStyle = MergeComponentStyle(
+  const _theadStyle = MergeComponentStyle(
     {
       css: classNames("sticky top-0", "bg-[#0e6db7] text-[#fff]"),
     },
-    headerStyle
+    theadStyle
   );
 
-  const _rowStyle = MergeComponentStyle(
+  const _tbodyStyle = MergeComponentStyle(
     {
-      css: "even:bg-[#fff] odd:bg-[#f0f0f0] text-center hover:bg-[#cce4f1]",
+      css: "even:[&>tr]:bg-[#fff] odd:[&>tr]:bg-[#f0f0f0] [&>tr]:text-center hover:[&>tr]:bg-[#cce4f1]",
     },
-    rowStyle
+    tbodyStyle
   );
 
   return (
     <div className={_tableDivStyle.css} style={_tableDivStyle.style}>
       <table className={_tableStyle.css} style={_tableStyle.style}>
-        <thead className={_headerStyle.css} style={_headerStyle.style}>
-          {headerCell && (
-            <tr>
-              {headerCell.map((cell, index) => (
-                <Fragment key={index}>{cell}</Fragment>
-              ))}
-            </tr>
-          )}
-        </thead>
-        <tbody>
-          {tableCell.map((row, rowIdx) => {
-            return (
-              <tr
-                key={`row-${rowIdx}`}
-                className={_rowStyle.css}
-                style={_rowStyle.style}
-                onClick={(event) => {
-                  onRowClicked?.(event, rowIdx);
-                }}
-              >
-                {row.map((cell, colIdx) => (
-                  <Fragment key={`cell-${rowIdx}-${colIdx}`}>{cell}</Fragment>
-                ))}
-              </tr>
-            );
+        {headRow && (
+          <thead className={_theadStyle.css} style={_theadStyle.style}>
+            {headRow}
+          </thead>
+        )}
+
+        <tbody className={_tbodyStyle.css} style={_tbodyStyle.style}>
+          {tableRows.map((row, rowIdx) => {
+            return <Fragment key={rowIdx}>{row}</Fragment>;
           })}
         </tbody>
       </table>

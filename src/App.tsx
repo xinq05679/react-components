@@ -8,7 +8,7 @@ import useModal, { ModalType } from "./components/modal/useModal";
 import BasicCheckBox, {
   CheckBoxStatus,
 } from "./components/checkbox/BasicCheckBox";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import BasicToolBar from "./components/toolbar/BasicToolBar";
 import { AiFillAlert } from "react-icons/ai";
 import BasicTreeView from "./components/treeview/BasicTreeView";
@@ -37,6 +37,7 @@ const App: React.FC = () => {
   const [selectedLabel, setSelectedLabel] = useState("5");
   const [dateTime, setDateTime] = useState<Date | null>(null);
   const [checkedState, setCheckedState] = useState(CheckBoxStatus.checked);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [checkedList, setCheckedList] = useState([
     CheckBoxStatus.unchecked,
     CheckBoxStatus.unchecked,
@@ -66,9 +67,13 @@ const App: React.FC = () => {
         }
         ContentPage={
           <BasicTable
-            headerCell={[<th className="w-[30%]">1</th>, <th>2</th>]}
-            tableCell={[
-              [
+            headRow={
+              <tr>
+                <th className="w-[30%]">1</th>, <th>2</th>
+              </tr>
+            }
+            tableRows={[
+              <tr>
                 <td>
                   <BasicTabPage
                     tabs={{
@@ -81,7 +86,7 @@ const App: React.FC = () => {
                       "tab 2": { text: "tab 2" },
                     }}
                   />
-                </td>,
+                </td>
                 <td>
                   <BasicToolBar
                     items={[
@@ -102,9 +107,9 @@ const App: React.FC = () => {
                       },
                     ]}
                   />
-                </td>,
-              ],
-              [
+                </td>
+              </tr>,
+              <tr>
                 <td>
                   <BasicTextarea
                     onValueChanged={(value) => console.log(value)}
@@ -112,7 +117,7 @@ const App: React.FC = () => {
                     text={value}
                     readOnly
                   />
-                </td>,
+                </td>
                 <td>
                   <BasicDateTimePicker
                     onDateTimeChanged={(date) => {
@@ -121,19 +126,19 @@ const App: React.FC = () => {
                     dateTime={dateTime}
                     readOnly
                   />
-                </td>,
-              ],
-              [
+                </td>
+              </tr>,
+              <tr>
                 <td>
                   <BasicTwoNumberInput
                     initValue={{ left: "0", right: "10" }}
                     range={{ min: 0, max: 10 }}
                     digits={1}
                   />
-                </td>,
-                <td>2-2</td>,
-              ],
-              [
+                </td>
+                <td>2-2</td>
+              </tr>,
+              <tr>
                 <td>
                   <BasicCheckBox
                     text={10}
@@ -142,20 +147,20 @@ const App: React.FC = () => {
                       setCheckedState(checked);
                     }}
                   />
-                </td>,
+                </td>
                 <td>
                   <BasicSearchTextBox />
-                </td>,
-              ],
-              [
+                </td>
+              </tr>,
+              <tr>
                 <td>
                   <BasicNumberInput />
-                </td>,
+                </td>
                 <td>
                   <BasicNumeric readOnly />
-                </td>,
-              ],
-              [
+                </td>
+              </tr>,
+              <tr>
                 <td>
                   <BasicSelect
                     items={[
@@ -172,24 +177,32 @@ const App: React.FC = () => {
                     // onSelectedItemChanged={setSelectedLabel}
                     placeholder="Please select one item"
                   />
-                </td>,
+                </td>
                 <td>
                   {/* <BasicToolTip text="QQ" position="TC"> */}
                   <TextInput1
+                    ref={inputRef}
+                    autoFocus
                     icon="QQ"
                     errorMessage="00000000000  000000000000000"
                     placeholder="QQQQ"
                     inputStyle={{ css: "h-[36px] rounded-xl" }}
                     // onValueChanged={(value) => console.log(value)}
                     onSubmit={(value) => {
+                      console.log(inputRef);
+                      inputRef.current?.focus();
                       setValue(value);
                       // console.log(value + "55");
                       // setValue(new Date().toLocaleString());
                     }}
+                    onValueChanged={(value) => {
+                      console.log(value);
+                    }}
                   />
                   {/* </BasicToolTip> */}
-                </td>,
-              ],
+                </td>
+                ,
+              </tr>,
             ]}
           />
         }
