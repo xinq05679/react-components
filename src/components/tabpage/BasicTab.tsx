@@ -5,7 +5,7 @@ import { useState } from "react";
 
 export interface BasicTabProps {
   icon?: React.ReactNode;
-  text?: string;
+  text?: React.ReactNode;
   page?: React.ReactNode;
   isSelected?: boolean;
   isModified?: boolean;
