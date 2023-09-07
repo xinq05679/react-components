@@ -1,64 +1,50 @@
 import classNames from "classnames";
 import { MergeComponentStyle } from "../../utility/componentUtility";
 import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
-import { useState, useRef, forwardRef, createRef } from "react";
+import { useState, useRef, forwardRef, InputHTMLAttributes } from "react";
 
-export interface BasicTextInputProps {
+export interface TextInputProps {
   value?: string;
+  name?: string;
   type?: "text" | "password";
   placeholder?: string;
   onValueChanged?: (value: string) => void;
   onSubmit?: (value: string) => void;
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
-  formStyle?: ComponentStyleMerging;
   inputStyle?: ComponentStyleMerging;
   enableSelectAll?: boolean;
   readOnly?: boolean;
   autoFocus?: boolean;
 }
 
-export const BasicTextInput = forwardRef<HTMLInputElement, BasicTextInputProps>(
+export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
   (
     {
       value = "",
-      type = "text",
-      placeholder = "",
-      formStyle,
       inputStyle,
       enableSelectAll,
-      readOnly,
-      autoFocus,
       onValueChanged,
       onSubmit,
       onFocus,
+      ...others
     },
     ref
   ) => {
     const [inputValue, setInputValue] = useState("");
     const [submitValue, setSubmitValue] = useState("");
-    const submitRef = useRef<HTMLInputElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     if (submitValue !== value) {
       setInputValue(value);
       setSubmitValue(value);
     }
 
-    const _formStyle = MergeComponentStyle(
-      {
-        css: classNames(
-          "flex items-center",
-          "h-[32px] w-[100%]",
-          "text-[16px]"
-        ),
-      },
-      formStyle
-    );
-
     const _inputStyle = MergeComponentStyle(
       {
         css: classNames(
           [
-            "h-[100%]",
+            "text-[16px]",
+            "h-[32px] w-[100%]",
             "outline-0",
             "border border-[#888] rounded-md",
             "cursor-pointer",
@@ -84,8 +70,7 @@ export const BasicTextInput = forwardRef<HTMLInputElement, BasicTextInputProps>(
       onValueChanged?.(event.target.value);
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
+    const handleSubmit = () => {
       if (submitValue !== inputValue) {
         setSubmitValue(inputValue);
         onSubmit?.(inputValue);
@@ -93,40 +78,33 @@ export const BasicTextInput = forwardRef<HTMLInputElement, BasicTextInputProps>(
     };
 
     return (
-      <form
-        className={_formStyle.css}
-        style={_formStyle.style}
-        onSubmit={handleSubmit}
-      >
-        <input
-          readOnly={readOnly}
-          ref={ref}
-          className={_inputStyle.css}
-          style={_inputStyle.style}
-          type={type}
-          placeholder={placeholder}
-          value={inputValue}
-          onChange={handleValueChanged}
-          onClick={() => {
-            // @ts-ignore
-            if (enableSelectAll) ref?.current?.select();
-          }}
-          onKeyDown={(event) => {
-            if (event.key === "Enter") {
-              // @ts-ignore
-              ref?.current?.blur();
-            }
-          }}
-          onBlur={() => {
-            submitRef.current?.click();
-          }}
-          onFocus={onFocus}
-          autoFocus={autoFocus}
-        />
-        <input ref={submitRef} type="submit" className="hidden" />
-      </form>
+      <input
+        {...others}
+        ref={(el) => {
+          // @ts-ignore
+          inputRef.current = el;
+          // @ts-ignore
+          if (ref) ref.current = el;
+        }}
+        className={_inputStyle.css}
+        style={_inputStyle.style}
+        value={inputValue}
+        onChange={handleValueChanged}
+        onClick={() => {
+          // @ts-ignore
+          if (enableSelectAll) inputRef.current?.select();
+        }}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            inputRef.current?.blur();
+          }
+        }}
+        onBlur={() => {
+          handleSubmit();
+        }}
+      />
     );
   }
 );
 
-export default BasicTextInput;
+export default TextInput;

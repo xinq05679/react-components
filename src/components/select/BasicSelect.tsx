@@ -8,10 +8,12 @@ import BasicPortal from "../portal/BasicPortal";
 export interface SelectItem {
   label: string;
   name?: string;
+  style?: ComponentStyleMerging;
 }
 
 export interface BasicSelectProps {
   items: SelectItem[];
+  name?: string;
   selectedLabel?: string;
   placeholder?: string;
   containerStyle?: ComponentStyleMerging;
@@ -21,11 +23,13 @@ export interface BasicSelectProps {
   optionsDivStyle?: ComponentStyleMerging;
   optionStyle?: ComponentStyleMerging;
   onSelectedItemChanged?: (selectedItem: string) => void;
+  onSelectionListVisibleChanged?: (visible: boolean) => void;
   readOnly?: boolean;
 }
 
 export const BasicSelect: React.FC<BasicSelectProps> = ({
   items,
+  name,
   selectedLabel = "",
   placeholder,
   placeholderStyle,
@@ -35,6 +39,7 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
   optionsDivStyle,
   optionStyle,
   onSelectedItemChanged,
+  onSelectionListVisibleChanged,
   readOnly = false,
 }) => {
   const [openDropDown, setOpenDropDown] = useState(false);
@@ -53,7 +58,10 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
         optionsDivRef?.current &&
         !optionsDivRef.current.contains(event.target)
       ) {
-        setOpenDropDown(false);
+        setOpenDropDown((s) => {
+          onSelectionListVisibleChanged?.(false);
+          return false;
+        });
       }
     };
 
@@ -169,9 +177,12 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
     event: React.MouseEvent<HTMLDivElement>,
     option: SelectItem
   ) => {
-    if (readOnly) return setOpenDropDown(false);
+    setOpenDropDown((s) => {
+      onSelectionListVisibleChanged?.(false);
+      return false;
+    });
 
-    setOpenDropDown(false);
+    if (readOnly) return;
 
     if (option.label !== selectedLabel) {
       onSelectedItemChanged?.(option.label);
@@ -188,7 +199,10 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
           style={_selectStyle.style}
           ref={selectRef}
           onClick={() => {
-            setOpenDropDown(!openDropDown);
+            setOpenDropDown((s) => {
+              onSelectionListVisibleChanged?.(!s);
+              return !s;
+            });
             setHighlightSelected(!readOnly);
           }}
         >
@@ -221,20 +235,25 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
               ref={optionsDivRef}
               onMouseEnter={() => setHighlightSelected(false)}
             >
-              {items.map((item, index) => (
-                <div
-                  data-select={selectedLabel === item.label}
-                  key={index}
-                  className={_optionStyle.css}
-                  style={_optionStyle.style}
-                  onClick={(event) => handleOptionClick(event, item)}
-                >
-                  {item.name || item.label}
-                </div>
-              ))}
+              {items.map((item, index) => {
+                const style = MergeComponentStyle(_optionStyle, item.style);
+                return (
+                  <div
+                    data-select={selectedLabel === item.label}
+                    key={index}
+                    className={style.css}
+                    style={style.style}
+                    onClick={(event) => handleOptionClick(event, item)}
+                  >
+                    {item.name || item.label}
+                  </div>
+                );
+              })}
             </div>
           </BasicPortal>
         )}
+        {/* Input */}
+        <input name={name} value={selectedLabel} readOnly hidden />
       </div>
     </>
   );

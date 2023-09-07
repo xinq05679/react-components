@@ -11,6 +11,7 @@ export enum CheckBoxStatus {
 
 export interface BasicCheckBoxProps {
   id?: string;
+  name?: string;
   text?: React.ReactNode;
   checked?: CheckBoxStatus;
   onCheckedChagned?: (checked: CheckBoxStatus) => void;
@@ -23,6 +24,7 @@ export interface BasicCheckBoxProps {
 
 export const BasicCheckBox: React.FC<BasicCheckBoxProps> = ({
   id = crypto.randomUUID(),
+  name,
   text,
   checked = CheckBoxStatus.unchecked,
   onCheckedChagned,
@@ -110,6 +112,7 @@ export const BasicCheckBox: React.FC<BasicCheckBoxProps> = ({
           style={_inputStyle.style}
           type="checkbox"
           id={id}
+          name={name}
           checked={checked !== CheckBoxStatus.unchecked}
           onChange={handleValueChanged}
         />

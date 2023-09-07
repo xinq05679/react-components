@@ -1,6 +1,6 @@
 import QueryIcon from "./resources/image/query.png";
 import BasicTemplate from "./template/BasicTemplate";
-import BasicButton from "./components/button/BasicButton";
+import BasicButton from "./components/button/Button";
 import BasicQueryDialog, {
   BasicQueryDialogProps,
 } from "./components/dialog/BasicQueryDialog";
@@ -12,16 +12,14 @@ import { useState, useRef } from "react";
 import BasicToolBar from "./components/toolbar/BasicToolBar";
 import { AiFillAlert } from "react-icons/ai";
 import BasicTreeView from "./components/treeview/BasicTreeView";
-import BasicTextInput from "./components/input/BasicTextInput";
+import TextInput from "./components/input/TextInput";
 import BasicSelect from "./components/select/BasicSelect";
-import BasicNumberInput from "./components/numeric/BasicNumberInput";
 import BasicTable from "./components/table/BasicTable";
 import BasicTabPage from "./components/tabpage/BasicTabPage";
 import useQueryDialog from "./hooks/useQueryDialog";
 import { QueryDialogType } from "./metadata/QueryDialogType";
 import BasicList from "./components/list/BasicList";
 import BasicToolTip from "./components/tooltip/BasicToolTip";
-import BasicNumeric from "./components/numeric/BasicNumeric";
 import BasicContextMenuItem from "./components/contextmenu/BasicContextMenuItem";
 import { ContextMenuItemType } from "./metadata/ContextMenuItemType";
 import useContextMenu from "./hooks/useContextMenu";
@@ -29,8 +27,10 @@ import { ButtonType } from "./metadata/ButtonType";
 import BasicTextarea from "./components/input/BasicTextarea";
 import BasicDateTimePicker from "./components/datetime/BasicDateTimePicker";
 import TextInput1 from "./components/input/TextInput1";
-import { BasicTwoNumberInput } from "..";
-import { BasicSearchTextBox } from "..";
+import { BasicSearchTextBox } from "./components/search/BasicSearchBar";
+import { NumericInput } from "./components/numeric/NumericInput";
+import { TwoNumericInput } from "./components/numeric/TwoNumericInput";
+import classNames from "classnames";
 
 const App: React.FC = () => {
   const [value, setValue] = useState("444");
@@ -43,6 +43,10 @@ const App: React.FC = () => {
     CheckBoxStatus.unchecked,
   ]);
   const { openContextMenu } = useContextMenu();
+
+  function handleChange() {
+    console.log(inputRef);
+  }
 
   return (
     <>
@@ -130,10 +134,10 @@ const App: React.FC = () => {
               </tr>,
               <tr>
                 <td>
-                  <BasicTwoNumberInput
-                    initValue={{ left: "0", right: "10" }}
+                  <TwoNumericInput
+                    value={{ min: 1, max: 5 }}
                     range={{ min: 0, max: 10 }}
-                    digits={1}
+                    digits={0}
                   />
                 </td>
                 <td>2-2</td>
@@ -149,22 +153,37 @@ const App: React.FC = () => {
                   />
                 </td>
                 <td>
-                  <BasicSearchTextBox />
+                  <BasicSearchTextBox onChanged={handleChange} />
                 </td>
               </tr>,
               <tr>
                 <td>
-                  <BasicNumberInput />
+                  <NumericInput
+                    value={5}
+                    range={{ min: 0, max: 6 }}
+                    onValueChanged={(value) => {
+                      console.log(value);
+                    }}
+                  />
                 </td>
                 <td>
-                  <BasicNumeric readOnly />
+                  <TextInput
+                    ref={inputRef}
+                    placeholder="123"
+                    autoFocus
+                    enableSelectAll
+                    onValueChanged={(value) => {
+                      // @ts-ignore
+                      console.log(inputRef.current);
+                    }}
+                  />
                 </td>
               </tr>,
               <tr>
                 <td>
                   <BasicSelect
                     items={[
-                      { label: "1" },
+                      { label: "1", style: { css: classNames("bg-[#f00]") } },
                       { label: "2" },
                       { label: "3" },
                       { label: "4" },
@@ -176,21 +195,18 @@ const App: React.FC = () => {
                     selectedLabel={selectedLabel}
                     // onSelectedItemChanged={setSelectedLabel}
                     placeholder="Please select one item"
+                    onSelectionListVisibleChanged={(s) => console.log(s)}
                   />
                 </td>
                 <td>
                   {/* <BasicToolTip text="QQ" position="TC"> */}
                   <TextInput1
-                    ref={inputRef}
-                    autoFocus
                     icon="QQ"
                     errorMessage="00000000000  000000000000000"
                     placeholder="QQQQ"
                     inputStyle={{ css: "h-[36px] rounded-xl" }}
                     // onValueChanged={(value) => console.log(value)}
                     onSubmit={(value) => {
-                      console.log(inputRef);
-                      inputRef.current?.focus();
                       setValue(value);
                       // console.log(value + "55");
                       // setValue(new Date().toLocaleString());

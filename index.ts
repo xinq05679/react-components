@@ -3,10 +3,10 @@ export * from "./src/template/BasicTemplate";
 //#endregion
 
 //#region Component
-export * from "./src/components/button/BasicButton";
+export * from "./src/components/button/Button";
 export * from "./src/components/header/BasicHeader";
 export * from "./src/components/input/BasicLink";
-export * from "./src/components/input/BasicTextInput";
+export * from "./src/components/input/TextInput";
 export * from "./src/components/input/TextInput1";
 export * from "./src/components/input/BasicTextarea";
 export * from "./src/components/list/BasicList";
@@ -23,10 +23,8 @@ export * from "./src/components/modal/BasicModal";
 export * from "./src/components/modal/useModal";
 export * from "./src/components/checkbox/BasicCheckBox";
 export * from "./src/components/checkbox/BasicMultiCheckBox";
-export * from "./src/components/numeric/BasicNumeric";
-export * from "./src/components/numeric/BasicTwoNumeric";
-export * from "./src/components/numeric/BasicNumberInput";
-export * from "./src/components/numeric/BasicTwoNumberInput";
+export * from "./src/components/numeric/NumericInput";
+export * from "./src/components/numeric/TwoNumericInput";
 export * from "./src/components/progressbar/BasicProgressBar";
 export * from "./src/components/dialog/BasicProgressDialog";
 export * from "./src/components/dialog/BasicQueryDialog";

@@ -7,8 +7,9 @@ import {
 import { MergeComponentStyle } from "../../utility/componentUtility";
 import classNames from "classnames";
 
-export interface BasicButtonProps {
-  type?: ButtonType;
+export interface ButtonProps
+  extends Pick<React.ButtonHTMLAttributes<HTMLButtonElement>, "type"> {
+  buttonType?: ButtonType;
   text?: string;
   children?: React.ReactNode;
   onClicked?: () => void;
@@ -17,10 +18,11 @@ export interface BasicButtonProps {
   [key: string]: any;
 }
 
-export const BasicButton = forwardRef<HTMLButtonElement, BasicButtonProps>(
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
-      type = ButtonType.Primary,
+      type = "button",
+      buttonType = ButtonType.Primary,
       text,
       children,
       onClicked,
@@ -34,7 +36,7 @@ export const BasicButton = forwardRef<HTMLButtonElement, BasicButtonProps>(
       css: "border rounded-md font-bold w-28 h-12",
     };
 
-    switch (type) {
+    switch (buttonType) {
       case ButtonType.Secondary:
         buttonStyle.css = classNames(buttonStyle.css, "border-[#6c757d]", {
           "text-[#fff] bg-[#6c757d] hover:bg-[#5c636a] active:bg-[#565e64]":
@@ -109,4 +111,4 @@ export const BasicButton = forwardRef<HTMLButtonElement, BasicButtonProps>(
   }
 );
 
-export default BasicButton;
+export default Button;

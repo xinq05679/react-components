@@ -1,11 +1,11 @@
 import classNames from "classnames";
 import { BiError } from "react-icons/bi";
 import { ComponentStyleMerging } from "../../..";
-import BasicTextInput, { BasicTextInputProps } from "./BasicTextInput";
+import BasicTextInput, { TextInputProps } from "./TextInput";
 import { MergeComponentStyle } from "../../..";
 import { forwardRef } from "react";
 
-export interface TextInput1Props extends BasicTextInputProps {
+export interface TextInput1Props extends TextInputProps {
   icon?: React.ReactNode;
   errorMessage?: string;
   divStyle?: ComponentStyleMerging;
