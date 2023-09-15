@@ -189,6 +189,18 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
     }
   };
 
+  function getAppearName(item: SelectItem) {
+    return item.name !== undefined ? (
+      item.name.trim() === "" ? (
+        <br />
+      ) : (
+        item.name
+      )
+    ) : (
+      item.label
+    );
+  }
+
   return (
     <>
       <div className={_containerStyle.css} style={_containerStyle.style}>
@@ -208,7 +220,7 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
         >
           <div className="grow">
             {selectedItem ? (
-              selectedItem.name || selectedItem.label
+              getAppearName(selectedItem)
             ) : (
               <div
                 className={_placeholderStyle.css}
@@ -245,7 +257,7 @@ export const BasicSelect: React.FC<BasicSelectProps> = ({
                     style={style.style}
                     onClick={(event) => handleOptionClick(event, item)}
                   >
-                    {item.name || item.label}
+                    {getAppearName(item)}
                   </div>
                 );
               })}
