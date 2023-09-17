@@ -70,8 +70,11 @@ export const TwoNumericInput: React.FC<TwoNumericInputProps> = ({
           range={{ min: range.min, max: value.max }}
           value={value.min}
           readOnly={readOnly?.l}
-          onValueChanged={(min: number) => {
-            handleRangeChaned({ min, max: value.max });
+          onValueChanged={(min: number | "") => {
+            handleRangeChaned({
+              min: min,
+              max: value.max,
+            });
           }}
           {...others}
         />
@@ -82,8 +85,11 @@ export const TwoNumericInput: React.FC<TwoNumericInputProps> = ({
           range={{ min: value.min, max: range.max }}
           value={value.max}
           readOnly={readOnly?.r}
-          onValueChanged={(max: number) => {
-            handleRangeChaned({ min: value.min, max });
+          onValueChanged={(max: number | "") => {
+            handleRangeChaned({
+              min: value.min,
+              max: max,
+            });
           }}
           {...others}
         />

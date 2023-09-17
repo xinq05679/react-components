@@ -138,6 +138,9 @@ const App: React.FC = () => {
                     value={{ min: 1, max: 5 }}
                     range={{ min: 0, max: 10 }}
                     digits={0}
+                    onValueChanged={(range) => {
+                      console.log(range);
+                    }}
                   />
                 </td>
                 <td>2-2</td>
@@ -161,9 +164,7 @@ const App: React.FC = () => {
                   <NumericInput
                     value={5}
                     range={{ min: 0, max: 6 }}
-                    onValueChanged={(value) => {
-                      console.log(value);
-                    }}
+                    onValueChanged={(value) => {}}
                   />
                 </td>
                 <td>
@@ -191,9 +192,10 @@ const App: React.FC = () => {
                       { label: "6" },
                       { label: "7" },
                       { label: "8" },
+                      { label: "empty", name: "" },
                     ]}
                     selectedLabel={selectedLabel}
-                    // onSelectedItemChanged={setSelectedLabel}
+                    onSelectedItemChanged={setSelectedLabel}
                     placeholder="Please select one item"
                     onSelectionListVisibleChanged={(s) => console.log(s)}
                   />

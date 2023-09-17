@@ -15,8 +15,8 @@ export interface NumericInputProps {
   id?: string;
   name?: string;
   range?: NumericRange;
-  value?: number;
-  onValueChanged?: (value: number) => void;
+  value?: number | "";
+  onValueChanged?: (value: number | "") => void;
   inputStyle?: ComponentStyleMerging;
   labelStyle?: ComponentStyleMerging;
   onlyInteger?: boolean;
@@ -30,7 +30,7 @@ export const NumericInput = forwardRef<HTMLInputElement, NumericInputProps>(
     {
       id = crypto.randomUUID(),
       range = { min: 0, max: 100 },
-      value = 0.0,
+      value = "",
       onValueChanged,
       inputStyle,
       digits = -1,
@@ -49,7 +49,8 @@ export const NumericInput = forwardRef<HTMLInputElement, NumericInputProps>(
       setSubmitValue(formatNumber(value));
     }
 
-    function formatNumber(value: number) {
+    function formatNumber(value: number | "") {
+      if (value === "") return "";
       return ConversionUtiltiy.convertNumberToString({
         value,
         digits,
@@ -90,13 +91,20 @@ export const NumericInput = forwardRef<HTMLInputElement, NumericInputProps>(
     };
 
     const handleSubmit = () => {
+      if (!inputValue.trim()) {
+        setSubmitValue("");
+        setInputValue("");
+        onValueChanged?.("");
+        return;
+      }
+
       // Check if the value is vaild
       let _inputValue = parseFloat(inputValue);
 
       if (
         isNaN(_inputValue) ||
-        _inputValue < range.min ||
-        _inputValue > range.max
+        (range?.min && _inputValue < range.min) ||
+        (range?.max && _inputValue > range.max)
       ) {
         return setInputValue(submitValue);
       }
