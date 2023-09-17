@@ -76,10 +76,12 @@ export const BasicTab: React.FC<BasicTabProps> = ({
         [
           "[&[data-selected='true']]:before:bg-[#0e6eb8]",
           "[&[data-selected='true']]:before:border-[#004a83]",
+          "[&[data-selected='true']]:before:hover:bg-[#eee]",
         ],
         [
           "[&[data-selected='true']]:after:bg-[#0e6eb8]",
           "[&[data-selected='true']]:after:border-[#004a83]",
+          "[&[data-selected='true']]:after:hover:bg-[#eee]",
         ]
       ),
     },
@@ -130,8 +132,8 @@ export const BasicTab: React.FC<BasicTabProps> = ({
         data-hidden={!isHoverd && !isSelected}
         className={_crossStyle.css}
         style={_crossStyle.style}
-        onClickCapture={(event) => {
-          event.preventDefault();
+        onClick={(event) => {
+          event.stopPropagation();
           onClosed?.(event);
         }}
       >
