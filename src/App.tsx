@@ -9,7 +9,6 @@ import BasicCheckBox, {
   CheckBoxStatus,
 } from "./components/checkbox/BasicCheckBox";
 import { useState, useRef } from "react";
-import BasicToolBar from "./components/toolbar/BasicToolBar";
 import { AiFillAlert } from "react-icons/ai";
 import BasicTreeView from "./components/treeview/BasicTreeView";
 import TextInput from "./components/input/TextInput";
@@ -19,7 +18,6 @@ import BasicTabPage from "./components/tabpage/BasicTabPage";
 import useQueryDialog from "./hooks/useQueryDialog";
 import { QueryDialogType } from "./metadata/QueryDialogType";
 import BasicList from "./components/list/BasicList";
-import BasicToolTip from "./components/tooltip/BasicToolTip";
 import BasicContextMenuItem from "./components/contextmenu/BasicContextMenuItem";
 import { ContextMenuItemType } from "./metadata/ContextMenuItemType";
 import useContextMenu from "./hooks/useContextMenu";
@@ -31,6 +29,8 @@ import { BasicSearchTextBox } from "./components/search/BasicSearchBar";
 import { NumericInput } from "./components/numeric/NumericInput";
 import { TwoNumericInput } from "./components/numeric/TwoNumericInput";
 import classNames from "classnames";
+import ToolBar from "./components/toolbar/ToolBar";
+import ToolTip from "./components/tooltip/ToolTip";
 
 const App: React.FC = () => {
   const [value, setValue] = useState("444");
@@ -92,21 +92,27 @@ const App: React.FC = () => {
                   />
                 </td>
                 <td>
-                  <BasicToolBar
+                  <ToolBar
+                    direction="horizontal"
                     items={[
                       {
-                        icon: <img src={QueryIcon} />,
-                        tooltip: "1",
-                        position: -5,
+                        node: (
+                          <ToolTip tooltip={"haha"}>
+                            <img src={QueryIcon} />
+                          </ToolTip>
+                        ),
+                        position: 1,
                       },
                       {
-                        icon: <img src={QueryIcon} />,
-                        tooltip: "2",
+                        node: (
+                          <ToolTip tooltip="QQ">
+                            <img src={QueryIcon} />
+                          </ToolTip>
+                        ),
                         position: -2,
                       },
                       {
-                        icon: <img src={QueryIcon} />,
-                        tooltip: "3",
+                        node: <img src={QueryIcon} />,
                         position: -3,
                       },
                     ]}
