@@ -1,4 +1,5 @@
 import QueryIcon from "./resources/image/query.png";
+import { AiFillEye } from "react-icons/ai";
 import BasicTemplate from "./template/BasicTemplate";
 import BasicButton from "./components/button/Button";
 import BasicQueryDialog, {
@@ -209,7 +210,10 @@ const App: React.FC = () => {
                 <td>
                   {/* <BasicToolTip text="QQ" position="TC"> */}
                   <TextInput1
-                    icon="QQ"
+                    prefixIcon={
+                      <AiFillEye className={classNames("h-[24px] w-[24px]")} />
+                    }
+                    suffixIcon={<AiFillEye />}
                     errorMessage="00000000000  000000000000000"
                     placeholder="QQQQ"
                     inputStyle={{ css: "h-[36px] rounded-xl" }}
@@ -225,7 +229,6 @@ const App: React.FC = () => {
                   />
                   {/* </BasicToolTip> */}
                 </td>
-                ,
               </tr>,
             ]}
           />
