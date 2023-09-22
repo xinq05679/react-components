@@ -1,41 +1,27 @@
-import { useRef, useState } from "react";
-import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
-import { MergeComponentStyle } from "../../utility/componentUtility";
 import classNames from "classnames";
+import { MergeComponentStyle } from "../../utility/componentUtility";
+import { useState } from "react";
+import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 
-export interface BasicTextarea
-  extends Omit<
-    React.HTMLAttributes<HTMLTextAreaElement>,
-    | "onSubmit"
-    | "onSubmitCapture"
-    | "onChange"
-    | "value"
-    | "className"
-    | "readOnly"
-    | "style"
-  > {
+export interface TextareaProps {
   text?: string;
+  name?: string;
   textareaStyle?: ComponentStyleMerging;
-  formStyle?: ComponentStyleMerging;
   onValueChanged?: (value: string) => void;
   onSubmit?: (value: string) => void;
   readOnly?: boolean;
-  [key: string]: any;
 }
 
-export const BasicTextarea: React.FC<BasicTextarea> = ({
+export const Textarea: React.FC<TextareaProps> = ({
   text = "",
+  name,
   textareaStyle,
-  formStyle,
-  onValueChanged,
   onSubmit,
-  onBlur,
+  onValueChanged,
   readOnly,
-  ...others
 }) => {
   const [inputValue, setInputValue] = useState("");
   const [submitValue, setSubmitValue] = useState("");
-  const btnRef = useRef<HTMLButtonElement>(null);
 
   if (submitValue !== text) {
     setSubmitValue(text);
@@ -71,23 +57,12 @@ export const BasicTextarea: React.FC<BasicTextarea> = ({
     textareaStyle
   );
 
-  others.onBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
-    btnRef.current?.click();
-    onBlur?.(event);
-  };
-
-  const _formStyle = MergeComponentStyle(
-    { css: classNames("h-[100%] w-[100%]") },
-    formStyle
-  );
-
   function handleValueChanged(event: React.ChangeEvent<HTMLTextAreaElement>) {
     setInputValue(event.target.value);
     onValueChanged?.(event.target.value);
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  function handleSubmit() {
     if (submitValue !== inputValue) {
       setSubmitValue(inputValue);
       onSubmit?.(inputValue);
@@ -95,22 +70,16 @@ export const BasicTextarea: React.FC<BasicTextarea> = ({
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className={_formStyle?.css}
-      style={_formStyle?.style}
-    >
-      <textarea
-        value={inputValue}
-        onChange={handleValueChanged}
-        className={_textareaStyle.css}
-        style={_textareaStyle.style}
-        readOnly={readOnly}
-        {...others}
-      />
-      <button ref={btnRef} className="hidden" type="submit" />
-    </form>
+    <textarea
+      value={inputValue}
+      name={name}
+      onChange={handleValueChanged}
+      onBlur={handleSubmit}
+      className={_textareaStyle.css}
+      style={_textareaStyle.style}
+      readOnly={readOnly}
+    />
   );
 };
 
-export default BasicTextarea;
+export default Textarea;

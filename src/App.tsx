@@ -23,7 +23,6 @@ import BasicContextMenuItem from "./components/contextmenu/BasicContextMenuItem"
 import { ContextMenuItemType } from "./metadata/ContextMenuItemType";
 import useContextMenu from "./hooks/useContextMenu";
 import { ButtonType } from "./metadata/ButtonType";
-import BasicTextarea from "./components/input/BasicTextarea";
 import BasicDateTimePicker from "./components/datetime/BasicDateTimePicker";
 import TextInput1 from "./components/input/TextInput1";
 import { BasicSearchTextBox } from "./components/search/BasicSearchBar";
@@ -32,6 +31,8 @@ import { TwoNumericInput } from "./components/numeric/TwoNumericInput";
 import classNames from "classnames";
 import ToolBar from "./components/toolbar/ToolBar";
 import ToolTip from "./components/tooltip/ToolTip";
+import Textarea from "./components/input/Textarea";
+import TextareaWithErrorMessage from "./components/input/TextareaWithErrorMessage";
 
 const App: React.FC = () => {
   const [value, setValue] = useState("444");
@@ -122,11 +123,10 @@ const App: React.FC = () => {
               </tr>,
               <tr>
                 <td>
-                  <BasicTextarea
+                  <TextareaWithErrorMessage
                     onValueChanged={(value) => console.log(value)}
                     onSubmit={(value) => setValue(value)}
                     text={value}
-                    readOnly
                   />
                 </td>
                 <td>
@@ -217,6 +217,7 @@ const App: React.FC = () => {
                     errorMessage="00000000000  000000000000000"
                     placeholder="QQQQ"
                     inputStyle={{ css: "h-[36px] rounded-xl" }}
+                    hideErrorIcon
                     // onValueChanged={(value) => console.log(value)}
                     onSubmit={(value) => {
                       setValue(value);

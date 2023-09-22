@@ -3,16 +3,27 @@ import { BiError } from "react-icons/bi";
 import { ComponentStyleMerging } from "../../..";
 import BasicTextInput, { TextInputProps } from "./TextInput";
 import { MergeComponentStyle } from "../../..";
-import { forwardRef, useRef, useState } from "react";
+import React, { forwardRef, useRef, useState } from "react";
 
 export interface TextInput1Props extends TextInputProps {
   prefixIcon?: React.ReactNode;
   suffixIcon?: React.ReactNode;
   errorMessage?: React.ReactNode;
+  hideErrorIcon?: boolean;
 }
 
 export const TextInput1 = forwardRef<HTMLInputElement, TextInput1Props>(
-  ({ prefixIcon, suffixIcon, errorMessage, inputStyle, ...others }, ref) => {
+  (
+    {
+      prefixIcon,
+      suffixIcon,
+      errorMessage,
+      inputStyle,
+      hideErrorIcon,
+      ...others
+    },
+    ref
+  ) => {
     const prefixIconDivRef = useRef<HTMLDivElement>(null);
     const suffixIconDivRef = useRef<HTMLDivElement>(null);
     const [forceUpdateRef, setForceUpdateRef] = useState(true);
@@ -88,7 +99,9 @@ export const TextInput1 = forwardRef<HTMLInputElement, TextInput1Props>(
             style={_errorMessageStyle.style}
           >
             <BiError
-              className={_errorMessageIconStyle.css}
+              className={classNames(_errorMessageIconStyle.css, {
+                hidden: hideErrorIcon,
+              })}
               style={_errorMessageIconStyle.style}
             />
             {errorMessage}
