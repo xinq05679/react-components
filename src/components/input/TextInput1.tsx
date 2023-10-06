@@ -63,11 +63,17 @@ export const TextInput1 = forwardRef<HTMLInputElement, TextInput1Props>(
     );
 
     const _divStyle = MergeComponentStyle({
-      css: classNames("relative", " w-[100%]", "flex items-center"),
+      css: classNames("relative", "w-[100%]", "flex items-center"),
     });
 
     const _errorMessageStyle = {
-      css: classNames("flex items-start", "text-sm text-[#f00]/80 text-start"),
+      css: classNames(
+        "relative",
+        "h-full",
+        "overflow-y-auto",
+        "flex items-start",
+        "text-sm text-[#f00]/80 text-start"
+      ),
     } as ComponentStyleMerging;
 
     const _errorMessageIconStyle = {
@@ -75,7 +81,7 @@ export const TextInput1 = forwardRef<HTMLInputElement, TextInput1Props>(
     } as ComponentStyleMerging;
 
     return (
-      <div className={classNames("flex flex-col")}>
+      <div className={classNames("flex flex-col", "h-full w-full")}>
         <div className={classNames(_divStyle.css)} style={_divStyle.style}>
           {/* Prefix Icon */}
           {prefixIcon && (
