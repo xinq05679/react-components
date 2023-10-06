@@ -4,6 +4,7 @@ import { ComponentStyleMerging } from "../../..";
 import BasicTextInput, { TextInputProps } from "./TextInput";
 import { MergeComponentStyle } from "../../..";
 import React, { forwardRef, useRef, useState } from "react";
+import ErrorMessageContainer from "../error/ErrorMessageContainer";
 
 export interface TextInput1Props extends TextInputProps {
   prefixIcon?: React.ReactNode;
@@ -66,22 +67,8 @@ export const TextInput1 = forwardRef<HTMLInputElement, TextInput1Props>(
       css: classNames("relative", "w-[100%]", "flex items-center"),
     });
 
-    const _errorMessageStyle = {
-      css: classNames(
-        "relative",
-        "h-full",
-        "overflow-y-auto",
-        "flex items-start",
-        "text-sm text-[#f00]/80 text-start"
-      ),
-    } as ComponentStyleMerging;
-
-    const _errorMessageIconStyle = {
-      css: classNames("shrink-0", "me-1", "w-[18px] h-[18px]"),
-    } as ComponentStyleMerging;
-
     return (
-      <div className={classNames("flex flex-col", "h-full w-full")}>
+      <ErrorMessageContainer errorMessage={errorMessage} hideErrorIcon>
         <div className={classNames(_divStyle.css)} style={_divStyle.style}>
           {/* Prefix Icon */}
           {prefixIcon && (
@@ -98,22 +85,7 @@ export const TextInput1 = forwardRef<HTMLInputElement, TextInput1Props>(
             </div>
           )}
         </div>
-        {/* Error Message */}
-        {errorMessage && (
-          <div
-            className={_errorMessageStyle.css}
-            style={_errorMessageStyle.style}
-          >
-            <BiError
-              className={classNames(_errorMessageIconStyle.css, {
-                hidden: hideErrorIcon,
-              })}
-              style={_errorMessageIconStyle.style}
-            />
-            {errorMessage}
-          </div>
-        )}
-      </div>
+      </ErrorMessageContainer>
     );
   }
 );

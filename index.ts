@@ -10,6 +10,7 @@ export * from "./src/components/input/TextInput";
 export * from "./src/components/input/TextInput1";
 export * from "./src/components/input/Textarea";
 export * from "./src/components/input/TextareaWithErrorMessage";
+export * from "./src/components/error/ErrorMessageContainer";
 export * from "./src/components/list/BasicList";
 export * from "./src/components/list/BasicListItem";
 export * from "./src/components/search/BasicSearchBar";
