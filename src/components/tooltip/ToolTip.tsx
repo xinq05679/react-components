@@ -18,7 +18,7 @@ type ToolTipPosition =
   | "LC"
   | "LB";
 
-interface ToolTipProps {
+export interface ToolTipProps {
   children: React.ReactElement;
   tooltip?: React.ReactNode;
   delayTimeOpen?: number;
