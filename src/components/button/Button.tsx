@@ -18,7 +18,10 @@ export interface ButtonProps
   [key: string]: any;
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button: React.FC<ButtonProps> = forwardRef<
+  HTMLButtonElement,
+  ButtonProps
+>(
   (
     {
       type = "button",
