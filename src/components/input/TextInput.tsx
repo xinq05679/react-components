@@ -15,6 +15,7 @@ export interface TextInputProps {
   enableSelectAll?: boolean;
   readOnly?: boolean;
   autoFocus?: boolean;
+  spellCheck?: boolean;
 }
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
