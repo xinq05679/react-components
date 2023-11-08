@@ -4,6 +4,7 @@ export * from "./src/template/BasicTemplate";
 
 //#region Component
 export * from "./src/components/button/Button";
+export * from "./src/components/button/Button1";
 export * from "./src/components/header/BasicHeader";
 export * from "./src/components/input/BasicLink";
 export * from "./src/components/input/TextInput";
