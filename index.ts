@@ -9,6 +9,7 @@ export * from "./src/components/icons/LoadingIcon";
 export * from "./src/components/icons/CheckIcon";
 export * from "./src/components/icons/IconWrapper";
 export * from "./src/components/svgs/SpinSVG";
+export * from "./src/components/2d-geometric/Line";
 export * from "./src/components/button/Button";
 export * from "./src/components/button/Button1";
 export * from "./src/components/button/ToggleButton";
