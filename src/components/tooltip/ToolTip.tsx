@@ -4,7 +4,7 @@ import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import BasicPortal from "../portal/BasicPortal";
 import { useRef, useState, useEffect } from "react";
 
-type ToolTipPosition =
+export type ToolTipPosition =
   | "TL"
   | "TC"
   | "TR"
@@ -22,7 +22,9 @@ export interface ToolTipProps {
   children: React.ReactElement;
   tooltip?: React.ReactNode;
   delayTimeOpen?: number;
-  tooltipDivStyle?: ComponentStyleMerging;
+  backgroundColor?: string;
+  fontColor?: string;
+  padding?: string;
   position?: ToolTipPosition;
 }
 
@@ -30,7 +32,9 @@ export const ToolTip: React.FC<ToolTipProps> = ({
   children,
   tooltip,
   delayTimeOpen = 0,
-  tooltipDivStyle,
+  backgroundColor = "#ffffffef",
+  fontColor = "#00f",
+  padding = "5px",
   position = "BC",
 }) => {
   const childrenRef = useRef<HTMLDivElement>(null);
@@ -45,13 +49,6 @@ export const ToolTip: React.FC<ToolTipProps> = ({
       clearTimeout(timeId);
     };
   }, [visible]);
-
-  const _tooltipDivStyle = MergeComponentStyle(
-    {
-      css: classNames("absolute"),
-    },
-    tooltipDivStyle
-  );
 
   function showToolTip() {
     if (!visible || !childrenRef.current || !tooltipRef.current) return;
@@ -149,7 +146,15 @@ export const ToolTip: React.FC<ToolTipProps> = ({
       />
       {tooltip && visible && (
         <BasicPortal portalId="tooltip-portal">
-          <div ref={tooltipRef} className={classNames(_tooltipDivStyle.css)}>
+          <div
+            ref={tooltipRef}
+            className={classNames("absolute")}
+            style={{
+              backgroundColor: backgroundColor,
+              color: fontColor,
+              padding: padding,
+            }}
+          >
             {tooltip}
           </div>
         </BasicPortal>

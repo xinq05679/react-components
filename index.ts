@@ -3,6 +3,12 @@ export * from "./src/template/BasicTemplate";
 //#endregion
 
 //#region Component
+export * from "./src/components/icons/ErrorIcon";
+export * from "./src/components/icons/WarningIcon";
+export * from "./src/components/icons/LoadingIcon";
+export * from "./src/components/icons/CheckIcon";
+export * from "./src/components/icons/IconWrapper";
+export * from "./src/components/svgs/SpinSVG";
 export * from "./src/components/button/Button";
 export * from "./src/components/button/Button1";
 export * from "./src/components/button/ToggleButton";
@@ -56,6 +62,9 @@ export * from "./src/metadata/QueryDialogType";
 export * from "./src/metadata/SelectionMode";
 export * from "./src/metadata/NumericRange";
 export * from "./src/metadata/ContextMenuItemType";
+export * from "./src/metadata/IconProps";
+export * from "./src/metadata/SVGProps";
+export * from "./src/metadata/Margin";
 //#endregion
 
 //#region Utility

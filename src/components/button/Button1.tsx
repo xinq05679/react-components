@@ -1,7 +1,9 @@
 import classNames from "classnames";
-import { BasicSpin, MergeComponentStyle } from "../../..";
+import { MergeComponentStyle } from "../../..";
 import Button, { ButtonProps } from "./Button";
 import { forwardRef } from "react";
+import SpinSVG from "../svgs/SpinSVG";
+import { Margin, getCSSMargin } from "../../metadata/Margin";
 
 export interface Button1Props extends ButtonProps {
   enableClickOnBusy?: boolean;
@@ -9,9 +11,11 @@ export interface Button1Props extends ButtonProps {
   busyButtonColor?: string;
   busyButtonBorderColor?: string;
   busyTextColor?: string;
-  spinHeight?: string;
-  spinMargin?: string;
-  strokeColor?: string;
+  spinSize?: number;
+  spinMargin?: Margin;
+  spinArcColor?: string;
+  spinCircleColor?: string;
+  spinStorkWidth?: number;
 }
 
 export const Button1: React.FC<Button1Props> = forwardRef<
@@ -27,9 +31,11 @@ export const Button1: React.FC<Button1Props> = forwardRef<
       busyButtonColor = "#acacac",
       busyButtonBorderColor = "#acacac",
       busyTextColor = "#fff",
-      spinHeight = "24px",
-      spinMargin = "0px 5px",
-      strokeColor = "#9ca3af",
+      spinSize = 24,
+      spinMargin = { left: 10, right: 10 },
+      spinArcColor = "#9ca3af",
+      spinCircleColor,
+      spinStorkWidth,
       customizedStyle,
       onClicked,
       ...others
@@ -63,12 +69,15 @@ export const Button1: React.FC<Button1Props> = forwardRef<
       >
         <div className={classNames("flex items-center justify-center")}>
           {busy && (
-            <BasicSpin
-              svgStyle={{
-                style: { height: spinHeight, margin: spinMargin },
-              }}
-              arcStyle={{ style: { stroke: strokeColor } }}
-            />
+            <div style={{ margin: getCSSMargin(spinMargin) }}>
+              <SpinSVG
+                animation="rotate"
+                arcColor={spinArcColor}
+                circleColor={spinCircleColor}
+                storkWidth={spinStorkWidth}
+                size={spinSize}
+              />
+            </div>
           )}
           {children || text}
         </div>
