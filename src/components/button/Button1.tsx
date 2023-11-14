@@ -3,7 +3,7 @@ import { MergeComponentStyle } from "../../..";
 import Button, { ButtonProps } from "./Button";
 import { forwardRef } from "react";
 import SpinSVG from "../svgs/SpinSVG";
-import { Margin, getCSSMargin } from "../../metadata/Margin";
+import { Point } from "../../metadata/Point";
 
 export interface Button1Props extends ButtonProps {
   enableClickOnBusy?: boolean;
@@ -12,7 +12,7 @@ export interface Button1Props extends ButtonProps {
   busyButtonBorderColor?: string;
   busyTextColor?: string;
   spinSize?: number;
-  spinMargin?: Margin;
+  spinTranslate?: Point;
   spinArcColor?: string;
   spinCircleColor?: string;
   spinStorkWidth?: number;
@@ -32,7 +32,7 @@ export const Button1: React.FC<Button1Props> = forwardRef<
       busyButtonBorderColor = "#acacac",
       busyTextColor = "#fff",
       spinSize = 24,
-      spinMargin = { left: 10, right: 10 },
+      spinTranslate = { x: -5 },
       spinArcColor = "#9ca3af",
       spinCircleColor,
       spinStorkWidth,
@@ -69,7 +69,13 @@ export const Button1: React.FC<Button1Props> = forwardRef<
       >
         <div className={classNames("flex items-center justify-center")}>
           {busy && (
-            <div style={{ margin: getCSSMargin(spinMargin) }}>
+            <div
+              style={{
+                translate: `${spinTranslate.x || 0}px ${
+                  spinTranslate.y || 0
+                }px`,
+              }}
+            >
               <SpinSVG
                 animation="rotate"
                 arcColor={spinArcColor}

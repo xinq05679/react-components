@@ -6,7 +6,17 @@ export interface Margin {
 }
 
 export function getCSSMargin(margin?: Margin) {
-  return `${margin?.top || "0"} ${margin?.right || "0"} ${
-    margin?.bottom || "0"
-  } ${margin?.left || "0"}`;
+  var top = margin?.top || "0";
+  if (top !== "auto") top = `${top}px`;
+
+  var right = margin?.right || "0";
+  if (right !== "auto") right = `${right}px`;
+
+  var bottom = margin?.bottom || "0";
+  if (bottom !== "auto") bottom = `${bottom}px`;
+
+  var left = margin?.left || "0";
+  if (left !== "auto") left = `${left}px`;
+
+  return `${top} ${right} ${bottom} ${left}`;
 }
