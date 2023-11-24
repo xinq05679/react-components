@@ -9,12 +9,8 @@ export const CheckIcon: React.FC<IconProps> = ({
   ...others
 }) => {
   return (
-    <IconWrapper size={size} {...others}>
-      {fill ? (
-        <BsCheckCircleFill size={size} color={color} />
-      ) : (
-        <BsCheckCircle size={size} color={color} />
-      )}
+    <IconWrapper size={size} color={color} {...others}>
+      {fill ? <BsCheckCircleFill size={size} /> : <BsCheckCircle size={size} />}
     </IconWrapper>
   );
 };

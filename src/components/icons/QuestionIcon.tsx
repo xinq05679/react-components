@@ -1,22 +1,22 @@
-import { BsExclamationCircleFill, BsExclamationCircle } from "react-icons/bs";
+import { BsQuestionCircle, BsQuestionCircleFill } from "react-icons/bs";
 import IconWrapper from "./IconWrapper";
 import { IconProps } from "../../metadata/IconProps";
 
-export const WarningIcon: React.FC<IconProps> = ({
+export const QuestionIcon: React.FC<IconProps> = ({
   size = 24,
-  color = "#facc15",
+  color = "#000",
   fill = false,
   ...others
 }) => {
   return (
     <IconWrapper size={size} color={color} {...others}>
       {fill ? (
-        <BsExclamationCircleFill size={size} />
+        <BsQuestionCircleFill size={size} />
       ) : (
-        <BsExclamationCircle size={size} />
+        <BsQuestionCircle size={size} />
       )}
     </IconWrapper>
   );
 };
 
-export default WarningIcon;
+export default QuestionIcon;

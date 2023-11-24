@@ -3,7 +3,6 @@ import { MergeComponentStyle } from "../../..";
 import Button, { ButtonProps } from "./Button";
 import { forwardRef } from "react";
 import SpinSVG from "../svgs/SpinSVG";
-import { Point } from "../../metadata/Point";
 
 export interface Button1Props extends ButtonProps {
   enableClickOnBusy?: boolean;
@@ -12,7 +11,7 @@ export interface Button1Props extends ButtonProps {
   busyButtonBorderColor?: string;
   busyTextColor?: string;
   spinSize?: number;
-  spinTranslate?: Point;
+  spinTransform?: string;
   spinArcColor?: string;
   spinCircleColor?: string;
   spinStorkWidth?: number;
@@ -32,7 +31,7 @@ export const Button1: React.FC<Button1Props> = forwardRef<
       busyButtonBorderColor = "#acacac",
       busyTextColor = "#fff",
       spinSize = 24,
-      spinTranslate = { x: -5 },
+      spinTransform = "translate(-5px)",
       spinArcColor = "#9ca3af",
       spinCircleColor,
       spinStorkWidth,
@@ -71,9 +70,7 @@ export const Button1: React.FC<Button1Props> = forwardRef<
           {busy && (
             <div
               style={{
-                translate: `${spinTranslate.x || 0}px ${
-                  spinTranslate.y || 0
-                }px`,
+                transform: spinTransform,
               }}
             >
               <SpinSVG

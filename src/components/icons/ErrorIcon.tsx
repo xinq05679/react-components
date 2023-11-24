@@ -4,17 +4,13 @@ import { IconProps } from "../../metadata/IconProps";
 
 export const ErrorIcon: React.FC<IconProps> = ({
   size = 24,
-  color = "#f87171",
   fill = false,
+  color = "#f87171",
   ...others
 }) => {
   return (
-    <IconWrapper size={size} {...others}>
-      {fill ? (
-        <BsXCircleFill size={size} color={color} />
-      ) : (
-        <BsXCircle size={size} color={color} />
-      )}
+    <IconWrapper size={size} color={color} {...others}>
+      {fill ? <BsXCircleFill size={size} /> : <BsXCircle size={size} />}
     </IconWrapper>
   );
 };

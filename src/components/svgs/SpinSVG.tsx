@@ -1,8 +1,7 @@
 import { SVGProps } from "../../metadata/SVGProps";
 import IconWrapper from "../icons/IconWrapper";
 
-export interface SpinSVGProps extends SVGProps {
-  size?: number;
+export interface SpinSVGProps extends Omit<SVGProps, "color"> {
   arcColor?: string;
   circleColor?: string;
   storkWidth?: number;

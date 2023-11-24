@@ -9,8 +9,8 @@ export const LoadingIcon: React.FC<Omit<IconProps, "fill">> = ({
   ...others
 }) => {
   return (
-    <IconWrapper size={size} animation={animation} {...others}>
-      <RxReload size={size} color={color} />
+    <IconWrapper size={size} color={color} animation={animation} {...others}>
+      <RxReload size={size} />
     </IconWrapper>
   );
 };

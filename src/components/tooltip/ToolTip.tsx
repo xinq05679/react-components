@@ -1,8 +1,7 @@
 import classNames from "classnames";
-import { MergeComponentStyle } from "../../utility/componentUtility";
-import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import BasicPortal from "../portal/BasicPortal";
 import { useRef, useState, useEffect } from "react";
+import { Point } from "../../metadata/Point";
 
 export type ToolTipPosition =
   | "TL"
@@ -21,21 +20,31 @@ export type ToolTipPosition =
 export interface ToolTipProps {
   children: React.ReactElement;
   tooltip?: React.ReactNode;
-  delayTimeOpen?: number;
-  backgroundColor?: string;
-  fontColor?: string;
-  padding?: string;
-  position?: ToolTipPosition;
+  tooltipDelayTimeOpen?: number;
+  tooltipBackgroundColor?: string;
+  tooltipFontColor?: string;
+  tooltipPadding?: string;
+  tooltipPosition?: ToolTipPosition;
+  tooltipTrasform?: string;
+  tooltipBorderRadius?: string;
+  tooltipBorderWidth?: string;
+  tooltipBorderColor?: string;
+  tooltipBorderStyle?: string;
 }
 
 export const ToolTip: React.FC<ToolTipProps> = ({
   children,
   tooltip,
-  delayTimeOpen = 0,
-  backgroundColor = "#ffffffef",
-  fontColor = "#00f",
-  padding = "5px",
-  position = "BC",
+  tooltipDelayTimeOpen = 0,
+  tooltipBackgroundColor = "#ffffffef",
+  tooltipBorderRadius,
+  tooltipBorderWidth,
+  tooltipBorderColor,
+  tooltipBorderStyle,
+  tooltipFontColor = "#00f",
+  tooltipPadding = "5px",
+  tooltipPosition = "BC",
+  tooltipTrasform,
 }) => {
   const childrenRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
@@ -44,7 +53,7 @@ export const ToolTip: React.FC<ToolTipProps> = ({
   useEffect(() => {
     const timeId = setTimeout(() => {
       showToolTip();
-    }, delayTimeOpen);
+    }, tooltipDelayTimeOpen);
     return () => {
       clearTimeout(timeId);
     };
@@ -68,14 +77,14 @@ export const ToolTip: React.FC<ToolTipProps> = ({
       divLeftTopPos[1] + childrenRef.current.clientHeight,
     ];
 
-    switch (position) {
+    switch (tooltipPosition) {
       case "BL":
       case "BC":
       case "BR":
         tooltipRef.current.style.top = divRightBottomPos[1] + "px";
-        if (position === "BL") {
+        if (tooltipPosition === "BL") {
           tooltipRef.current.style.left = divLeftTopPos[0] + "px";
-        } else if (position === "BC") {
+        } else if (tooltipPosition === "BC") {
           tooltipRef.current.style.left = divCenterPos[0] + "px";
         } else {
           tooltipRef.current.style.left = divRightBottomPos[0] + "px";
@@ -86,9 +95,9 @@ export const ToolTip: React.FC<ToolTipProps> = ({
       case "TR":
         tooltipRef.current.style.top =
           divLeftTopPos[1] - tooltipRef.current.clientHeight + "px";
-        if (position === "TL") {
+        if (tooltipPosition === "TL") {
           tooltipRef.current.style.left = divLeftTopPos[0] + "px";
-        } else if (position === "TC") {
+        } else if (tooltipPosition === "TC") {
           tooltipRef.current.style.left = divCenterPos[0] + "px";
         } else {
           tooltipRef.current.style.left = divRightBottomPos[0] + "px";
@@ -99,9 +108,9 @@ export const ToolTip: React.FC<ToolTipProps> = ({
       case "LB":
         tooltipRef.current.style.left =
           divLeftTopPos[0] - tooltipRef.current.clientWidth + "px";
-        if (position === "LT") {
+        if (tooltipPosition === "LT") {
           tooltipRef.current.style.top = divLeftTopPos[1] + "px";
-        } else if (position === "LC") {
+        } else if (tooltipPosition === "LC") {
           tooltipRef.current.style.top = divCenterPos[1] + "px";
         } else {
           tooltipRef.current.style.top = divRightBottomPos[1] + "px";
@@ -111,9 +120,9 @@ export const ToolTip: React.FC<ToolTipProps> = ({
       case "RC":
       case "RB":
         tooltipRef.current.style.left = divRightBottomPos[0] + "px";
-        if (position === "RT") {
+        if (tooltipPosition === "RT") {
           tooltipRef.current.style.top = divLeftTopPos[1] + "px";
-        } else if (position === "RC") {
+        } else if (tooltipPosition === "RC") {
           tooltipRef.current.style.top = divCenterPos[1] + "px";
         } else {
           tooltipRef.current.style.top = divRightBottomPos[1] + "px";
@@ -150,9 +159,14 @@ export const ToolTip: React.FC<ToolTipProps> = ({
             ref={tooltipRef}
             className={classNames("absolute")}
             style={{
-              backgroundColor: backgroundColor,
-              color: fontColor,
-              padding: padding,
+              backgroundColor: tooltipBackgroundColor,
+              color: tooltipFontColor,
+              padding: tooltipPadding,
+              transform: tooltipTrasform,
+              borderRadius: tooltipBorderRadius,
+              borderWidth: tooltipBorderWidth,
+              borderBlockColor: tooltipBorderColor,
+              borderStyle: tooltipBorderStyle,
             }}
           >
             {tooltip}
