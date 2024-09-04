@@ -6,6 +6,7 @@ import { ComponentStyleMerging } from "../../metadata/ComponentStyle";
 import { MergeComponentStyle } from "../../utility/componentUtility";
 import classNames from "classnames";
 import { QueryDialogType } from "../../metadata/QueryDialogType";
+import { useEffect, useRef, useState } from "react";
 
 export interface BasicQueryDialogProps {
   queryDialogType?: QueryDialogType;
@@ -18,8 +19,7 @@ export interface BasicQueryDialogProps {
   modalStyle?: ComponentStyleMerging;
   containerStyle?: ComponentStyleMerging;
   bodyStyle?: ComponentStyleMerging;
-  outerContentStyle?: ComponentStyleMerging;
-  innerContentStyle?: ComponentStyleMerging;
+  contentStyle?: ComponentStyleMerging;
   headerStyle?: ComponentStyleMerging;
   iconStyle?: ComponentStyleMerging;
   footerStyle?: ComponentStyleMerging;
@@ -44,8 +44,7 @@ export const BasicQueryDialog: React.FC<BasicQueryDialogProps> = (props) => {
     containerStyle,
     bodyStyle,
     iconStyle,
-    outerContentStyle,
-    innerContentStyle,
+    contentStyle,
     headerStyle,
     footerStyle,
     buttonStyle,
@@ -55,6 +54,14 @@ export const BasicQueryDialog: React.FC<BasicQueryDialogProps> = (props) => {
     onCloseButtonClicked,
     reverseFooter,
   } = props;
+
+  const bodyDiv = useRef<HTMLDivElement>(null);
+  const span = useRef<HTMLSpanElement>(null);
+  const [bodyDivHeight, setBodyDivHeight] = useState(0);
+
+  useEffect(() => {
+    setBodyDivHeight(bodyDiv?.current?.clientHeight ?? 0);
+  }, [bodyDiv]);
 
   const _modalStyle = MergeComponentStyle({ css: "group" }, modalStyle);
 
@@ -81,28 +88,27 @@ export const BasicQueryDialog: React.FC<BasicQueryDialogProps> = (props) => {
 
   const _bodyStyle = MergeComponentStyle(
     {
-      css: classNames("flex items-center gap-[10px]", "pl-[20px]"),
+      css: classNames("flex items-center gap-[10px] grow", "pl-[20px]"),
     },
     bodyStyle
   );
 
-  const _outerContentStyle = MergeComponentStyle(
-    {
-      css: classNames("grow", "relative", "h-[100%]"),
-    },
-    outerContentStyle
-  );
-
-  const _innerContentStyle = MergeComponentStyle(
+  const _contentStyle = MergeComponentStyle(
     {
       css: classNames(
-        "absolute",
-        "flex items-center",
-        "overflow-auto",
-        "h-[100%] w-[100%]"
+        "text-wrap break-words",
+        "overflow-hidden overflow-y-auto",
+        {
+          "flex items-center":
+            (span?.current?.clientHeight ?? 0) <=
+            (bodyDiv.current?.clientHeight ?? 0),
+        }
       ),
+      style: {
+        height: `${bodyDivHeight}px`,
+      },
     },
-    innerContentStyle
+    contentStyle
   );
 
   const _iconStyle = MergeComponentStyle(
@@ -238,18 +244,19 @@ export const BasicQueryDialog: React.FC<BasicQueryDialogProps> = (props) => {
         header={title}
         body={
           <>
-            {/* ICON */}
-            {renderIcon()}
-            {/* CONTENT */}
-            <div
-              className={_outerContentStyle.css}
-              style={_outerContentStyle.style}
-            >
-              <div
-                className={_innerContentStyle.css}
-                style={_innerContentStyle.style}
-              >
-                {content}
+            <div ref={bodyDiv} className="flex items-center h-full w-full">
+              {/* ICON */}
+              {renderIcon()}
+              {/* CONTENT */}
+              <div className={_contentStyle.css} style={_contentStyle.style}>
+                <span
+                  ref={span}
+                  style={{
+                    margin: "auto 0",
+                  }}
+                >
+                  {content}
+                </span>
               </div>
             </div>
           </>
